@@ -1,5 +1,5 @@
 <!--
-
+Página do cadastro deo gestor de estacionamentos
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Now UI Dashboard by Creative Tim
+    ParkingBr - Dados Cadastrais do Gestor de Estacionamentos
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -30,9 +30,6 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
     <div class="logo">
-        <a class="simple-text logo-mini">
-          Logo
-        </a>
         <a class="simple-text logo-normal">
           ParkingBr
         </a>
@@ -91,7 +88,6 @@
       <div class="panel-header panel-header-sm">
       </div>
       <div class="content">
-
         <div class="row">
           <div class="col-md-8">
             <div class="card">
@@ -166,8 +162,6 @@
                     <button class="button button-block button-primary" type="submit">Adicionar novo gestor</button>
                   </div>                    
                 </form>
-                
-
               </div>
             </div>
           </div>
@@ -175,29 +169,10 @@
       </div>
       <footer class="footer">
         <div class=" container-fluid ">
-          <nav>
-            <ul>
-              <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
-                </a>
-              </li>
-              <li>
-                <a href="http://presentation.creative-tim.com">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="http://blog.creative-tim.com">
-                  Blog
-                </a>
-              </li>
-            </ul>
-          </nav>
           <div class="copyright" id="copyright">
             &copy; <script>
               document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-            </script>, Designed by <a href="https://www.invisionapp.com" target="_blank">Invision</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+            </script>, Designed by <a href="https://www.invisionapp.com" target="_blank">Invision</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>. Changed by <a style="color:#FF7F63" > Team ParkingBR</a>.
           </div>
         </div>
       </footer>
