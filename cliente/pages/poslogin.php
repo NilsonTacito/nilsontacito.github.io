@@ -1,12 +1,7 @@
 <!--
-/////////Essa página era User Profile e a editei pra porra toda!!!!
-/////////comecei na cadastro-veiculo!
-
-/////////É pra cá que o user vem depois de ser cadastrado!!!
-
-/////////dir:  http://192.168.1.15/tcc/dash/examples/cadastro-veiculo.php
-
+Página para a qual o usuário é redirecionado após o cadastro no "Arma".
 -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +13,7 @@
   <title>
     ParkingBr - Cadastre Seu Veículo
     <?php
-    //olha a sessao aqui!
+    //início da sessão
     session_start();
     ?>
   </title>
@@ -39,24 +34,24 @@
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
-      <div class="logo"><!-- Alterei essa merda, olha depois no vanilla! -->
-      <!-- centraliza esse logo, porra! -->
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <div class="logo">
+      <!-- Adicionar o e retirar o link -->
+        <a class="simple-text logo-normal">
           ParkingBr
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
-        <ul class="nav"><!-- nav do menu lateral, aprende, porra!!! -->
+        <ul class="nav"><!-- nav do menu lateral -->
           <li>
             <a>
               <i class="now-ui-icons education_atom"></i>
               <p>Editar Perfil</p>
             </a>
           </li>
-          <li class="active "><!--1ª que estou mexendo, cadastrar veículo. era "User Profile" escito aqui embaixo -->
-            <a href="./user.html"><!--o efeito de selecionado (cores invertidas no menu e ícone, eram css, html ou javascrpit?) -->
-              <i class="now-ui-icons users_single-02"></i><!--Acho que estão no css, só -->
-              <p>Cadastrar Veículo</p><!-- só css, sem javascrpit, menos pior -->
+          <li class="active ">
+            <a>
+              <i class="now-ui-icons users_single-02"></i>
+              <p>Cadastrar Veículo</p>
             </a>
           </li>
           <li><!-- Reservar Vagas! -->
@@ -65,9 +60,8 @@
               <p>Reservar Vagas</p>
             </a>
           </li>
-          <!-- Tirei a li do typography, que estava aqui-->
-          <li class="active-pro"> <!-- Upgrade to Pro virou meu logout, hein! -->
-            <a href="./upgrade.html">
+          <li class="active-pro">
+            <a href="./upgrade.html"><!-- adicionar código do logout --> 
               <i class="now-ui-icons arrows-1_cloud-download-93"></i>
               <p>Logout</p>
             </a>
@@ -102,9 +96,9 @@
                 <h5 class="title">Cadastre Seu Veículo, <?php echo($_SESSION['usuario']);?></h5>
               </div><!--Placa, Tipo, Modelo, Fabricante, Cor, Ano  -->
               <div class="card-body">
-                <form method="POST" action="processa-cad-veiculo.php"><!-- form action pra enviar o cadastro do veículo-->
+                <form method="POST" action="processa-cad-veiculo.php"><!-- adicionar form action pra enviar o cadastro do veículo-->
                   <!--Abaixo, o campo do tipo do veículo -->
-                  <div class="row"><!--tem que fazero botão de submit lá embaixo -->
+                  <div class="row"><!--tem que fazer o botão de submit lá embaixo -->
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Tipo</label>
@@ -118,7 +112,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row"><!-- copie isso eternamente -->
+                  <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Modelo</label>
@@ -132,7 +126,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row"><!-- copie isso eternamente -->
+                  <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Cor</label>
@@ -147,19 +141,18 @@
                     </div>
                   </div>
                   
-                  <div class="offset-top-25"><!-- tirado do Arma, melhorar -->
+                  <div class="offset-top-25"><!-- alterar posição deste botão -->
                     <button class="button button-block button-primary" type="submit">Concluir cadastro</button>
                   </div>                
                  
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label></label><!--Mexi aqui, veja o vanilla -->
+                        <label></label>
                         <textarea rows="4" cols="80" class="form-control" value="Mike"></textarea>
                       </div>
                     </div>
-                  </div>
-                  
+                  </div>                  
                 </form>
               </div>
             </div>
@@ -168,25 +161,6 @@
       </div>
       <footer class="footer">
         <div class=" container-fluid ">
-          <nav>
-            <ul>
-              <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
-                </a>
-              </li>
-              <li>
-                <a href="http://presentation.creative-tim.com">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="http://blog.creative-tim.com">
-                  Blog
-                </a>
-              </li>
-            </ul>
-          </nav>
           <div class="copyright" id="copyright">
             &copy; <script>
               document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
