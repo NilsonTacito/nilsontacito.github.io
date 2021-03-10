@@ -1,10 +1,4 @@
 <!--
-/////////Essa página era User Profile e a editei pra porra toda!!!!
-/////////comecei na cadastro-veiculo!
-
-/////////É pra cá que o user vem depois de ser cadastrado!!!
-
-/////////dir:  http://192.168.1.15/tcc/dash/examples/cadastro-veiculo.php
 
 -->
 <!DOCTYPE html>
@@ -18,7 +12,7 @@
   <title>
     ParkingBr - Cadastre Seu Veículo
     <?php
-    //olha a sessao aqui!
+    //sessao
     session_start();
     ?>
   </title>
@@ -32,16 +26,15 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
-<!-- ele criou uma classe css pro body? foi isso-->
 <body class="user-profile">
   <div class="wrapper ">
     <div class="sidebar" data-color="orange">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
-      <div class="logo"><!-- Alterei essa merda, olha depois no vanilla! -->
+      <div class="logo">
       <!-- centraliza esse logo, porra! -->
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a class="simple-text logo-normal">
           ParkingBr
         </a>
       </div>
@@ -53,10 +46,10 @@
               <p>Editar Perfil</p>
             </a>
           </li>
-          <li class="active "><!--1ª que estou mexendo, cadastrar veículo. era "User Profile" escito aqui embaixo -->
-            <a href="./user.html"><!--o efeito de selecionado (cores invertidas no menu e ícone, eram css, html ou javascrpit?) -->
-              <i class="now-ui-icons users_single-02"></i><!--Acho que estão no css, só -->
-              <p>Cadastrar Veículo</p><!-- só css, sem javascrpit, menos pior -->
+          <li class="active "><
+            <a href="./user.html">
+              <i class="now-ui-icons users_single-02"></i>
+              <p>Cadastrar Veículo</p>
             </a>
           </li>
           <li><!-- Reservar Vagas! -->
@@ -66,7 +59,7 @@
             </a>
           </li>
           <!-- Tirei a li do typography, que estava aqui-->
-          <li class="active-pro"> <!-- Upgrade to Pro virou meu logout, hein! -->
+          <li class="active-pro"> 
             <a href="./upgrade.html">
               <i class="now-ui-icons arrows-1_cloud-download-93"></i>
               <p>Logout</p>
@@ -166,7 +159,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row"><!-- copie isso eternamente -->
+                  <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Modelo</label>
@@ -180,7 +173,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="row"><!-- copie isso eternamente -->
+                  <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Cor</label>
@@ -202,7 +195,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label></label><!--Mexi aqui, veja o vanilla -->
+                        <label></label>
                         <textarea rows="4" cols="80" class="form-control" value="Mike"></textarea>
                       </div>
                     </div>
@@ -212,68 +205,13 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4"> <!-- side profile -->
-            <div class="card card-user">
-              <div class="image">
-                <img src="../assets/img/bg5.jpg" alt="...">
-              </div>
-              <div class="card-body">
-                <div class="author">
-                  <a href="#">
-                    <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
-                    <h5 class="title">Mike Andrew</h5><!-- dá pra botar form aqui?-->
-                  </a>
-                  <p class="description">
-                    Pegar nome e sobrenome
-                  </p>
-                </div>
-                <p class="description text-center">
-                  "Pegar dados <br>
-                  do user <br>
-                  no pós login"
-                </p>
-              </div>
-              <hr>
-              <div class="button-container">
-                <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-                  <i class="fab fa-facebook-f"></i>
-                </button>
-                <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-                  <i class="fab fa-twitter"></i>
-                </button>
-                <button href="#" class="btn btn-neutral btn-icon btn-round btn-lg">
-                  <i class="fab fa-google-plus-g"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
       <footer class="footer">
         <div class=" container-fluid ">
-          <nav>
-            <ul>
-              <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
-                </a>
-              </li>
-              <li>
-                <a href="http://presentation.creative-tim.com">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="http://blog.creative-tim.com">
-                  Blog
-                </a>
-              </li>
-            </ul>
-          </nav>
           <div class="copyright" id="copyright">
             &copy; <script>
               document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
-            </script>, Designed by <a href="https://www.invisionapp.com" target="_blank">Invision</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>.
+            </script>, Designed by <a href="https://www.invisionapp.com" target="_blank">Invision</a>. Coded by <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>. Changed by <a style="color:#FF7F63" > Team ParkingBR</a>.
           </div>
         </div>
       </footer>
