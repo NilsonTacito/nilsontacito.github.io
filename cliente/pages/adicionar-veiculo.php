@@ -92,7 +92,7 @@ O usuário é direcionado à mesma após o cadastro na landing page
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Cadastre Seu Veículo, <?php echo($_SESSION['usuario']);?></h5>
+                <h5 class="title">Cadastre Seu Veículo, <?php echo $_SESSION['usuario'];?></h5>
               </div><!--Placa, Tipo, Modelo, Fabricante, Cor, Ano  -->
               <div class="card-body">
                 <form method="POST" action="processa-cad-veiculo.php"><!-- form action pra enviar o cadastro do veículo-->
