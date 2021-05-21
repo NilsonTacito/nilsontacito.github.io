@@ -160,6 +160,10 @@ include("processa-sessao-cliente.php");
         });
         var infoWindow = new google.maps.InfoWindow;
 
+
+          //Os campos de ID não precisarão aparecer no mapa, só precisamos deles armazenados em varáveis pra colocar nos cookies.
+          //A implementação dos cookies já foi feita mais abaixo, alteraremos quando for necessário 
+
           // Change this depending on the name of your PHP or XML file
           downloadUrl('resultado.php', function(data) {
             var xml = data.responseXML;

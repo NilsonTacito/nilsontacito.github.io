@@ -10,6 +10,14 @@ function parseToXML($htmlStr){
 	return $xmlStr;
 }
 
+/*
+Query consultando as tabelas corretas:
+
+SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_lat, estacionamento.estac_long, estacionamento.estac_endrc, estacionamento.estac_cep, mov_vagas.mvg_id, mov_vagas.mvg_ocp_carro, mov_vagas.mvg_ocp_moto FROM (
+(mov_vagas INNER JOIN estacionamento ON mov_vagas.mvg_id = estacionamento.estac_id));
+
+*/
+
 // Select all the rows in the markers table
 $result_markers = "SELECT * FROM markers";
 $resultado_markers = mysqli_query($conn, $result_markers);
