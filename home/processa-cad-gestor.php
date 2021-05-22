@@ -12,13 +12,13 @@
     $gestor_telefone = $_POST['telefone-gestor'];
 
     //busca dados existentes no banco e só cadastra caso não os encontre
-    $select_gestor = "SELECT cnpj, email FROM gestor WHERE cnpj = '{$gestor_cnpj}' OR email = '{$gestor_email}'";
+    $select_gestor = "SELECT gst_cnpj, gst_email FROM gestor WHERE gst_cnpj = '{$gestor_cnpj}' OR gst_email = '{$gestor_email}'";
     $result_gestor = mysqli_query($conn, $select_gestor);
 
     //guarda em variáveis
-    while ($retorno_gestor = mysqli_fetch_array($result_gestor)) {
-        echo $retorno_gestor['cnpj'] = $retorno_cnpj;
-        echo $retorno_gestor['email'] = $retorno_email;
+    while ($retorno_gestor = mysqli_fetch_array($result_gestor, MYSQLI_ASSOC)) {
+        echo $retorno_gestor['gst_cnpj'] = $retorno_cnpj;
+        echo $retorno_gestor['gst_email'] = $retorno_email;
         break;
     }
 
@@ -27,10 +27,10 @@
         echo("Usuário já cadastrado!");
     }
     else {//não existem dados
-        $insert_gestor = "INSERT INTO gestor(cnpj, email, senha, razaosocial, nome, sobrenome, telefone, endereco, cep) VALUES ('{$gestor_cnpj}','{$gestor_email}','{$gestor_senha}','{$gestor_razaosocial}','{$gestor_nome}', '{$gestor_sbnome}', '{$gestor_telefone}', '{$gestor_endereco}','{$gestor_cep}')";
+        $insert_gestor = "INSERT INTO gestor(gst_cnpj, gst_email, gst_senha, gst_rzsocial, gst_nome, gst_sbnome, gst_tel, gst_endrc, gst_cep) VALUES ('{$gestor_cnpj}','{$gestor_email}','{$gestor_senha}','{$gestor_razaosocial}','{$gestor_nome}', '{$gestor_sbnome}', '{$gestor_telefone}', '{$gestor_endereco}','{$gestor_cep}');";
         $resultado_gestor = mysqli_query($conn, $insert_gestor);     
         if ($resultado_gestor == TRUE){//consultar o nome no banco pra retonar e colocar na sessão         
-            $sql = "SELECT nome FROM gestor WHERE email = '{$gestor_email}' AND senha = '{$gestor_senha}'";
+            $sql = "SELECT gst_nome FROM gestor WHERE gst_email = '{$gestor_email}' AND gst_senha = '{$gestor_senha}'";
             $result_sql = mysqli_query($conn,$sql);
             $row_sql = mysqli_num_rows($result_sql);
             if($row_sql == 1) {

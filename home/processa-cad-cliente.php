@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include('conexao2.php');
+    include('conexao.php');
     $nome_cliente = $_POST['nome'];
     $sbnome_cliente = $_POST['sobrenome'];
     $documento_cliente = $_POST['documento'];
@@ -22,11 +22,11 @@
     if (($retorno_doc == $documento_cliente) OR ($retorno_email == $email_cliente)){
         echo("Usuário já cadastrado!");
     }else {//realiza cadastro se o email ou o documento não existirem 
-        $insert_cliente = "INSERT INTO cliente (clt_doc, clt_email, clt_senha, clt_nome, clt_sbnome, clt_tel, clt_endrc, clt_cep) VALUES ('$documento_cliente', '$email_cliente', '$senha_cliente', '$nome_cliente','$sbnome_cliente', '$telefone_cliente','$endereco_cliente','$cep_cliente')";
+        $insert_cliente = "INSERT INTO cliente (clt_doc, clt_email, clt_senha, clt_nome, clt_sbnome, clt_tel, clt_endrc, clt_cep) VALUES ('$documento_cliente', '$email_cliente', '$senha_cliente', '$nome_cliente','$sbnome_cliente', '$telefone_cliente','$endereco_cliente','$cep_cliente');";
         $resultado_cliente = mysqli_query($conn, $insert_cliente);
         if ($resultado_cliente === TRUE){//ainda não é redirecionado após o insert
             //include('processa-sessao.php');
-            $select_cliente = "SELECT clt_nome FROM cliente WHERE clt_email = '{$email_cliente}' AND senha ='{$senha_cliente}'";
+            $select_cliente = "SELECT clt_nome FROM cliente WHERE clt_email = '{$email_cliente}' AND clt_senha ='{$senha_cliente}'";
             $result_select_cliente = mysqli_query($conn, $select_cliente);
             $row_sql_cliente = mysqli_num_rows($result_select_cliente);
             if($row_sql_cliente == 1) {
@@ -34,9 +34,11 @@
                 $_SESSION['cliente_logado']= true;
                 $_SESSION['cliente_nome'] = $sql_nome_cliente;//a consulta ao banco pra retornar o nome funcionou no teste
                 $_SESSION['cliente_email'] = $email_cliente;
-                header('Location: /cliente/pages/cadastrar-veiculo.php');
-                exit(0);
+                if ($sql_nome_cliente == $_SESSION['cliente_nome']){
+                    header('Location: /cliente/pages/cadastrar-veiculo.php');
+                    exit(0);
+                }
+            }
         }
     }
-}
 ?>
