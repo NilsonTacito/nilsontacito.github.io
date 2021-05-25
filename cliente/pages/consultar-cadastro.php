@@ -104,7 +104,7 @@ include("processa-consultar-cliente.php");
                 <h5 class="title">Dados Cadastrais</h5>
               </div>
               <div class="card-body"> <!-- teste de retorno de dados do banco realizado com sucesso -->
-                <form method="POST" action="consultar-cadastro2.php">
+                <form method="POST" action="alterar-cadastro.php">
                   <div class="row">
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
@@ -145,7 +145,7 @@ include("processa-consultar-cliente.php");
                     <div class="col-md-4 pr-1">
                       <div class="form-group">
                         <label>CEP</label>
-                        <br><?php echo ($ret_cep_cliente . "<br> ret_pk_cliente= " . $ret_pk_cliente); ?>
+                        <br><?php echo $ret_cep_cliente; ?>
                         <br>
                       </div>
                     </div>                    
@@ -157,23 +157,27 @@ include("processa-consultar-cliente.php");
                 <br>
                   <h5 class="title">Veículos</h5>
                     <?php
-                    $fk_cliente = $ret_pk_cliente;                    
-                    $query_veiculos = "SELECT placa, tipoveiculo, modelo, fabricante, cor, ano  FROM veiculo WHERE gambiarra = '$fk_cliente';";
-                    $res_veiculos = mysqli_query($conn, $query_veiculos); 
+                    $fk_cliente = $id_cliente;
+                    //echo("<a> fk_cliente = " . $fk_cliente . " </a>");                    
+                    $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '{$fk_cliente}';";
+                    $res_veiculos = mysqli_query($conn, $query_veiculos);
+                    $get_dados_veiculo = mysqli_fetch_array($res_veiculos, MYSQLI_ASSOC);
+                    $placa_veiculo = $get_dados_veiculo['vei_placa']; 
+                    if($placa_veiculo != NULL){
                     while ($dados_veiculos = mysqli_fetch_array($res_veiculos, MYSQLI_ASSOC)) {
-                    ?>   
+                    ?>  
                 <form >
                 <div class="row"><!--corrigir botões de submit e alterar para mostrar form com placeholders caso não haja veículos cadastrados-->
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Placa</label>
-                        <br> <?php echo $dados_veiculos['placa']; ?>
+                        <br> <?php echo $dados_veiculos['vei_placa']; ?>
                       </div>
                     </div>
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Tipo</label>
-                        <br><?php echo $dados_veiculos['tipoveiculo']; ?>
+                        <br><?php echo $dados_veiculos['vei_tipo']; ?>
                       </div>
                     </div>
                   </div>
@@ -181,13 +185,13 @@ include("processa-consultar-cliente.php");
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Modelo</label>
-                        <br> <?php echo $dados_veiculos['modelo']; ?>
+                        <br> <?php echo $dados_veiculos['vei_modelo']; ?>
                       </div>
                     </div>
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Fabricante</label>
-                        <br><?php echo $dados_veiculos['fabricante']; ?>
+                        <br><?php echo $dados_veiculos['vei_fabricante']; ?>
                       </div>
                     </div>
                   </div>
@@ -195,13 +199,13 @@ include("processa-consultar-cliente.php");
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Cor</label>
-                        <br><?php echo $dados_veiculos['cor']; ?>
+                        <br><?php echo $dados_veiculos['vei_cor']; ?>
                       </div>
                     </div>
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Ano</label>
-                        <br><?php echo $dados_veiculos['ano']; ?>
+                        <br><?php echo $dados_veiculos['vei_ano']; ?>
                       </div>
                     </div>
                   </div>
@@ -209,9 +213,11 @@ include("processa-consultar-cliente.php");
                     <button class="button button-block button-primary" type="submit">Editar Veículo</button>
                   </div><!-- testar "editar" dentro do while (com mais de 1 veículo) -->
                   <br>
-                  <?php } ?>
+                  <?php } } else {
+                    echo("<a>Você ainda não cadastrou nenhum veículo. </a>");
+                  } ?>
                 </form>
-                <form method="POST" action="adicionar-veiculo.php">
+                <form method="POST" action="cadastrar-veiculo.php">
                   <div class="offset-top-25"><!-- funciona, manda o cliente pra page de add veiculo -->
                       <button class="button button-block button-primary" type="submit">Adicionar Veículo</button>
                   </div>

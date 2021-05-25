@@ -31,7 +31,7 @@ echo '<markers>';
 while ($row_markers = mysqli_fetch_assoc($resultado_markers)){
   // Add to XML document node
   echo '<marker ';
-  echo 'id="' . $row_markers['id'] . '" ';//add id estac
+  echo 'idestac="' . $row_markers['id'] . '" ';//add id estac
   echo 'name="' . parseToXML($row_markers['name']) . '" ';
   echo 'address="' . parseToXML($row_markers['address']) . '" ';
   echo 'lat="' . $row_markers['lat'] . '" ';

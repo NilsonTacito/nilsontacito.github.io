@@ -108,7 +108,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Faça sua reserva</h5>
+                <h5 class="title">Faça sua reserva <?php echo $ck; ?> </h5>
               </div>
               <div class="card-body">
               <?php

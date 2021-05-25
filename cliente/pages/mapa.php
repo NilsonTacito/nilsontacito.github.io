@@ -169,7 +169,7 @@ include("processa-sessao-cliente.php");
             var xml = data.responseXML;
             var markers = xml.documentElement.getElementsByTagName('marker');
             Array.prototype.forEach.call(markers, function(markerElem) {
-              var id = markerElem.getAttribute('id'); //var do ID do estac
+              var id = markerElem.getAttribute('idestac'); //var do ID do estac
               var name = markerElem.getAttribute('name');
               var address = markerElem.getAttribute('address');
               var type = markerElem.getAttribute('type');

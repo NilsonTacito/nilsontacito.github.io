@@ -19,13 +19,26 @@ if ($res_cliente != NULL){
 //só usar while pro veículo pq pode haver mais 1 (ainda não foi testado)
 //veículo: placa, tipo, modelo, fabricante, cor, ano
 //a FK do 'cliente' em 'veiculo'é o 'documento'. logo, é preciso buscá-la ('gambiarra' é o campo no bd dos testes)
-$query_pk_cliente = "SELECT clt_doc FROM cliente WHERE clt_email ='{$login_cliente}' "; 
+$get_id_cliente = "SELECT clt_doc FROM cliente WHERE clt_email = '{$login_cliente}';";
+$res_id_cliente =  mysqli_query($conn, $get_id_cliente);
+$ret_id_cliente = mysqli_fetch_array($res_id_cliente, MYSQLI_ASSOC);
+$id_cliente= $ret_id_cliente['clt_doc'];
+//$id_cliente = $res_id_cliente['clt_doc'];//get id 
+
+/*$query_pk_cliente = "SELECT vei_placa FROM veiculo WHERE fk_clt_doc ='{$id_cliente}'; "; //$_SESSION['cliente_email']
 $res_pk_cliente = mysqli_query($conn, $query_pk_cliente);
-if($res_pk_cliente != NULL){
-    $array_pk_cliente = $res_pk_cliente->fetch_array(MYSQLI_ASSOC);
-    $ret_pk_cliente = $array_pk_cliente['documento'];
-}else if($ret_pk_cliente == "") { //$ret_pk_cliente
-    $ret_pk_cliente = "Este cliente ainda não cadastrou veículos!";
-}
+$ret_pk_cliente = mysqli_fetch_array($res_pk_cliente, MYSQLI_ASSOC); 
+$pk_cliente_stored = $ret_pk_cliente['vei_placa']; //array de placas
+
+
+
+
+
+if($pk_cliente_stored != NULL){
+    $array_pk_cliente = $ret_pk_cliente->fetch_array(MYSQLI_ASSOC);
+    $get_pk_cliente = $array_pk_cliente['documento'];
+}else if($get_pk_cliente[0] == "") { //$ret_pk_cliente
+    $get_pk_cliente = "Este cliente ainda não cadastrou veículos!";
+}*/
 
 ?>
