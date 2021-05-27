@@ -6,16 +6,21 @@ Obs: nossa documentação informa que estes cadastros informados acima devem ser
 include("conexao.php");
 include("processa-sessao-cliente.php");
 include("processa-consultar-cliente.php");
+include("processa-reservar-vaga.php");
 
+/*
 if (isset($_COOKIE["id-do-estac"])){
 $ck = $_COOKIE["id-do-estac"];
-//quando for utilizado o bd corrigido, será feito select da tx de estacionamento
+/quando for utilizado o bd corrigido, será feito select da tx de estacionamento
 $query_tx_reserva = "SELECT vg_carro FROM markers WHERE id ='{$ck}';";
 $res_tx_reserva = mysqli_query($conn,$query_tx_reserva);
 $ret_tx_reserva = mysqli_fetch_array($res_tx_reserva, MYSQLI_ASSOC);
 $tx_reserva = $ret_tx_reserva['vg_carro'];
 }
+*/
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -112,22 +117,23 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
               </div>
               <div class="card-body">
               <?php
-              $query_estac_reserva = "SELECT name, address, vg_carro, vg_moto FROM markers WHERE id = '{$ck}';";
-              $res_estac_reserva = mysqli_query($conn, $query_estac_reserva);
-              while ($ph_estac_reserva = mysqli_fetch_array($res_estac_reserva, MYSQLI_ASSOC)) {
+              /*$query_estac_reserva = "SELECT name, address, vg_carro, vg_moto FROM markers WHERE id = '{$ck}';";
+              $res_estac_reserva = mysqli_query($conn, $query_estac_reserva);*/
+              //$cons_reserva = $ret_cons_reserva;
+              //while ($campos_reserva = mysqli_fetch_array($cons_reserva, MYSQLI_ASSOC)) {
               ?>
               <form method="POST" action="processa-reservar-vaga.php">
                 <div class="row">
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Estacionamento </label>
-                        <br><?php echo $ph_estac_reserva['name']; ?><br>
+                        <br><?php echo $ret_estac_nome; ?><br>
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>CEP</label>
-                        <br><?php echo ($ph_estac_reserva['vg_carro']."-".$ph_estac_reserva['vg_moto']."-".$ph_estac_reserva['vg_carro']."-".$ph_estac_reserva['vg_moto']); ?><br>
+                        <br><?php echo $ret_estac_cep; ?><br>
                       </div>
                     </div>
                   </div>
@@ -135,7 +141,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Endereço</label>
-                        <br><?php echo $ph_estac_reserva['address']; ?> <br>
+                        <br><?php echo $ret_estac_endrc; ?> <br>
                       </div>
                     </div>
                   </div>
@@ -144,13 +150,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Vagas dispoíveis (carros)</label>
-                        <br><?php echo $ph_estac_reserva['vg_carro']; ?><br>
+                        <br><?php echo $disp_carro; ?><br>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
                         <label>Vagas disponíveis (motos)</label>
-                        <br><?php echo $ph_estac_reserva['vg_moto']; ?><br>
+                        <br><?php echo $disp_moto; ?><br>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -174,13 +180,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Preço por hora (carros)</label>
-                        <br><?php echo ($ph_estac_reserva['vg_carro']."$"); ?>
+                        <br><?php //echo ($ph_estac_reserva['vg_carro']."$"); ?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Preço por hora (motos)</label>
-                        <?php echo ($ph_estac_reserva['vg_moto']."$"); ?>
+                        <?php //echo ($ph_estac_reserva['vg_moto']."$"); ?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -196,17 +202,17 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Diária (carros)</label>
-                        <br><?php echo ($ph_estac_reserva['vg_moto']."$"); ?><br>
+                        <br><?php //echo ($ph_estac_reserva['vg_moto']."$"); ?><br>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Diária (motos)</label>
-                        <br><?php echo ($ph_estac_reserva['vg_carro']."$"); ?><br>
+                        <br><?php //echo ($ph_estac_reserva['vg_carro']."$"); ?><br>
                       </div>
                     </div>  
                 </div>
-                <?php } ?>
+                <?php// } ?>
                 <br><!-- daqui pra baixo -->
                   <div class="row">
                     <div class="col-md-12">
