@@ -1,5 +1,5 @@
 <?php
-session_start();;
+session_start();
 include('conexao.php');
 $login_cliente = mysqli_real_escape_string($conn, $_POST['email']);
 $senha_cliente = mysqli_real_escape_string($conn, $_POST['senha']);
