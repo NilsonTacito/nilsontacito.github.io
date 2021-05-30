@@ -1,3 +1,11 @@
+<?php
+session_start();
+if($_SESSION['cliente_logado'] == true){
+  header('Location: /cliente/pages/mapa.php');
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
@@ -85,7 +93,7 @@
           <h3 class="text-uppercase">Você ainda não<br>é nosso cliente?</h3>
           <p class="text-primary text-uppercase text-box offset-top-15">Cadastre-se!</p>
           <!--RD Mailform          -->
-          <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="POST" action="/home/processa-cad-cliente.php">
+          <form class="rd-form rd-mailform" data-form-type="contact" method="POST" action="/home/processa-cad-cliente.php">
             <div class="form-wrap">                                               
               <input name="nome" class="form-input" id="contact-name" type="text" data-constraints="@Required">
               <label class="form-label" for="contact-name">Nome</label>

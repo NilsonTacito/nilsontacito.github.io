@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start();;
 include('conexao.php');
 $login_cliente = mysqli_real_escape_string($conn, $_POST['email']);
 $senha_cliente = mysqli_real_escape_string($conn, $_POST['senha']);
@@ -21,6 +21,6 @@ if($result_cliente != null){
         echo("Dados incorretos");//aprender a 'popar' dados na tela, javascript
         header('Location: /index.php');
         exit();
-        }
+    }
 }
 ?>

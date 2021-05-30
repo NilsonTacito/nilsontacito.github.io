@@ -3,10 +3,9 @@ Página de cadastro do estacionamento, para a qual o usuário será direcionado 
 Obs: nossa documentação informa que estes cadastros informados acima devem ser aprovados pelo administrador isto ainda não foi implementado 
 -->
 <?php
-include("conexao.php");
-include("processa-sessao-cliente.php");
-include("processa-consultar-cliente.php");
-include("processa-reservar-vaga.php");
+include('conexao.php');
+include('processa-sessao-cliente.php');
+include('backend-reservar-vaga.php');
 
 /*
 if (isset($_COOKIE["id-do-estac"])){
@@ -113,7 +112,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Faça sua reserva <?php echo $ck; ?> </h5>
+                <h5 class="title">Faça sua reserva <?php echo $nome_cliente; ?> </h5>
               </div>
               <div class="card-body">
               <?php
@@ -165,13 +164,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-2 pl-1">
                       <div class="form-group"><!-- estes dados estarão no banco "definitivo" -->
                         <label>Horário de abertura</label>
-                        <br>07:00<br>
+                        <br><?php echo ($ret_estac_expd_ini . "h"); ?><br>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Horário de encerramento</label>
-                        <br>19:00<br>
+                        <br><?php echo ($ret_estac_expd_fim . "h"); ?><br>
                       </div>
                     </div>
                   </div>
@@ -180,13 +179,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Preço por hora (carros)</label>
-                        <br><?php //echo ($ph_estac_reserva['vg_carro']."$"); ?>
+                        <br><?php echo ($ret_mvg_hr_carro ."$"); ?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Preço por hora (motos)</label>
-                        <?php //echo ($ph_estac_reserva['vg_moto']."$"); ?>
+                        <?php echo ($ret_mvg_hr_moto ."$"); ?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -202,13 +201,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Diária (carros)</label>
-                        <br><?php //echo ($ph_estac_reserva['vg_moto']."$"); ?><br>
+                        <br><?php echo ($ret_mvg_dia_carro ."$"); ?><br>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Diária (motos)</label>
-                        <br><?php //echo ($ph_estac_reserva['vg_carro']."$"); ?><br>
+                        <br><?php echo ($ret_mvg_dia_moto ."$"); ?><br>
                       </div>
                     </div>  
                 </div>
@@ -236,7 +235,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <!-- query dos veículos -->
                     <?php
                     $fk_cliente = $ret_pk_cliente;                    
-                    $query_veiculos = "SELECT placa, tipoveiculo, modelo, fabricante, cor, ano  FROM veiculo WHERE gambiarra = '$fk_cliente';";
+                    $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '$fk_cliente';";
                     $res_veiculos = mysqli_query($conn, $query_veiculos); 
                     while ($dados_veiculos = mysqli_fetch_array($res_veiculos, MYSQLI_ASSOC)) {
                     ?>
