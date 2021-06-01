@@ -5,9 +5,10 @@ Esta tela será editada para demonstrar as reservas já efetuadas pelos usuário
 Poderá demonstrar as reservas passadas e as que estão próximas de sua data de utilização.
 -->
 <?php
-include("conexao.php");
-include("processa-sessao-cliente.php");
-include("processa-consultar-reserva.php");
+include('conexao.php');
+include('processa-consultar-cliente.php');
+include('processa-sessao-cliente.php');
+include('processa-consultar-reserva.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,8 +85,35 @@ include("processa-consultar-reserva.php");
               <div class="card-body">
                 <div class="table-responsive">
                   <?php
-                  $query0 = "SELECT documento, telefone, cep, nome FROM cliente WHERE nome = '$busca'";
-                  $resultado0 = mysqli_query($conn, $query0);
+                  /*
+                  query (funcionando!!): 
+                  SELECT estacionamento.estac_nome, estacionamento.estac_endrc, reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa, veiculo.vei_tipo
+                  FROM ((reserva
+                  INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
+                  INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) WHERE reserva.fk_rsv_estac_id ='1' AND reserva.fk_rsv_vei_placa = 'LIC5886';
+
+                  Pendências da query: contar quantidade de veículos (select count) e lidar com a quantidade de veículos  
+                  criar campo status na "reserva?" status= em andamento, cancelada, concluída                 
+                  */
+                  
+                  //SELECT COUNT(*) vei_placa FROM veiculo WHERE fk_clt_doc = '14225801721'; ... fazer um array com as placas? verificar repetição pelo id da reserva?
+                  $query_get_placa="SELECT vei_placa FROM veiculo WHERE fk_clt_doc ='{$ret_doc_cliente}';";
+                  $res_get_placa = mysqli_query($conn, $query_get_placa);
+
+                  if (!empty($res_get_placa)){ 
+                  while ($ret_get_placa = mysqli_fetch_array($res_get_placa,MYSQLI_ASSOC)){
+                  //$placa_braba = $ret_get_placa[0];
+                  if(!empty($ret_get_placa)){
+                    $vei_placa = $ret_get_placa['vei_placa'];
+                  }
+                  $query_futuras_rsv = " SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa, veiculo.vei_tipo
+                  FROM ((reserva
+                  INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
+                  INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) WHERE reserva.fk_rsv_estac_id ='{$cookie_id_estac}' AND reserva.fk_rsv_vei_placa = '{$vei_placa}';";
+                  
+                  $res_futuras_rsv = mysqli_query($conn, $query_futuras_rsv);
+                  //$query0 = "SELECT documento, telefone, cep, nome FROM cliente WHERE nome = '$busca'";
+                  //$resultado0 = mysqli_query($conn, $query0);
                   ?>
                   <table class="table"><!-- Alterar para informar que não há dados caso nenhuma reserva tenha sido feita antes --> 
                     <thead class=" text-primary">
@@ -103,22 +131,30 @@ include("processa-consultar-reserva.php");
                       </th>
                     </thead>
                     <tbody>
-                    <?php while ($testedado = mysqli_fetch_array($resultado0)) {?> <!--  meu erro estava sendo usar $conn->fetch_array() sem parâmetro -->
+                    <?php
+                    if(!empty($res_futuras_rsv)){                   
+                    while ($fut_res_campo = mysqli_fetch_array($res_futuras_rsv,MYSQLI_ASSOC)) {
+                    $dadox0 = $fut_res_campo['estac_nome'];
+                    $dadox1 = $fut_res_campo['estac_endrc'];
+                    $dadox2 = $fut_res_campo['estac_cep'];
+                    $dadox3 = $fut_res_campo['fk_rsv_vei_placa'];
+                    $dadox4 = $fut_res_campo['res_data'];
+                    ?> <!--  meu erro estava sendo usar $conn->fetch_array() sem parâmetro -->
                       <tr>
                         <td>
-                          <?php echo $testedado['documento']; ?>
+                          <?php print_r($dadox0); ?>
                         </td>
                         <td>
-                          <?php echo $testedado['telefone']; ?>
+                          <?php echo $dadox1; ?>
                         </td>
                         <td>
-                          <?php echo $testedado['cep']; ?>
+                          <?php echo $dadox2; ?>
                         </td>
                         <td class="text-right">
-                          <?php echo $testedado['nome']; ?>
+                          <?php print_r ($dadox4); ?>
                         </td>
                       </tr>
-                      <?php break;} ?>
+                      <?php } } } }?>
                       <!-- verificar o uso do break --> 
                       <!--
                       <tr>
@@ -137,6 +173,7 @@ include("processa-consultar-reserva.php");
                       </tr>
                       -->
                     </tbody>
+                    <?php var_dump($vei_placa, $res_futuras_rsv, $fut_res_campo);?>
                   </table>
                 </div>
               </div>
@@ -151,6 +188,23 @@ include("processa-consultar-reserva.php");
               <div class="card-body">
                 <div class="table-responsive">
                 <?php
+                  /*
+                  dados necessários: Estacionamento 	Vagas 	Período 	Custo 
+
+                  SELECT estacionamento.estac_nome, reserva.rsv_id, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt, reserva.rsv_preco       
+                  FROM estacionamento, reserva WHERE reserva.fk_rsv_estac_id = estacionamento.estac_id AND reserva.rsv_chkin = reserva.rsv_chkout -- ambos "Realizado"
+                  
+                  se check-in e check-out = realizado, a reserva é passada... os outros valores seriam 
+                  como chegar à quantidade de veículos na reserva?
+                  
+                  não sei preciso fazer uma página específica da reserva passada, isso parece atender.
+                  talvez precise pra futura...
+
+                  SELECT estacionamento.estac_nome, reserva.rsv_id, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt, reserva.rsv_preco
+                  FROM ((mov_vagas
+                  INNER JOIN estacionamento ON mov_vagas.mvg_id = estacionamento.estac_id)
+                  INNER JOIN reserva ON mov_vagas.mvg_id = reserva.rsv_id);
+                  */
                   $query1 = "SELECT nome_estac_cons, id_vaga_cons, h_ent_cons, check_in_cons FROM testcons";
                   $resultado1 = mysqli_query($conn, $query1);
                   ?>

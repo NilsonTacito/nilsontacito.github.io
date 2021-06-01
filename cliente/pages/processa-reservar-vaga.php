@@ -1,27 +1,35 @@
 <?php
 //processamento do form de compra e/ou reserva de vagas (página reservar-vaga.php)
+
 include('conexao.php');
 include('processa-sessao-cliente.php');
 /*reserva:
-get data by form;
-get placa (by email);//get placa no form, se possível... ou pega e põe numa var //fazer isso em reservar-vaga.php
+//a data será obtida através do formulário;
+//a placa também, ou será obtida buscando no banco (usando o email que está na sessão);
+//ou obter placa através do formulário, talvez... colocar em variável na página reservar-vaga.php e mandar na hora do submit
+
+
+/daqui pra baixo, Júlio
+
+//reservar vaga
 $query_res = "INSERT INTO reserva (rsv_data, fk_rsv_vei_placa, fk_mvg_estac_id) VALUES ('{$var_data}','{$var_placa}','{$cookie_id_estac}');
-//acima, insert ok (reserva feita!)
+//os demais dados são default ou será informados posteriormente... reserva ok!
 
-
-//retorna valores das tables, subtrair do total a quantidade de ocupadas
+//obter quantidade de vagas atuais subtraindo vagas ocupadas (mov_vagas.mvg_ocp_carro) do total (estacionamento.estac_vg_carro)
 SELECT estac_vg_carro FROM estacionamento WHERE estac_id ='{$cookie_id_estac}';
 SELECT mvg_ocp_carro FROM mov_vagas WHERE mvg_id ='{$cookie_id_estac}';
 
-//fazer update do valor da subtração na table mov_vagas (atualizar vagas ocupadas)
+//como realizar este cálculo no banco?
+
+//isso aparentemente funciona (retorna dados null como número 0)
+SELECT COALESCE(CASE WHEN ISNULL (mvg_ocp_carro) THEN 0 ELSE mvg_ocp_carro END) AS mvg_ocp_carro_null_0, COALESCE(CASE WHEN ISNULL (mvg_ocp_moto) THEN 0 ELSE mvg_ocp_moto END) AS mvg_ocp_moto_null_0 FROM mov_vagas WHERE fk_mvg_estac_id = '1';
+//subtrair: estac_vg_carro - mvg_ocp_carro
+
+//por fim, fazer update do valor da subtração na table mov_vagas (atualizar vagas ocupadas)
 UPDATE mov_vagas SET mvg_ocp_carro ='valor_subtracao' WHERE fk_mvg_estac_id = '{$cookie_id_estac}';
 
-null como zero
-SELECT COALESCE(CASE WHEN ISNULL mvg_ocp_carro) THEN 0 ELSE mvg_ocp_carro END) AS ttl_carro, COALESCE(CASE WHEN ISNULL (mvg_ocp__moto) THEN 0 ELSE mvg_ocp_moto END) AS ttl_moto FROM mov_vagas WHERE estac_id = '1';
-SELECT COALESCE(CASE WHEN ISNULL (estac_vg_moto) THEN 0 ELSE estac_vg_moto END) AS ttl_moto FROM estacionamento WHERE estac_id = '1'
+//no fim, informar: reserva realizada com sucesso!
 
-isso funciona
-SELECT COALESCE(CASE WHEN ISNULL (mvg_ocp_carro) THEN 0 ELSE mvg_ocp_carro END) AS ttl_carro, COALESCE(CASE WHEN ISNULL (mvg_ocp_moto) THEN 0 ELSE mvg_ocp_moto END) AS ttl_moto FROM mov_vagas WHERE fk_mvg_estac_id = '1';
 
 
 */

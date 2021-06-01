@@ -157,21 +157,17 @@ include("processa-consultar-cliente.php");
                 <br>
                   <h5 class="title">Veículos</h5>
                     <?php
-                    $fk_cliente = $id_cliente;
-                    //echo("<a> fk_cliente = " . $fk_cliente . " </a>");                    
-                    $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '{$fk_cliente}';";
+                    $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '{$ret_doc_cliente}';";
                     $res_veiculos = mysqli_query($conn, $query_veiculos);
-                    $get_dados_veiculo = mysqli_fetch_array($res_veiculos, MYSQLI_ASSOC);
-                    $placa_veiculo = $get_dados_veiculo['vei_placa']; 
-                    if($placa_veiculo != NULL){
-                    while ($dados_veiculos = mysqli_fetch_array($res_veiculos, MYSQLI_ASSOC)) {
+                    if($res_veiculos != null){
+                    while ($dados_veiculos = mysqli_fetch_array($res_veiculos,MYSQLI_ASSOC)) {
                     ?>  
                 <form >
                 <div class="row"><!--corrigir botões de submit e alterar para mostrar form com placeholders caso não haja veículos cadastrados-->
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Placa</label>
-                        <br> <?php echo $dados_veiculos['vei_placa']; ?>
+                        <br> <?php print_r($dados_veiculos['vei_placa']); ?>
                       </div>
                     </div>
                     <div class="col-md-6 pr-1">
@@ -209,12 +205,13 @@ include("processa-consultar-cliente.php");
                       </div>
                     </div>
                   </div>
-                  <div class="offset-top-25"> 
+                  <div class="offset-top-25"> <!-- não implantado ainda -->
                     <button class="button button-block button-primary" type="submit">Editar Veículo</button>
                   </div><!-- testar "editar" dentro do while (com mais de 1 veículo) -->
                   <br>
-                  <?php } } else {
+                  <?php } } if ($res_veiculos == null) {
                     echo("<a>Você ainda não cadastrou nenhum veículo. </a>");
+                    var_dump($res_veiculos);
                   } ?>
                 </form>
                 <form method="POST" action="cadastrar-veiculo.php">

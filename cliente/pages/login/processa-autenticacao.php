@@ -9,7 +9,7 @@ $rows_cliente = mysqli_num_rows($result_cliente);
 
 if($result_cliente != null){
     $ret_cliente = $result_cliente->fetch_array(MYSQLI_ASSOC);
-    $retNome_cliente = $ret_cliente['nome'];
+    $retNome_cliente = $ret_cliente['clt_nome'];
 
     if($rows_cliente == 1) {
         $_SESSION['cliente_logado']= true;

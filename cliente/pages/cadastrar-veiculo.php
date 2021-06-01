@@ -5,7 +5,6 @@ O usuário é direcionado à mesma após o cadastro na landing page
 <?php
 //include('conexao.php');
 include('processa-sessao-cliente.php');
-include('processa-consultar-cliente.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

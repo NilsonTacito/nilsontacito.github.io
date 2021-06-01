@@ -6,6 +6,10 @@ Obs: nossa documentação informa que estes cadastros informados acima devem ser
 include('conexao.php');
 include('processa-sessao-cliente.php');
 include('backend-reservar-vaga.php');
+//$cookie_id_estac isset in the seesion
+
+//preciso do clt_doc pra chegar nos carros
+
 
 /*
 if (isset($_COOKIE["id-do-estac"])){
@@ -234,8 +238,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     </div>                 
                     <!-- query dos veículos -->
                     <?php
-                    $fk_cliente = $ret_pk_cliente;                    
-                    $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '$fk_cliente';";
+                    //preciso do clt_doc
+                    $query_id_clt = "SELECT clt_doc FROM cliente WHERE clt_email = '{$login_cliente}'; ";
+                    $res_id_clt = mysqli_query($conn, $query_id_clt);
+                    $ret_id_clt = mysqli_fetch_array($res_id_clt, MYSQLI_ASSOC);
+                    $ret_id_clt_doc = strval($ret_id_clt['clt_doc']);
+               
+                    $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '{$ret_id_clt_doc}';";
                     $res_veiculos = mysqli_query($conn, $query_veiculos); 
                     while ($dados_veiculos = mysqli_fetch_array($res_veiculos, MYSQLI_ASSOC)) {
                     ?>
@@ -248,16 +257,16 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                   <div class="row">
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
-                        <label>Veículo <?php echo ("(" . $dados_veiculos['tipoveiculo'] . ")");?> </label>
-                        <br><?php echo ($dados_veiculos['fabricante'] ." ". $dados_veiculos['modelo']); ?>
-                        <br><?php echo ("Placa: " . $dados_veiculos['placa'] ."<br> Ano: " . $dados_veiculos['ano'] ); ?>
+                        <label>Veículo <?php echo ("(" . $dados_veiculos['vei_tipo'] . ")");?> </label>
+                        <br><?php echo ($dados_veiculos['vei_fabricante'] ." ". $dados_veiculos['vei_modelo']); ?>
+                        <br><?php echo ("Placa: " . $dados_veiculos['vei_placa'] ."<br> Ano: " . $dados_veiculos['vei_ano'] ); ?>
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                     <tr>
                         <td>
                           <div class="form-check pl-1">
-                            <label class="form-check-label">Reservar vaga para este veículo<br>Taxa de reserva: <?php echo($tx_reserva . "$"); ?>
+                            <label class="form-check-label">Reservar vaga para este veículo<br>Taxa de reserva: <?php echo($ret_mvg_tx_reserva . "$"); ?>
                               <input class="form-check-input" type="checkbox">
                               <span class="form-check-sign"></span>
                             </label>

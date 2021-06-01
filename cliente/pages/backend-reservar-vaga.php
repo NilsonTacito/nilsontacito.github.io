@@ -3,6 +3,7 @@
 include("conexao.php");
 include("processa-sessao-cliente.php");
 
+
 //a taxa da reserva foi incluída na tabela "mov_vagas" e será removida da tabela "reserva"
 
 //consultar dados do estacionamento (e mov_vagas)
