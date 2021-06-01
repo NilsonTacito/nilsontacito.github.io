@@ -1,5 +1,6 @@
 <?php
-require("conexao.php");
+require('conexao.php');
+include('proc-sessao-gestor.php');
 
 function parseToXML($htmlStr){
 	$xmlStr=str_replace('<','&lt;',$htmlStr);
@@ -10,6 +11,21 @@ function parseToXML($htmlStr){
 	return $xmlStr;
 }
 
+/*
+retornar cnpj
+$query_get_cnpj = SELECT gst_cnpj FROM gestor WHERE gst_email = '{$lg_gestor}';
+$res_get_cnpj = mysqli_query($conn, $query_get_cnpj);
+if ($res_get_cnpj != null){
+  $ret_get_cnpj = mysqli_fetch_array($res_get_cnpj, MYSQLI_ASSOC);
+  $cnpj = $ret_get_cnpj['gst_cnpj'];
+}
+
+esboço da query do xml
+SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_lat, estacionamento.estac_long, estacionamento.estac_vg_carro, estacionamento.estac_vg_moto
+mov_vagas.mvg_id, mov_vagas.mvg_ocp_carro 
+mov_vagas.fk_mvg_estac_id = estacionamento.fk_gst_cnpj = $cnpj
+
+*/
 // Select all the rows in the markers table
 $result_markers = "SELECT * FROM markers";
 $resultado_markers = mysqli_query($conn, $result_markers);
