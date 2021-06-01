@@ -34,11 +34,10 @@
                 $_SESSION['cliente_nome'] = $nome1;//a consulta ao banco pra retornar o nome funcionou no teste
                 $_SESSION['cliente_email'] = $email_cliente;
                 if ($nome1 == $_SESSION['cliente_nome']){
-                    echo "<a> Loguei </a>";
                     header('Location: /cliente/pages/cadastrar-veiculo.php');
                     exit();
                 }else{
-                    header('/index.php');
+                    header('/cliente/pages/login/index.html');
                     exit();
                 }
 

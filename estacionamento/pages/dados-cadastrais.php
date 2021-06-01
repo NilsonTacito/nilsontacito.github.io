@@ -99,7 +99,7 @@ include("proc-consulta-gestor.php");
                 <h5 class="title">Dados Cadastrais</h5>
               </div>
               <div class="card-body">
-                <form action="dados-cadastrais2.php" method="POST">
+                <form action="alterar-cadastro.php" method="POST">
                  <div class="row"><!--tem que fazero botão de submit lá embaixo -->
                     <div class="col-md-6 pr-1">
                       <div class="form-group">

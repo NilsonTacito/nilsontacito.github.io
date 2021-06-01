@@ -3,7 +3,7 @@ Páigina de testes, para criação do front end de gestão de vagas
 -->
 <?php
 include("proc-sessao-gestor.php");
-include("proc-cons-geral-estacionamento.php");
+//include("proc-cons-geral-estacionamento.php"); ver isso
 //em teste, funcionou melhor com as variáveis declaras na página
 $busca = $pk_gestor;//cnoj gestor
 $count_estac = strval($prs_count_estac); //contagem de estacionamentos
