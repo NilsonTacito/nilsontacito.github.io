@@ -1,6 +1,6 @@
 <?php
     include('conexao.php');
-    include('processa-sessa-cliente.php');
+    include('processa-sessao-cliente.php');
     //incluir processa-consultar-cliente.php ?
 
     $campo_tipo = $_POST['tipo_veiculo'];

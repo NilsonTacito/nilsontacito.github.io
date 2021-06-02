@@ -162,15 +162,15 @@ include("processa-consultar-cliente.php");
                     if($res_veiculos != null){
                     while ($dados_veiculos = mysqli_fetch_array($res_veiculos,MYSQLI_ASSOC)) {
                     ?>  
-                <form >
+                <form method="POST" action="alterar-veiculo.php"> <!-- não implantado ainda -->
                 <div class="row"><!--corrigir botões de submit e alterar para mostrar form com placeholders caso não haja veículos cadastrados-->
-                    <div class="col-md-6 pr-1">
+                    <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label>Placa</label>
                         <br> <?php print_r($dados_veiculos['vei_placa']); ?>
                       </div>
                     </div>
-                    <div class="col-md-6 pr-1">
+                    <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>Tipo</label>
                         <br><?php echo $dados_veiculos['vei_tipo']; ?>
@@ -178,13 +178,13 @@ include("processa-consultar-cliente.php");
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6 pr-1">
+                    <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label>Modelo</label>
                         <br> <?php echo $dados_veiculos['vei_modelo']; ?>
                       </div>
                     </div>
-                    <div class="col-md-6 pr-1">
+                    <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>Fabricante</label>
                         <br><?php echo $dados_veiculos['vei_fabricante']; ?>
@@ -192,13 +192,13 @@ include("processa-consultar-cliente.php");
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6 pr-1">
+                    <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label>Cor</label>
                         <br><?php echo $dados_veiculos['vei_cor']; ?>
                       </div>
                     </div>
-                    <div class="col-md-6 pr-1">
+                    <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>Ano</label>
                         <br><?php echo $dados_veiculos['vei_ano']; ?>

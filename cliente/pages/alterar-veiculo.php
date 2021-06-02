@@ -1,24 +1,20 @@
 <!--
-Página de edição dos dados cadastrais
-esta página deve:
-- abrir realizando uma consulta no banco e mostrar os dados atuais do usuário
-- permitir sua edição limpando os campos e permitindo submit ou redirecionando para páginas que realizem esta tarefa
+Página de cadastro de veículo
+O usuário é direcionado à mesma após o cadastro na landing page 
 -->
 <?php
-include("conexao.php");
-include("processa-sessao-cliente.php");
-include("processa-consultar-cliente.php");
+//include('conexao.php');
+include('processa-sessao-cliente.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    ParkingBr - Editar Dados Cadastrais
+    ParkingBr - Cadastre Seu Veículo
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -30,24 +26,23 @@ include("processa-consultar-cliente.php");
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
-
 <body class="user-profile">
   <div class="wrapper ">
     <div class="sidebar" data-color="orange">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
-      <div class="logo">
-        <div class="simple-text logo-normal" style="padding-left: 14px;"><!-- 168x40 original -->
+    <div class="logo">
+        <div class="simple-text logo-normal" style="padding-left: 14px;"><!-- 168x40 original -->      
           <img src="/home/images/logox-wt.png" alt="" width="126" height="30"/>
         </div>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-        <li class="active ">
+          <li class="active">
             <a href="./consultar-cadastro.php">
               <i class="now-ui-icons users_single-02"></i>
-              <p>Editar Perfil</p>
+              <p>Cadastrar Veículo</p>
             </a>
           </li>
           <li>
@@ -58,7 +53,7 @@ include("processa-consultar-cliente.php");
           </li>
           <li>
             <a href="./consultar-reservas.php">
-              <i class="now-ui-icons ui-1_calendar-60"></i>
+            <i class="now-ui-icons ui-1_calendar-60"></i>
               <p>Consultar Reservas</p>
             </a>
           </li>
@@ -83,82 +78,76 @@ include("processa-consultar-cliente.php");
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Dados Cadastrais</a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
+            <a class="navbar-brand" href="#pablo">Cadastro De Veículos</a>
+          </div>          
         </div>
       </nav>
-      <!-- End Navbar -->
+      <!-- End Navbar --><!--aqui começa a parte das consultas pra mostrar os dados ou cadastrar o veículo -->
       <div class="panel-header panel-header-sm">
       </div>
       <div class="content">
-
         <div class="row">
           <div class="col-md-8">
             <div class="card">
-              <div class="card-header">
-                <h5 class="title">Dados Cadastrais</h5>
-              </div>
-              <div class="card-body"> <!-- teste de retorno de dados do banco realizado com sucesso -->
-                <form method="POST" action="processa-alt-cadastro.php">
+              <div class="card-header"><!-- retornar placa-->
+                <h5 class="title"> Atualizar dados do veículo de placa <?php echo ("teste: ". $nome_cliente);?> </h5>
+              </div><!--Placa, Tipo, Modelo, Fabricante, Cor, Ano  -->
+              <div class="card-body">
+                <form method="POST" action="processa-cad-veiculo.php">
+                  <!--Abaixo, o campo do tipo do veículo -->
                   <div class="row">
-                    <div class="col-md-5 pr-1">
+                    <div class="col-md-6 pr-1">
                       <div class="form-group">
-                        <label>Documento (CPF/CNPJ)</label>
-                        <input type="text" class="form-control" disabled="" placeholder="<?php echo $ret_doc_cliente; ?>">
+                        <label>Tipo</label>
+                        <input name="tipo_veiculo" type="text" class="form-control" placeholder="carro ou moto" >
                       </div>
                     </div>
-                    <div class="col-md-4 pl-1">
+                    <div class="col-md-6 pr-1">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Email</label>
-                        <input type="email" class="form-control" disabled="" placeholder="<?php echo $ret_email_cliente ?>">
+                        <label>Placa</label>
+                        <input name="placa_veiculo" type="text" class="form-control" placeholder="ABC-1234">
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
-                        <label>Nome</label>
-                        <input type="text" class="form-control" name="nome-cliente" placeholder="<?php echo $ret_nome_cliente; ?>">
+                        <label>Modelo</label>
+                        <input name="modelo_veiculo" type="text" class="form-control" placeholder="Civic XLS, Golf GTI, etc...">
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
-                        <label>Sobrenome</label>
-                        <input type="text" class="form-control" name="sbnome-cliente" placeholder="<?php echo $ret_sbnome_cliente; ?>"">
+                        <label>Fabricante</label>
+                        <input name="fabricante_veiculo" type="text" class="form-control" placeholder="Ford, Mercedes Benz, BMW, etc...">
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                        <label>Cor</label>
+                        <input name="cor_veiculo" type="text" class="form-control" placeholder="Cinza Carra, Azul Platinum, etc...">
+                      </div>
+                    </div>
+                    <div class="col-md-6 pl-1">
+                      <div class="form-group">
+                        <label>Ano</label>
+                        <input name="ano_veiculo" type="text" class="form-control" placeholder="1997">
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="offset-top-25"><!-- tirado do Arma, melhorar -->
+                    <button class="button button-block button-primary" type="submit">Concluir cadastro</button>
+                  </div>                                 
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label>Endereço</label>
-                        <input type="text" class="form-control" name="endrc-cliente" placeholder="<?php echo $ret_endrc_cliente; ?>">
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-4 pr-1">
-                      <div class="form-group">
-                        <label>Telefone</label>
-                        <input type="text" class="form-control" name="tel-cliente" placeholder="<?php echo $ret_tel_cliente; ?>">
-                      </div>
-                    </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>CEP</label>
-                        <input type="text" class="form-control" name="cep-cliente" placeholder="<?php echo $ret_cep_cliente; ?>">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="offset-top-25"><!-- tirado do Arma, melhorar -->
-                    <button class="button button-block button-primary" type="submit">Alterar Cadastro</button>
-                  </div>                    
-                </form>                  
+                  </div>                  
+                </form>
               </div>
             </div>
           </div>

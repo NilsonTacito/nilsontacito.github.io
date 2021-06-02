@@ -119,12 +119,6 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 <h5 class="title">Faça sua reserva <?php echo $nome_cliente; ?> </h5>
               </div>
               <div class="card-body">
-              <?php
-              /*$query_estac_reserva = "SELECT name, address, vg_carro, vg_moto FROM markers WHERE id = '{$ck}';";
-              $res_estac_reserva = mysqli_query($conn, $query_estac_reserva);*/
-              //$cons_reserva = $ret_cons_reserva;
-              //while ($campos_reserva = mysqli_fetch_array($cons_reserva, MYSQLI_ASSOC)) {
-              ?>
               <form method="POST" action="processa-reservar-vaga.php">
                 <div class="row">
                     <div class="col-md-8 pr-1">
