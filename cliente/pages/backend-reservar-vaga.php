@@ -15,8 +15,8 @@ while ($ret_cons_reserva = mysqli_fetch_array($res_cons_reserva, MYSQLI_BOTH)){
     $ret_estac_nome = $ret_cons_reserva['estac_nome'];
     $ret_estac_endrc = $ret_cons_reserva['estac_endrc'];
     $ret_estac_cep = $ret_cons_reserva['estac_cep'];
-    $ret_estac_capac_carro = $ret_cons_reserva['estac_vg_carro'];
-    $ret_estac_capac_moto = $ret_cons_reserva['estac_vg_moto'];
+    $ret_estac_capac_carro = intval($ret_cons_reserva['estac_vg_carro']);
+    $ret_estac_capac_moto = intval($ret_cons_reserva['estac_vg_moto']);
     $ret_estac_expd_ini = $ret_cons_reserva['estac_expd_ini'];
     $ret_estac_expd_fim = $ret_cons_reserva['estac_expd_fim'];
     $ret_mvg_id = $ret_cons_reserva['mvg_id'];
@@ -33,21 +33,21 @@ while ($ret_cons_reserva = mysqli_fetch_array($res_cons_reserva, MYSQLI_BOTH)){
 //calcular e atualizar vagas disponíveis
 //if (isset($ret_mvg_ocp_carro) and isset($ret_mvg_ocp_moto)){
 
-$vagas_disp_carro = (intval($ret_estac_capac_carro) - intval($ret_mvg_ocp_carro));
-$vagas_disp_moto = (intval($ret_estac_capac_moto) - intval($ret_mvg_ocp_moto));
+$vagas_disp_carro = ($ret_estac_capac_carro - $ret_mvg_ocp_carro);
+$vagas_disp_moto = ($ret_estac_capac_moto - $ret_mvg_ocp_moto);
 
 $query_update_vagas_disp = "UPDATE mov_vagas SET mvg_ocp_carro='{$vagas_disp_carro}', mvg_ocp_moto='{$vagas_disp_moto}' WHERE mvg_id = '{$ret_mvg_id}';";
 $res_update_vagas_disp = mysqli_query($conn, $query_update_vagas_disp);
 
-$query_disp_vagas ="SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE mvg_id = '{$ret_mvg_id}';";
+/*$query_disp_vagas ="SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE mvg_id = '{$ret_mvg_id}';";
 $res_disp_vagas = mysqli_query($conn, $query_disp_vagas);
 while ($ret_disp_vagas = mysqli_fetch_array($res_disp_vagas, MYSQLI_NUM)){
     $disp_carro = $ret_disp_vagas['mvg_ocp_carro'];
     $disp_moto = $ret_disp_vagas['mvg_ocp_moto'];
-}
+}*/
 //}//else
 //}//else
 
-echo( "<a> ret_tx: ". $ret_mvg_tx_reserva .  " / vagas_disp_carro: " . $vagas_disp_carro . " / vagas_disp_moto: " . $vagas_disp_moto . " / disp_carro: " . $disp_carro . " / disp_moto: " . $disp_moto . "</a>");
+//echo( "<a> ret_tx: ". $ret_mvg_tx_reserva .  " / vagas_disp_carro: " . $vagas_disp_carro . " / vagas_disp_moto: " . $vagas_disp_moto . " / disp_carro: " . $disp_carro . " / disp_moto: " . $disp_moto . "</a>");
 
 ?>

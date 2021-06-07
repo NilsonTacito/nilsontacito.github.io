@@ -3,13 +3,30 @@
 
 include('conexao.php');
 include('processa-sessao-cliente.php');
+include('reservar-vaga.php');
+
+if(isset($array[$contador])){
+    $quant = 0;
+    if($contador > $contadorOutput){
+        for ($cont0 = $contador; $cont0 <= 0; $cont0--){
+            $array_x[$quant] = $array[$contadorOutput];
+            //testes abaixo
+            $x = strval($array[$contador]); 
+            $y = strval($array[$contadorOutput]);
+            echo ($x . " - " . $y);
+            $quant++;
+            //array de placas
+            //através das placas, saber o tipo das vagas
+        }
+    }
+}
+
+
 /*reserva:
 //a data será obtida através do formulário;
 //a placa também, ou será obtida buscando no banco (usando o email que está na sessão);
 //ou obter placa através do formulário, talvez... colocar em variável na página reservar-vaga.php e mandar na hora do submit
 
-
-/daqui pra baixo, Júlio
 
 //reservar vaga
 $query_res = "INSERT INTO reserva (rsv_data, fk_rsv_vei_placa, fk_mvg_estac_id) VALUES ('{$var_data}','{$var_placa}','{$cookie_id_estac}');

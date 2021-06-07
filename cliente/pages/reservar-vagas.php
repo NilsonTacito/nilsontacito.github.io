@@ -146,6 +146,17 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                   <div class="row">
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
+                      <?php
+
+                      $query_disp_vagas = "SELECT COALESCE(CASE WHEN ISNULL (mvg_ocp_carro) THEN 0 ELSE mvg_ocp_carro END) AS mvg_ocp_carro_null_0, COALESCE(CASE WHEN ISNULL (mvg_ocp_moto) THEN 0 ELSE mvg_ocp_moto END) AS mvg_ocp_moto_null_0 FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
+                      //"SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE mvg_id = '{$ret_mvg_id}';";
+                      $res_disp_vagas = mysqli_query($conn, $query_disp_vagas);
+                      while ($ret_disp_vagas = mysqli_fetch_array($res_disp_vagas, MYSQLI_BOTH)){
+                          $disp_carro = $ret_disp_vagas['mvg_ocp_carro_null_0'];
+                          $disp_moto = $ret_disp_vagas['mvg_ocp_moto_null_0'];
+                          break;
+                      }    
+                      ?>
                         <label>Vagas dispoíveis (carros)</label>
                         <br><?php echo $disp_carro; ?><br>
                       </div>
@@ -232,15 +243,24 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     </div>                 
                     <!-- query dos veículos -->
                     <?php
-                    //preciso do clt_doc
+                    //get clt_doc
                     $query_id_clt = "SELECT clt_doc FROM cliente WHERE clt_email = '{$login_cliente}'; ";
                     $res_id_clt = mysqli_query($conn, $query_id_clt);
                     $ret_id_clt = mysqli_fetch_array($res_id_clt, MYSQLI_ASSOC);
                     $ret_id_clt_doc = strval($ret_id_clt['clt_doc']);
-               
+
                     $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '{$ret_id_clt_doc}';";
-                    $res_veiculos = mysqli_query($conn, $query_veiculos); 
+                    $res_veiculos = mysqli_query($conn, $query_veiculos);
+                    $contador= 0;
+                    $array[$contador] = "ok"; 
                     while ($dados_veiculos = mysqli_fetch_array($res_veiculos, MYSQLI_ASSOC)) {
+                      if(isset($array[$contador])){
+                        $contadorOutput = $contador;
+                        $array[$contador] = $dados_veiculos['vei_placa'];
+                        $contador++;
+                        //$_SESSION['placa-sessao'] = true;
+                      } //como eu mando isso no insert?
+                        //preciso mandar isso num post ou fazer include, mandar via POST pra outra página, form action value
                     ?>
                   </div>
                   <div class="row">
@@ -250,10 +270,10 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                   </div>              
                   <div class="row">
                     <div class="col-md-8 pr-1">
-                      <div class="form-group">
-                        <label>Veículo <?php echo ("(" . $dados_veiculos['vei_tipo'] . ")");?> </label>
+                      <div class="form-group"><!-- botar este form por aqui, precisará da checkbox funcionando (processa-reservar-vaga.php)-->
+                        <label>Veículo <?php echo ("(" . $dados_veiculos['vei_tipo'] . ")");?> </label><!-- decidir se manda ou não aquela placa no insert -->
                         <br><?php echo ($dados_veiculos['vei_fabricante'] ." ". $dados_veiculos['vei_modelo']); ?>
-                        <br><?php echo ("Placa: " . $dados_veiculos['vei_placa'] ."<br> Ano: " . $dados_veiculos['vei_ano'] ); ?>
+                        <br><?php echo ("Placa: " . $dados_veiculos['vei_placa'] ."<br> Ano: " . $dados_veiculos['vei_ano']); ?>
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
@@ -261,7 +281,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                         <td>
                           <div class="form-check pl-1">
                             <label class="form-check-label">Reservar vaga para este veículo<br>Taxa de reserva: <?php echo($ret_mvg_tx_reserva . "$"); ?>
-                              <input class="form-check-input" type="checkbox">
+                              <input class="form-check-input" type="checkbox" name="check-veiculo" value="ok"><!-- preciso saber se isso (essa placa) é carro ou moto e somar com outras placas -->
                               <span class="form-check-sign"></span>
                             </label>
                           </div>
@@ -305,5 +325,4 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
   <script src="../assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
 </body>
-
 </html>
