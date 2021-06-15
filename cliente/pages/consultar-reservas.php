@@ -93,7 +93,8 @@ include('processa-consultar-reserva.php');
                   INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) WHERE reserva.fk_rsv_estac_id ='1' AND reserva.fk_rsv_vei_placa = 'LIC5886';
 
                   Pendências da query: contar quantidade de veículos (select count) e lidar com a quantidade de veículos  
-                  criar campo status na "reserva?" status= em andamento, cancelada, concluída                 
+                  criar campo status na "reserva?" status= em andamento, cancelada, concluída                  
+                  
                   */
                   
                   //SELECT COUNT(*) vei_placa FROM veiculo WHERE fk_clt_doc = '14225801721'; ... fazer um array com as placas? verificar repetição pelo id da reserva?
@@ -133,7 +134,7 @@ include('processa-consultar-reserva.php');
                     <tbody>
                     <?php
                     if(!empty($res_futuras_rsv)){                   
-                    while ($fut_res_campo = mysqli_fetch_array($res_futuras_rsv,MYSQLI_ASSOC)) {
+                    while ($fut_res_campo = mysqli_fetch_array($res_futuras_rsv,MYSQLI_ASSOC)) { 
                     $dadox0 = $fut_res_campo['estac_nome'];
                     $dadox1 = $fut_res_campo['estac_endrc'];
                     $dadox2 = $fut_res_campo['estac_cep'];

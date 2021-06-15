@@ -17,5 +17,5 @@ if ($res_cliente != NULL){
     $ret_cep_cliente = $array_cliente['clt_cep'];
 }
 
-
+//consultar veículos nesse arquivo tbm?
 ?>

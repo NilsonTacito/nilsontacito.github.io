@@ -1,11 +1,29 @@
 <!--
-Página de cadastro do estacionamento, para a qual o usuário será direcionado após cadastrar-se como gestor na home/landing page
-Obs: nossa documentação informa que estes cadastros informados acima devem ser aprovados pelo administrador isto ainda não foi implementado 
+Página de consulta da reserva e criada para realização do check in/check out.
+
+página final da reserva (hora de estacionar):
+
+mostrar na tela:
+rsv_data
+rsv_chkin Não Realizado
+fk_rsv_estac_id (retornar pra mostrar dados do estac)
+fk_rsv_vei_placa (todos veiculos)
+
+realizar check in = estacionar (informar abaixo)
+realizar check out = sair e calcular e mostrar "final page" (botão ok pra pagar)
+
+
+
+
+
+
+
 -->
 <?php
 include('conexao.php');
 include('processa-sessao-cliente.php');
-include('backend-reservar-vaga.php');
+include('backend-checkin-reserva.php');
+include('processa-checkin-reserva.php');
 //$cookie_id_estac isset in the seesion
 
 //preciso do clt_doc pra chegar nos carros
@@ -65,13 +83,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
               <p>Editar Perfil</p>
             </a>
           </li>
-          <li class="active">
+          <li>
             <a href="./mapa.php">
               <i class="now-ui-icons files_paper"></i>
               <p>Reservar Vagas</p>
             </a>
           </li>
-          <li>
+          <li  class="active">
             <a href="./consultar-reservas.php">
               <i class="now-ui-icons ui-1_calendar-60"></i>
               <p>Consultar Reservas</p>
@@ -98,7 +116,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Reservar Vagas</a>
+            <a class="navbar-brand" href="#pablo">Consultar Reservas</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -116,21 +134,31 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Faça sua reserva <?php echo $nome_cliente; ?> </h5>
+                <h5 class="title">Deseja realizar check-in no estacionamento, <?php echo $nome_cliente; ?>? </h5>
+                <?php
+                //gambi: front end da tela de check in
+                $qry_page_get_rsv= "SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, estacionamento.estac_expd_ini, estacionamento.estac_expd_fim, reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa, veiculo.vei_tipo
+                FROM ((reserva
+                INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
+                INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) WHERE reserva.fk_rsv_estac_id ='1' AND reserva.fk_rsv_vei_placa = 'LIC5886';";
+                $res_qry_page_get_rsv = mysqli_query($conn,$qry_page_get_rsv);                
+                //$ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_BOTH);
+                while ($ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_BOTH)) {
+                ?>
               </div>
               <div class="card-body">
-              <form method="POST" action="processa-reservar-vaga.php">
+              <form method="POST" action="processa-checkin-reserva.php"><!-- alterar este form -->
                 <div class="row">
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Estacionamento </label>
-                        <br><?php echo $ret_estac_nome; ?><br>
+                        <br><?php echo strval($ret_qry_page_get_rsv['estac_nome']); ?><br>
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>CEP</label>
-                        <br><?php echo $ret_estac_cep; ?><br>
+                        <br><?php echo strval($ret_qry_page_get_rsv['estac_cep']); ?><br>
                       </div>
                     </div>
                   </div>
@@ -138,7 +166,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Endereço</label>
-                        <br><?php echo $ret_estac_endrc; ?> <br>
+                        <br><?php echo strval($ret_qry_page_get_rsv['estac_endrc']); ?> <br>
                       </div>
                     </div>
                   </div>
@@ -149,22 +177,22 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                       <?php
 
                       //$query_disp_vagas = "SELECT COALESCE(CASE WHEN ISNULL (mvg_ocp_carro) THEN 0 ELSE mvg_ocp_carro END) AS mvg_ocp_carro_null_0, COALESCE(CASE WHEN ISNULL (mvg_ocp_moto) THEN 0 ELSE mvg_ocp_moto END) AS mvg_ocp_moto_null_0 FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
-                      $query_disp_vagas = "SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
+                      /*$query_disp_vagas = "SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
                       $res_disp_vagas = mysqli_query($conn, $query_disp_vagas);
                       while ($ret_disp_vagas = mysqli_fetch_array($res_disp_vagas, MYSQLI_BOTH)){
                           $disp_carro = $ret_disp_vagas['mvg_ocp_carro'];
                           $disp_moto = $ret_disp_vagas['mvg_ocp_moto'];
                           break;
-                      }    
+                      }*/    
                       ?>
-                        <label>Vagas dispoíveis (carros)</label>
-                        <br><?php echo $disp_carro; ?><br>
+                        <label>Data da Reserva</label>
+                        <br><?php echo strval($ret_qry_page_get_rsv['rsv_data']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
-                        <label>Vagas disponíveis (motos)</label>
-                        <br><?php echo $disp_moto; ?><br>
+                        <label>Horário da reserva: </label>
+                        <br><?php echo strval($ret_qry_page_get_rsv['rsv_data']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -173,77 +201,25 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-2 pl-1">
                       <div class="form-group"><!-- estes dados estarão no banco "definitivo" -->
                         <label>Horário de abertura</label>
-                        <br><?php echo ($ret_estac_expd_ini . "h"); ?><br>
+                        <br><?php echo strval($ret_qry_page_get_rsv['estac_expd_ini']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Horário de encerramento</label>
-                        <br><?php echo ($ret_estac_expd_fim . "h"); ?><br>
+                        <br><?php echo strval($ret_qry_page_get_rsv['estac_expd_fim']);?>
                       </div>
                     </div>
                   </div>
-                  <br>
-                  <div class="row">
-                    <div class="col-md-2 pr-1">
-                      <div class="form-group">
-                        <label>Preço por hora (carros)</label>
-                        <br><?php echo ($ret_mvg_hr_carro ."$"); ?>
-                      </div>
-                    </div>
-                    <div class="col-md-2 pr-1">
-                      <div class="form-group">
-                        <label>Preço por hora (motos)</label>
-                        <?php echo ($ret_mvg_hr_moto ."$"); ?>
-                      </div>
-                    </div>
-                    <div class="col-md-2 pr-1">
-                      <div class="form-group"></div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <label></label>
-                    </div>
-                  </div>
-                <div class="row">
-                <div class="col-md-2 pr-1">
-                      <div class="form-group">
-                        <label>Diária (carros)</label>
-                        <br><?php echo ($ret_mvg_dia_carro ."$"); ?><br>
-                      </div>
-                    </div>
-                    <div class="col-md-2 pr-1">
-                      <div class="form-group">
-                        <label>Diária (motos)</label>
-                        <br><?php echo ($ret_mvg_dia_moto ."$"); ?><br>
-                      </div>
-                    </div>  
-                </div>
-                <?php// } ?>
-                <br><!-- daqui pra baixo, form: processa-reservar-vaga.php -->
+                <!-- daqui pra baixo, form: ...php -->
                 <!-- form action="test.php" method="POST" -->
                   <div class="row">
                     <div class="col-md-12">
-                      <br>Preencha os campos abaixo de acordo com o exmeplo:
-                    </div>
-
-                    <div class="col-md-3 pr-1">
-                      <div class="form-group">
-                        <br>
-                        <label>Data</label>
-                        <input type="text" class="form-control" placeholder="Ex: 13/05/2021" name="inp-data">
-                      </div>
-                    </div>
-                    <div class="col-md-3 pr-1">
-                      <div class="form-group">
-                        <br>
-                        <label for="exampleInputEmail1">Hora</label>
-                        <input type="text" class="form-control" placeholder="19:30" name="inp-hora">
-                      </div>
-                    </div>                 
+                      <br>Ao realizar o check-in, você estará informando que seus veículos foram estacionados na vaga e seu tempo de utilização da mesma será computado:
+                    </div>               
                     <!-- query dos veículos -->
                     <?php
+                    }
                     //get clt_doc
                     $query_id_clt = "SELECT clt_doc FROM cliente WHERE clt_email = '{$login_cliente}'; ";
                     $res_id_clt = mysqli_query($conn, $query_id_clt);
@@ -282,20 +258,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <?php //echo("<a>". $array[$contadorOutput] . " - " . $array[$contador] . "</a>"); ?>
                     <div class="col-md-4 pl-1">
                     <tr>
-                        <td>
-                          <div class="form-check pl-1">
-                            <label class="form-check-label">Reservar vaga para este veículo<br>Taxa de reserva: <?php echo($ret_mvg_tx_reserva . "$"); ?>                            
-                              <input class="form-check-input" type="checkbox" name="<?php echo ($tagname . strval($contador_novo));?>" value="<?php echo $dados_veiculos['vei_placa'];?>"><!-- preciso saber se isso (essa placa) é carro ou moto e somar com outras placas -->
-                              <span class="form-check-sign"></span>
-                            </label>
-                          </div>
-                        </td>
-                      </tr> 
+                        
+                    </tr> 
                   </div>
                   <?php $contador_novo++; } ?>
                   <br>
                   <div class="col-md-4 pl-1"><!-- tirado do Arma, melhorar -->
-                    <button class="button button-block button-primary" type="submit">Reservar Vagas</button>
+                    <button class="button button-block button-primary" type="submit">Realizar Check-In</button>
                     <?php //echo("<a> ac: " . $array[$contador] . " - aco: " . $array[$contadorOutput] . " </a>"); ?>
                   </div> 
                 </form>
