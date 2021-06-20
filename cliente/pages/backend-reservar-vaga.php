@@ -3,7 +3,6 @@
 include("conexao.php");
 include("processa-sessao-cliente.php");
 
-
 //a taxa da reserva foi incluída na tabela "mov_vagas" e será removida da tabela "reserva"
 
 //consultar dados do estacionamento (e mov_vagas)
@@ -29,25 +28,19 @@ while ($ret_cons_reserva = mysqli_fetch_array($res_cons_reserva, MYSQLI_BOTH)){
     $ret_mvg_tx_reserva =  $ret_cons_reserva['mvg_tx_reserva'];
 }
 
-//aprender a fazer isso na query, dentro do banco...
+//query a ser terminada
+//SELECT estacionamento.estac_vg_carro, estacionamento.estac_vg_moto, mov_vagas.mvg_ocp_carro, mov_vagas.mvg_ocp_carro 
+//subtrai (estacionamento.estac_vg_carro -  mov_vagas.mvg_ocp_carro) e (estacionamento.estac_vg_moto -  mov_vagas.mvg_ocp_moto) 
+//faz update destes valores na tabela mov_vagas
+//a página 'reserva-vagas.php' apenas faz o select e mostra
+
+//abaixo, a gambiarra (aprender a fazer isso na query, dentro do banco)
 //calcular e atualizar vagas disponíveis
-//if (isset($ret_mvg_ocp_carro) and isset($ret_mvg_ocp_moto)){
 
 $vagas_disp_carro = ($ret_estac_capac_carro - $ret_mvg_ocp_carro);
 $vagas_disp_moto = ($ret_estac_capac_moto - $ret_mvg_ocp_moto);
 
 $query_update_vagas_disp = "UPDATE mov_vagas SET mvg_ocp_carro='{$vagas_disp_carro}', mvg_ocp_moto='{$vagas_disp_moto}' WHERE mvg_id = '{$ret_mvg_id}';";
 $res_update_vagas_disp = mysqli_query($conn, $query_update_vagas_disp);
-
-/*$query_disp_vagas ="SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE mvg_id = '{$ret_mvg_id}';";
-$res_disp_vagas = mysqli_query($conn, $query_disp_vagas);
-while ($ret_disp_vagas = mysqli_fetch_array($res_disp_vagas, MYSQLI_NUM)){
-    $disp_carro = $ret_disp_vagas['mvg_ocp_carro'];
-    $disp_moto = $ret_disp_vagas['mvg_ocp_moto'];
-}*/
-//}//else
-//}//else
-
-//echo( "<a> ret_tx: ". $ret_mvg_tx_reserva .  " / vagas_disp_carro: " . $vagas_disp_carro . " / vagas_disp_moto: " . $vagas_disp_moto . " / disp_carro: " . $disp_carro . " / disp_moto: " . $disp_moto . "</a>");
 
 ?>

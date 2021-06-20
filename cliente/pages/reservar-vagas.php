@@ -6,21 +6,6 @@ Obs: nossa documentação informa que estes cadastros informados acima devem ser
 include('conexao.php');
 include('processa-sessao-cliente.php');
 include('backend-reservar-vaga.php');
-//$cookie_id_estac isset in the seesion
-
-//preciso do clt_doc pra chegar nos carros
-
-
-/*
-if (isset($_COOKIE["id-do-estac"])){
-$ck = $_COOKIE["id-do-estac"];
-/quando for utilizado o bd corrigido, será feito select da tx de estacionamento
-$query_tx_reserva = "SELECT vg_carro FROM markers WHERE id ='{$ck}';";
-$res_tx_reserva = mysqli_query($conn,$query_tx_reserva);
-$ret_tx_reserva = mysqli_fetch_array($res_tx_reserva, MYSQLI_ASSOC);
-$tx_reserva = $ret_tx_reserva['vg_carro'];
-}
-*/
 
 ?>
 
@@ -119,7 +104,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 <h5 class="title">Faça sua reserva <?php echo $nome_cliente; ?> </h5>
               </div>
               <div class="card-body">
-              <form method="POST" action="processa-reservar-vaga.php">
+              <form action="processa-reservar-vaga.php" method="POST">
                 <div class="row">
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
@@ -147,7 +132,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                       <?php
-
+                      
                       //$query_disp_vagas = "SELECT COALESCE(CASE WHEN ISNULL (mvg_ocp_carro) THEN 0 ELSE mvg_ocp_carro END) AS mvg_ocp_carro_null_0, COALESCE(CASE WHEN ISNULL (mvg_ocp_moto) THEN 0 ELSE mvg_ocp_moto END) AS mvg_ocp_moto_null_0 FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
                       $query_disp_vagas = "SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
                       $res_disp_vagas = mysqli_query($conn, $query_disp_vagas);
@@ -245,20 +230,14 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <!-- query dos veículos -->
                     <?php
                     //get clt_doc
-                    $query_id_clt = "SELECT clt_doc FROM cliente WHERE clt_email = '{$login_cliente}'; ";
-                    $res_id_clt = mysqli_query($conn, $query_id_clt);
-                    $ret_id_clt = mysqli_fetch_array($res_id_clt, MYSQLI_ASSOC);
-                    $ret_id_clt_doc = strval($ret_id_clt['clt_doc']);
-
-                    $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '{$ret_id_clt_doc}';";
+                    $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '{$sess_doc}';";
                     $res_veiculos = mysqli_query($conn, $query_veiculos);
+                    //$_SESSION['placas'] = array();
                     
-                    $_SESSION['placas'] = array();
+                    //abaixo, gerar o dado a ser enviado quando a checkbox for marcada
                     $tagname = "check-veiculo";
                     $contador_novo =0;
                     while ($dados_veiculos = mysqli_fetch_array($res_veiculos, MYSQLI_ASSOC)) {
-                      //como eu mando isso no insert?
-                      //preciso mandar isso num post ou fazer include, mandar via POST pra outra página, form action value
                     ?>
                   </div>
                   <div class="row">

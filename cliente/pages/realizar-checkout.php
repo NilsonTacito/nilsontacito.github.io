@@ -24,6 +24,10 @@ include('conexao.php');
 include('processa-sessao-cliente.php');
 include('backend-checkin-reserva.php');
 include('processa-checkin-reserva.php');
+
+if(isset($_SESSION['id_rsv_futura'])){
+  $id_rsv_rlz_chkout = $_SESSION['id_rsv_futura'];
+}
 //$cookie_id_estac isset in the seesion
 
 //preciso do clt_doc pra chegar nos carros
@@ -134,16 +138,17 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Deseja realizar check-out, <?php echo $nome_cliente; ?>? </h5>
+                <h5 class="title">Deseja realizar check-in no estacionamento, <?php echo $nome_cliente; ?>? </h5>
                 <?php
-                //gambi: front end da tela de check in
-                $qry_page_get_rsv= "SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, estacionamento.estac_expd_ini, estacionamento.estac_expd_fim, reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa, veiculo.vei_tipo
+                $qry_rsv_rlz_chkout="SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, estacionamento.estac_expd_ini, estacionamento.estac_expd_fim, 
+                reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa, reserva.fk_rsv_vei_placa_1, reserva.fk_rsv_vei_placa_2, reserva.fk_rsv_vei_placa_3, reserva.fk_rsv_vei_placa,
+                veiculo.vei_tipo, vei_modelo, vei_fabricante, vei_ano
                 FROM ((reserva
                 INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
-                INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) WHERE reserva.fk_rsv_estac_id ='1' AND reserva.fk_rsv_vei_placa = 'LIC5886';";
-                $res_qry_page_get_rsv = mysqli_query($conn,$qry_page_get_rsv);                
+                INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) WHERE reserva.rsv_id ='1';";//$id_rsv_rlz_chkout , coloquei "1" pra testar
+                $res_rsv_rlz_chkout = mysqli_query($conn,$qry_rsv_rlz_chkout);                
                 //$ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_BOTH);
-                while ($ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_BOTH)) {
+                while ($ret_rsv_rlz_chkout= mysqli_fetch_array($res_rsv_rlz_chkout, MYSQLI_BOTH)) {
                 ?>
               </div>
               <div class="card-body">
@@ -152,13 +157,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Estacionamento </label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_nome']); ?><br>
+                        <br><?php echo strval($ret_rsv_rlz_chkout['estac_nome']); ?><br>
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>CEP</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_cep']); ?><br>
+                        <br><?php echo strval($ret_rsv_rlz_chkout['estac_cep']); ?><br>
                       </div>
                     </div>
                   </div>
@@ -166,7 +171,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Endereço</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_endrc']); ?> <br>
+                        <br><?php echo strval($ret_rsv_rlz_chkout['estac_endrc']); ?> <br>
                       </div>
                     </div>
                   </div>
@@ -174,25 +179,14 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                   <div class="row">
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
-                      <?php
-
-                      //$query_disp_vagas = "SELECT COALESCE(CASE WHEN ISNULL (mvg_ocp_carro) THEN 0 ELSE mvg_ocp_carro END) AS mvg_ocp_carro_null_0, COALESCE(CASE WHEN ISNULL (mvg_ocp_moto) THEN 0 ELSE mvg_ocp_moto END) AS mvg_ocp_moto_null_0 FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
-                      /*$query_disp_vagas = "SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
-                      $res_disp_vagas = mysqli_query($conn, $query_disp_vagas);
-                      while ($ret_disp_vagas = mysqli_fetch_array($res_disp_vagas, MYSQLI_BOTH)){
-                          $disp_carro = $ret_disp_vagas['mvg_ocp_carro'];
-                          $disp_moto = $ret_disp_vagas['mvg_ocp_moto'];
-                          break;
-                      }*/    
-                      ?>
                         <label>Data da Reserva</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['rsv_data']);?>
+                        <br><?php echo strval($ret_rsv_rlz_chkout['rsv_data']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
                         <label>Horário da reserva: </label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['rsv_data']);?>
+                        <br><?php echo strval($ret_rsv_rlz_chkout['rsv_hora']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -201,13 +195,13 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     <div class="col-md-2 pl-1">
                       <div class="form-group"><!-- estes dados estarão no banco "definitivo" -->
                         <label>Horário de abertura</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_expd_ini']);?>
+                        <br><?php echo strval($ret_rsv_rlz_chkout['estac_expd_ini']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Horário de encerramento</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_expd_fim']);?>
+                        <br><?php echo strval($ret_rsv_rlz_chkout['estac_expd_fim']);?>
                       </div>
                     </div>
                   </div>
@@ -215,56 +209,83 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 <!-- form action="test.php" method="POST" -->
                   <div class="row">
                     <div class="col-md-12">
-                      <br>Ao realizar o check-out, você concluirá o processo de estacionamento:
+                      <br>Ao realizar o check-in, você estará informando que seus veículos foram estacionados na vaga e seu tempo de utilização da mesma será computado:
                     </div>               
                     <!-- query dos veículos -->
-                    <?php
-                    }
-                    //get clt_doc
-                    $query_id_clt = "SELECT clt_doc FROM cliente WHERE clt_email = '{$login_cliente}'; ";
-                    $res_id_clt = mysqli_query($conn, $query_id_clt);
-                    $ret_id_clt = mysqli_fetch_array($res_id_clt, MYSQLI_ASSOC);
-                    $ret_id_clt_doc = strval($ret_id_clt['clt_doc']);
-
-                    $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano  FROM veiculo WHERE fk_clt_doc = '{$ret_id_clt_doc}';";
-                    $res_veiculos = mysqli_query($conn, $query_veiculos);
-                    
-                    $_SESSION['placas'] = array();
-                    $tagname = "check-veiculo";
-                    $contador_novo =0;
-                    while ($dados_veiculos = mysqli_fetch_array($res_veiculos, MYSQLI_ASSOC)) {
-                      //como eu mando isso no insert?
-                      //preciso mandar isso num post ou fazer include, mandar via POST pra outra página, form action value
-                    ?>
                   </div>
                   <div class="row">
                     <div class="col-md-12">
+                    <?php //var_dump($estac_res_futura . " - " . $placa_res_futura . " - " . $ret_qry_page_get_rsv['vei_tipo'] . " - " . $ret_qry_page_get_rsv['estac_expd_fim']); ?>
                       <label></label>
                     </div>
                   </div>              
                   <div class="row">
                     <div class="col-md-8 pr-1">
-                      <div class="form-group"><!-- botar este form por aqui, precisará da checkbox funcionando (processa-reservar-vaga.php)-->
-                        <label>Veículo <?php echo ("(" . $dados_veiculos['vei_tipo'] . ")");?> </label><!-- decidir se manda ou não aquela placa no insert -->
-                        <br><?php echo ($dados_veiculos['vei_fabricante'] ." ". $dados_veiculos['vei_modelo']); ?>
-                        <br><?php echo ("Placa: " . $dados_veiculos['vei_placa'] ."<br> Ano: " . $dados_veiculos['vei_ano']); 
-                             if(isset($dados_veiculos['vei_placa'])){                                 
-                                 array_push($_SESSION['placas'], $dados_veiculos['vei_placa']);
-                              
-                             } 
-                        ?>
+                      <div class="form-group"><!-- botar este form por aqui, precisará da checkbox funcionando (processa-reservar-vaga.php)  - vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano -->
+                        <label>Veículo <?php echo ("(" . $ret_rsv_rlz_chkout['vei_tipo'] . ")");?> </label><!-- decidir se manda ou não aquela placa no insert -->
+                        <br><?php echo ($ret_rsv_rlz_chkout['vei_fabricante'] . " " . $ret_rsv_rlz_chkout['vei_modelo']); ?>
+                        <br><?php echo ("Placa: " . $ret_rsv_rlz_chkout['fk_rsv_vei_placa'] . "<br> Ano: " . $ret_rsv_rlz_chkout['vei_ano']); ?>
                       </div>
                     </div>
-                    <?php //echo("<a>". $array[$contadorOutput] . " - " . $array[$contador] . "</a>"); ?>
+                    <?php 
+                    if(!empty($ret_rsv_rlz_chkout['fk_rsv_vei_placa_1'])){
+                      echo(
+                        '<div class="row">
+                          <div class="col-md-8 pr-1">
+                            <div class="form-group">
+                              <label>Veículo (' . $ret_rsv_rlz_chkout['vei_tipo'] . ')</label>
+                              <br>' . $ret_rsv_rlz_chkout['vei_fabricante'] . '" "' . $ret_rsv_rlz_chkout['vei_modelo'] .
+                              '<br>Placa: ' . $ret_rsv_rlz_chkout['fk_rsv_vei_placa_1'] . ' <br> Ano: ' . $ret_rsv_rlz_chkout['vei_ano'] .'
+                            </div>
+                          </div>'
+                          )
+                    }/*
+                    if(!empty($ret_rsv_rlz_chkout['fk_rsv_vei_placa_2'])){
+                      echo(
+                        '<div class="row">
+                          <div class="col-md-8 pr-1">
+                            <div class="form-group">
+                              <label>Veículo (' . $ret_rsv_rlz_chkout['vei_tipo'] . ')</label>
+                              <br>' . $ret_rsv_rlz_chkout['vei_fabricante'] . ' ' . $ret_rsv_rlz_chkout['vei_modelo'] .
+                              '<br>Placa: ' . $ret_rsv_rlz_chkout['fk_rsv_vei_placa_2'] . '<br> Ano: ' . $ret_rsv_rlz_chkout['vei_ano'] .'
+                            </div>
+                          </div>'
+                          )
+                    }
+                    if(!empty($ret_rsv_rlz_chkout['fk_rsv_vei_placa_3'])){
+                      echo(
+                        '<div class="row">
+                          <div class="col-md-8 pr-1">
+                            <div class="form-group">
+                              <label>Veículo (' . $ret_rsv_rlz_chkout['vei_tipo'] . ')</label>
+                              <br>' . $ret_rsv_rlz_chkout['vei_fabricante'] . ' ' . $ret_rsv_rlz_chkout['vei_modelo'] .
+                              '<br>Placa: ' . $ret_rsv_rlz_chkout['fk_rsv_vei_placa_3'] . '<br> Ano: ' . $ret_rsv_rlz_chkout['vei_ano'] .'
+                            </div>
+                          </div>'
+                          )
+                    }
+                    if(!empty($ret_rsv_rlz_chkout['fk_rsv_vei_placa_4'])){
+                      echo(
+                        '<div class="row">
+                          <div class="col-md-8 pr-1">
+                            <div class="form-group">
+                              <label>Veículo (' . $ret_rsv_rlz_chkout['vei_tipo'] . ')</label>
+                              <br>' . $ret_rsv_rlz_chkout['vei_fabricante'] . ' ' . $ret_rsv_rlz_chkout['vei_modelo'] .
+                              '<br>Placa: ' . $ret_rsv_rlz_chkout['fk_rsv_vei_placa_4'] . '<br> Ano: ' . $ret_rsv_rlz_chkout['vei_ano'] .'
+                            </div>
+                          </div>'
+                          )
+                    } */                   
+                  } ?>
                     <div class="col-md-4 pl-1">
                     <tr>
                         
                     </tr> 
                   </div>
-                  <?php $contador_novo++; } ?>
-                  <br>     
+                  <?php //$contador_novo++; } ?>
+                  <br>
                   <div class="col-md-4 pl-1"><!-- tirado do Arma, melhorar -->
-                    <button class="button button-block button-primary" type="submit">Realizar Check-out</button> <!-- processa e manda pra final page -->
+                    <button class="button button-block button-primary" type="submit">Realizar Check-In</button>
                     <?php //echo("<a> ac: " . $array[$contador] . " - aco: " . $array[$contadorOutput] . " </a>"); ?>
                   </div> 
                 </form>
@@ -299,4 +320,3 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
   <script src="../assets/js/now-ui-dashboard.min.js?v=1.5.0" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
 </body>
-</html>
