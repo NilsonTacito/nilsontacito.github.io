@@ -40,7 +40,7 @@ include("proc-consulta-gestor.php");
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
       <ul class="nav">
-        <li class="active">
+          <li class="active">
             <a href="./dados-cadastrais.php">
               <i class="now-ui-icons users_single-02"></i>
               <p>Dados Cadastrais</p>
@@ -58,6 +58,12 @@ include("proc-consulta-gestor.php");
               <p>Controle de Vagas</p>
             </a>
           </li>
+          <li>
+            <a href="./relatorios.php">
+              <i class="now-ui-icons files_paper"></i>
+              <p>Relatórios</p>
+            </a>
+          </li>          
           <li class="active-pro">
             <a href="./logout.php">
               <i class="now-ui-icons ui-1_simple-remove"></i>

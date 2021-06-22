@@ -43,7 +43,7 @@ include("proc-sessao-gestor.php");
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
       <ul class="nav">
-        <li>
+          <li>
             <a href="./dados-cadastrais.php">
               <i class="now-ui-icons users_single-02"></i>
               <p>Dados Cadastrais</p>
@@ -51,16 +51,22 @@ include("proc-sessao-gestor.php");
           </li>
           <li>
             <a href="./estacionamentos.php">
-              <i class="now-ui-icons location_map-big"></i>
+              <i class="now-ui-icons shopping_shop"></i>
               <p>Estacionamentos</p>
             </a>
           </li>
           <li class="active">
             <a href="./controle-de-vagas.php">
-              <i class="now-ui-icons ui-1_bell-53"></i>
+              <i class="now-ui-icons business_chart-bar-32"></i>
               <p>Controle de Vagas</p>
             </a>
           </li>
+          <li>
+            <a href="./relatorios.php">
+              <i class="now-ui-icons files_paper"></i>
+              <p>Relatórios</p>
+            </a>
+          </li>          
           <li class="active-pro">
             <a href="./logout.php">
               <i class="now-ui-icons ui-1_simple-remove"></i>
@@ -70,68 +76,6 @@ include("proc-sessao-gestor.php");
         </ul>
       </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="#pablo">Maps</a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form>
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="now-ui-icons media-2_sound-wave"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="now-ui-icons location_world"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="now-ui-icons users_single-02"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Account</span>
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
     <div class="main-panel" id="main-panel">
     <!-- Navbar -->
        <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
@@ -144,7 +88,7 @@ include("proc-sessao-gestor.php");
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Estacionamentos</a>
+            <a class="navbar-brand" href="#pablo">Controle de Vagas</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -161,8 +105,8 @@ include("proc-sessao-gestor.php");
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Nome do estacionamento</h4><!-- return do banco -->
-                <p class="category"> endereço?</p> <!-- aumentar fonte -->
+                <h4 class="card-title">Estacionamento Nome</h4><!-- return do banco -->
+                <p class="category">Endereço e CEP</p>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -173,20 +117,21 @@ include("proc-sessao-gestor.php");
                   <table class="table"><!-- Alterar para informar que não há dados caso nenhuma reserva tenha sido feita antes --> 
                     <thead class=" text-primary">
                       <th>
-                        Vagas para carros
+                        Vagas (Carros)
                       </th>
                       <th>
-                        Vagas para motos <!-- quantidade e tipo -->
+                        Vagas (Motos)
                       </th>
-                      <th>
-                        Vagas para carros
+                      <!--th>
+                        Horário
                       </th>
-                      <th>
-                        Vagas para motos <!-- quantidade e tipo -->
-                      </th>
+                      th>
+                        Vagas para motos // quantidade e tipo -->
+                      <!-- /th -->
                     </thead>
                     <tbody>
                     <?php while ($testedado = mysqli_fetch_array($resultado0)) {?> <!--  meu erro estava sendo usar $conn->fetch_array() sem parâmetro -->
+                      
                       <tr>
                         <td> <!-- Total, ocupadas, reservadas-->
                           <?php echo $testedado['cep']; ?>
@@ -201,80 +146,93 @@ include("proc-sessao-gestor.php");
                           <?php echo $testedado['telefone']; ?>                         
                         </td>
                       </tr>
+                      
                       <?php break;} ?>
-                      <!-- verificar o uso do break --> 
-                      <!--
+
                       <tr>
                         <td>
-                          Minerva Hooper
+                          D: Disponíveis 
+                          <br>O: Ocupadas
+                          <br>R: Reservadas para Hoje
                         </td>
                         <td>
-                          Curaçao
+                          D: Disponíveis
+                          <br>O: Ocupadas
+                          <br>R: Reservadas para Hoje
                         </td>
-                        <td>
+                        <!-- td>
                           Sinaai-Waas
                         </td>
                         <td class="text-right">
                           $23,789
-                        </td>
+                        </td -->
                       </tr>
-                      -->
+
                     </tbody>
                   </table>
+
+                  <table class="table"><!-- Alterar para informar que não há dados caso nenhuma reserva tenha sido feita antes -->
+                  <h4 class="card-title"> Próximas Reservas</h4> 
+                    <thead class=" text-primary">
+                      <th>
+                        Reserva (ID)
+                      </th>
+                      <th>
+                        Cliente
+                      </th>
+                      <th>
+                        Veículos <!-- quantidade e tipo -->
+                      </th>
+                      <th>
+                        Horário
+                      </th>
+                      <!-- th>
+                        Vagas para motos // quantidade e tipo -->
+                      <!-- /th -->
+                    </thead>
+                    <tbody>
+                    <?php while ($testedado = mysqli_fetch_array($resultado0)) {?> <!--  meu erro estava sendo usar $conn->fetch_array() sem parâmetro -->
+                      
+                      <tr>
+                        <td> <!-- Total, ocupadas, reservadas-->
+                          <?php echo $testedado['cep']; ?>
+                        </td>
+                        <td>
+                          <?php echo $testedado['telefone']; ?>                        
+                        </td>                        
+                        <td> <!-- Total, ocupadas, reservadas-->
+                          <?php echo $testedado['documento']; ?>
+                        </td>
+                        <td>
+                          <?php echo $testedado['telefone']; ?>                         
+                        </td>
+                      </tr>
+                      
+                      <?php break;} ?>
+
+                      <tr>
+                        <td>
+                          ID: x
+                        </td>
+                        <td>
+                          Cliente: Minerva Hooper
+                        </td>
+                        <td>
+                          x Carros / x Motos
+                        </td>
+                        <td>
+                          Sinaai-Waas
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-12">
-            <div class="card card-plain">
-              <div class="card-header">
-                <h4 class="card-title">Próximas reservas</h4>
-                <!--p class="category"> Here is a subtitle for this table</p -->
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                <?php
-                  $query1 = "SELECT nome_estac_cons, id_vaga_cons, h_ent_cons, check_in_cons FROM testcons";
-                  $resultado1 = mysqli_query($conn, $query1);
-                  ?>
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Estacionamento
-                      </th>
-                      <th>
-                        Vagas para carros
-                      </th>
-                      <th>
-                        Vagas para motos
-                      </th>
-                      <!--th class="text-right">
-                        Custo
-                      </th -->
-                    </thead>
-                    <tbody><!-- próximas reservas tbm atende ao gestor, add disponíveis na view / histórico de reservas tbm-->
-                    <?php while ($dado = mysqli_fetch_array($resultado1)) {?>
-                      <tr>
-                        <td><!--mudar cor css -->
-                          <a href ="estac-espec.php"><?php echo $dado['nome_estac_cons']; ?></a>
-                        </td>
-                        <td>
-                          <?php echo $dado['id_vaga_cons']; ?>
-                        </td>
-                        <td>
-                          <?php echo $dado['h_ent_cons']; ?>
-                        </td>
-                        <!--td class="text-right">
-                          <!?php echo $dado['check_in_cons']; ?>
-                        </td -->
-                      </tr>
-                      <?php break; } ;?> 
-                      <!-- testar populando o banco -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

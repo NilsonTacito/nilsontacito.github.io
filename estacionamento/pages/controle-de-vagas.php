@@ -51,16 +51,22 @@ $count_estac = strval($prs_count_estac); //contagem de estacionamentos
           </li>
           <li>
             <a href="./estacionamentos.php">
-              <i class="now-ui-icons location_map-big"></i>
+              <i class="now-ui-icons shopping_shop"></i>
               <p>Estacionamentos</p>
             </a>
           </li>
           <li class="active">
             <a href="./controle-de-vagas.php">
-              <i class="now-ui-icons ui-1_bell-53"></i>
+              <i class="now-ui-icons business_chart-bar-32"></i>
               <p>Controle de Vagas</p>
             </a>
           </li>
+          <li>
+            <a href="./relatorios.php">
+              <i class="now-ui-icons files_paper"></i>
+              <p>Relatórios</p>
+            </a>
+          </li>          
           <li class="active-pro">
             <a href="./logout.php">
               <i class="now-ui-icons ui-1_simple-remove"></i>
@@ -70,68 +76,6 @@ $count_estac = strval($prs_count_estac); //contagem de estacionamentos
         </ul>
       </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
-            </div>
-            <a class="navbar-brand" href="#pablo">Maps</a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form>
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="now-ui-icons media-2_sound-wave"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="now-ui-icons location_world"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="now-ui-icons users_single-02"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Account</span>
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
     <div class="main-panel" id="main-panel">
     <!-- Navbar -->
        <nav class="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
@@ -144,7 +88,7 @@ $count_estac = strval($prs_count_estac); //contagem de estacionamentos
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Estacionamentos</a>
+            <a class="navbar-brand" href="#pablo">Controle de Vagas</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -162,6 +106,7 @@ $count_estac = strval($prs_count_estac); //contagem de estacionamentos
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title"> Controle de Vagas</h4>
+                <!-- p class="category"> endereço?</p -->
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -191,6 +136,7 @@ $count_estac = strval($prs_count_estac); //contagem de estacionamentos
                         <td> <!-- Total, ocupadas, reservadas-->
                           <?php echo ($ctrl_vagas['ttl_carro_mvg']." Ocupadas / ". $ctrl_vagas['ttl_moto_mvg'] ." Livres / " . $soma_ctrl_teste ." Total");?>
                           <?php echo("Em ". $count_estac ." Estacionamentos"); ?>
+                          AAA
                         </td>
                         <td>
                         <?php echo ($ctrl_vagas['ttl_carro_mvg']." Ocupadas / ". $ctrl_vagas['ttl_moto_mvg'] ." Livres / " . $soma_ctrl_teste ." Total");?>
@@ -199,56 +145,60 @@ $count_estac = strval($prs_count_estac); //contagem de estacionamentos
                       </tr>
                       <?php break;} ?>
                       <!-- verificar o uso do break --> 
-                      <!--
+
                       <tr>
                         <td>
-                          Minerva Hooper
+                          x Disponíveis / x Reservadas / x Ocupadas
+                          <br> Em x Estacionamentos
                         </td>
                         <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
+                          x Disponíveis / x Reservadas / x Ocupadas
+                          <br> Em x Estacionamentos
                         </td>
                       </tr>
-                      -->
                     </tbody>
                   </table>
-                </div>
+
+              <div>
+                <h4 class="card-title"> Estacionamentos</h4>
+                <p> D: Disponíveis / O: Ocupadas / R: Reservadas para Hoje</p>
+                <!-- p class="category"> endereço?</p -->
               </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <div class="card card-plain">
-              <div class="card-header">
-                <h4 class="card-title">Estacionamentos</h4>
-                <!--p class="category"> Here is a subtitle for this table</p -->
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                <?php
-                  $query_lista_estac="SELECT nome_mvg, ttl_carro_mvg, ttl_moto_mvg FROM mvg_test WHERE dono_mvg ='{$busca}'";
-                  $res_lista_estac= mysqli_query($conn, $query_lista_estac);
-                  ?>
+
                   <table class="table">
                     <thead class=" text-primary">
                       <th>
                         Estacionamento
                       </th>
                       <th>
-                        Vagas para carros
+                        Vagas (Carros)
                       </th>
                       <th>
-                        Vagas para motos
+                        Vagas (Motos)
+                      </th>
+                      <th>
+                        Reservas Para Hoje
                       </th>
                       <!--th class="text-right">
                         Custo
                       </th -->
                     </thead>
                     <tbody>
+                    <tr>
+                        <td>
+                          Minerva Hooper
+                        </td>
+                        <td>
+                          99 (D) / 88 (O) / 77 (R)
+                        </td>
+                        <td>
+                        99 (D) / 88 (O) / 77 (R)
+                        </td>
+                        <td class="text-center">
+                          Sim
+                        </td>
+                      </tr>
+
                     <?php while ($lista_campo = mysqli_fetch_array($res_lista_estac)) {?>
                       <tr>
                         <td><!--mudar cor css -->
@@ -276,6 +226,19 @@ $count_estac = strval($prs_count_estac); //contagem de estacionamentos
                       <!-- testar populando o banco -->
                     </tbody>
                   </table>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="card card-plain">
+              <div class="card-header">
+                              
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+
                 </div>
               </div>
             </div>

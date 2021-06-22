@@ -14,7 +14,7 @@ include("proc-sessao-gestor.php");
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    ParkingBr - Cadastrar Estacionamento
+    ParkingBr - Remover Estacionamento
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -103,7 +103,7 @@ include("proc-sessao-gestor.php");
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Cadastre seu estacionamento</h5>
+                <h5 class="title">Remover Estacionamentos</h5>
               </div>
               <div class="card-body">
                 <form method="POST" action="processa-cad-estacionamento.php">

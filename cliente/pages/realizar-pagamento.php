@@ -2,6 +2,16 @@
 Página de check-out/encerramento da reserva (o submit levaria ao pagseguro)
 
 -->
+<?php
+include('conexao.php');
+include('processa-sessao-cliente.php');
+
+if(isset($_SESSION['id_rsv_futura'])){
+  $id_rsv_pagto = $_SESSION['id_rsv_futura'];
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +21,7 @@ Página de check-out/encerramento da reserva (o submit levaria ao pagseguro)
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    ParkingBr - Cadastrar Estacionamento
+    ParkingBr - Realizar Pagamento
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -76,7 +86,7 @@ Página de check-out/encerramento da reserva (o submit levaria ao pagseguro)
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Consultar Reservas</a>
+            <a class="navbar-brand" href="#pablo">Realizar Pagamento</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -92,9 +102,39 @@ Página de check-out/encerramento da reserva (o submit levaria ao pagseguro)
         <div class="row">
           <div class="col-md-8">
             <div class="card card-upgrade">
-              <div class="card-header text-center">
-                <h4 class="card-title">Reserva (ID: xxx)</h3>
-                  <p class="card-category">Estacionamento xxx</p>
+              <div class="card-header text-left">
+              <?php
+                $qry_rsv_pagto="SELECT estacionamento.estac_nome, 
+                reserva.rsv_id,reserva.rsv_chkin_dt, reserva.rsv_chkout_dt, reserva.fk_rsv_vei_placa, reserva.fk_rsv_vei_placa_1, reserva.fk_rsv_vei_placa_2, reserva.fk_rsv_vei_placa_3, reserva.fk_rsv_vei_placa_4,
+                mov_vagas.mvg_id, mov_vagas.mvg_dia_carro, mov_vagas.mvg_dia_moto, mov_vagas.mvg_hr_carro, mov_vagas.mvg_hr_moto, mov_vagas.mvg_tx_reserva, mov_vagas.mvg_tx_servico,
+                veiculo.vei_tipo, veiculo.vei_modelo, veiculo.vei_fabricante, veiculo.vei_ano
+                FROM (
+                ((reserva INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
+                INNER JOIN mov_vagas ON reserva.fk_rsv_estac_id = mov_vagas.fk_mvg_estac_id)
+                INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) WHERE reserva.rsv_id ='1';";//$id_rsv_pagto , coloquei "1" pra testar
+                $res_rsv_pagto = mysqli_query($conn,$qry_rsv_pagto);                
+                //$ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_BOTH);
+                while ($ret_rsv_pagto= mysqli_fetch_array($res_rsv_pagto, MYSQLI_BOTH)) {
+                ?>
+                <h5 class="card-title">Reserva (ID: <?php echo $ret_rsv_pagto['rsv_id']; ?>)</h5>
+                  <a class="text-left">Estacionamento: <?php echo $ret_rsv_pagto['estac_nome']; ?></a>
+                  <br><a class="text-left"><?php echo("De: " . $ret_rsv_pagto['rsv_chkin_dt'] . " Até: " . $ret_rsv_pagto['rsv_chkout_dt']); ?></a>
+                  <!--placas -->
+                  <br><a class="text-left"><?php echo("Veículo(s): " . $ret_rsv_pagto['fk_rsv_vei_placa']);
+                  if(!empty($ret_rsv_pagto['fk_rsv_vei_placa_1'])){
+                    echo(" / " . $ret_rsv_pagto['fk_rsv_vei_placa_1']);
+                    
+                    if(!empty($ret_rsv_pagto['fk_rsv_vei_placa_2'])){
+                      echo(" / " . $ret_rsv_pagto['fk_rsv_vei_placa_2']);
+                    }
+                    if(!empty($ret_rsv_pagto['fk_rsv_vei_placa_3'])){
+                      echo(" / " . $ret_rsv_pagto['fk_rsv_vei_placa_3']);
+                    }
+                    if(!empty($ret_rsv_pagto['fk_rsv_vei_placa_4'])){
+                      echo(" / " . $ret_rsv_pagto['fk_rsv_vei_placa_4']);
+                    }                 
+                  }                  
+                  ?></a>
                   <!-- p class="card-category">Are you looking for more components? Please check our Premium Version of Now UI Dashboard PRO.</p -->
               </div>
               <div class="card-body">
@@ -102,67 +142,51 @@ Página de check-out/encerramento da reserva (o submit levaria ao pagseguro)
                   <table class="table">
                     <thead>
                       <th></th>
-                      <th class="text-center">Free</th>
-                      <th class="text-center">PRO</th>
+                      <th class="text-right"></th>
                     </thead>
                     <tbody>
                       <tr>
                         <td>Veículos</td>
-                        <td class="text-center">16 Carros</td>
-                        <td class="text-center">160 Motos</td>
+                        <td class="text-right"">160 Carros/Motos</td>
                       </tr>
                       <tr>
-                        <td>Tempo de Utilização das Vagas</td>
-                        <td class="text-center">4</td>
-                        <td class="text-center">13</td>
+                        <td>Tempo de Utilização das Vagas</td> <!-- Verificar com Júlio -->
+                        <td class="text-right">13</td>
                       </tr>
                       <tr>
                         <td>Preço por Hora</td>
-                        <td class="text-center">7</td>
-                        <td class="text-center">27</td>
+                        <td class="text-right""><?php echo($ret_rsv_pagto['mvg_hr_carro'] . "$ (Carros) / " . $ret_rsv_pagto['mvg_hr_moto'] . "$ (Motos)"); ?></td>
                       </tr>
                       <tr>
                         <td>Preço Diária</td>
-                        <td class="text-center">7 - Carros</td>
-                        <td class="text-center">7 - Motos</td>
+                        <td class="text-right"><?php echo($ret_rsv_pagto['mvg_dia_carro'] . "$ (Carros) /" . $ret_rsv_pagto['mvg_dia_moto'] . "$ (Motos)"); ?></td>
                         <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
                         <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
                       </tr>
                       <tr>
                         <td>Taxa de Reserva</td>
-                        <td class="text-center">7</td>
-                        <td class="text-center">7</td>
+                        <td class="text-right""><?php echo($ret_rsv_pagto['mvg_tx_reserva'] . "$"); ?></td>
                         <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
                         <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
                       </tr>
                       <tr>
                         <td>Taxa de Serviço</td>
-                        <td class="text-center">7</td>
-                        <td class="text-center">7</td>
+                        <td class="text-right"><?php echo($ret_rsv_pagto['mvg_tx_servico'] . "% (Total)"); ?></td>
                         <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
                         <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
                       </tr>
+                      <?php } ?>
                       <tr>
                         <td>Total A Pagar</td>
-                        <td class="text-center">7</td>
-                        <td class="text-center">7</td>
+                        <td class="text-right">7</td>
                         <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
                         <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
                       </tr>
                       <tr>
                         <td></td>
-                        <td class="text-center">Free</td>
-                        <td class="text-center">Just $49</td>
-                      </tr>
-                      <tr>
-                        <td class="text-center"></td>
-                        <td class="text-center">
-                          <!-- a href="#" class="btn btn-round btn-default disabled">Current Version</a -->
-                        </td >
-                        <td class="text-center">
-                          <a target="_blank" href="https://www.creative-tim.com/product/now-ui-dashboard-pro?ref=nud-free-upgrade-live" class="btn btn-round btn-primary">Realizar Pagamento</a>
-                        </td>
-                      </tr>
+                        <!-- td class="text-center">Free</td -->
+                        <td class="text-right"><a target="_blank" href="https://www.creative-tim.com/product/now-ui-dashboard-pro?ref=nud-free-upgrade-live" class="btn btn-round btn-primary">Realizar Pagamento</a> </td>
+                      </tr>                      
                     </tbody>
                   </table>
                 </div>

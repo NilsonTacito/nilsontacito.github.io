@@ -140,7 +140,7 @@ include('processa-sessao-cliente.php');
                           }
 
                           if(($chk_in_em_andamento != "Realizado") AND ($chk_out_em_andamento != "Não Realizado")){
-                          echo ('<a href="reserva-espec.php?estac_futura=' . $fut_res_campo['estac_id'] . '&placa_futura=' . $fut_res_campo['fk_rsv_vei_placa'] . '&id_rsv_futura=' . $fut_res_campo['rsv_id'] . '">' . $fut_res_campo['estac_nome'] . '</a>'); 
+                          echo ('<a href="realizar-checkin.php?estac_futura=' . $fut_res_campo['estac_id'] . '&placa_futura=' . $fut_res_campo['fk_rsv_vei_placa'] . '&id_rsv_futura=' . $fut_res_campo['rsv_id'] . '">' . $fut_res_campo['estac_nome'] . '</a>'); 
                           }                          
                           ?>
                     

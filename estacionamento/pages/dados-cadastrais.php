@@ -14,7 +14,7 @@ include("proc-consulta-gestor.php");
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    ParkingBr - Dados Cadastrais do Gestor de Estacionamentos
+    ParkingBr - Dados Cadastrais
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -58,6 +58,12 @@ include("proc-consulta-gestor.php");
               <p>Controle de Vagas</p>
             </a>
           </li>
+          <li>
+            <a href="./relatorios.php">
+              <i class="now-ui-icons files_paper"></i>
+              <p>Relatórios</p>
+            </a>
+          </li>          
           <li class="active-pro">
             <a href="./logout.php">
               <i class="now-ui-icons ui-1_simple-remove"></i>

@@ -13,7 +13,7 @@ include("proc-sessao-gestor.php");
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Now UI Dashboard by Creative Tim
+    ParkingBr - Estacionamentos
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -39,7 +39,7 @@ include("proc-sessao-gestor.php");
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
       <ul class="nav">
-        <li>
+          <li>
             <a href="./dados-cadastrais.php">
               <i class="now-ui-icons users_single-02"></i>
               <p>Dados Cadastrais</p>
@@ -47,19 +47,25 @@ include("proc-sessao-gestor.php");
           </li>
           <li class="active">
             <a href="./estacionamentos.php">
-              <i class="now-ui-icons location_map-big"></i>
+              <i class="now-ui-icons shopping_shop"></i>
               <p>Estacionamentos</p>
             </a>
           </li>
           <li>
             <a href="./controle-de-vagas.php">
-              <i class="now-ui-icons ui-1_bell-53"></i>
+              <i class="now-ui-icons business_chart-bar-32"></i>
               <p>Controle de Vagas</p>
             </a>
           </li>
+          <li>
+            <a href="./relatorios.php">
+              <i class="now-ui-icons files_paper"></i>
+              <p>Relatórios</p>
+            </a>
+          </li>          
           <li class="active-pro">
             <a href="./logout.php">
-              <i class="now-ui-icons arrows-1_cloud-download-93"></i>
+              <i class="now-ui-icons ui-1_simple-remove"></i>
               <p>Sair</p>
             </a>
           </li>
@@ -78,37 +84,14 @@ include("proc-sessao-gestor.php");
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Reservar Vagas</a>
+            <a class="navbar-brand" href="#pablo">Estacionamentos</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form><!-- form pesquisa -->
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="now-ui-icons location_world"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>              
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">             
             </ul>
           </div>
         </div>
@@ -135,8 +118,10 @@ include("proc-sessao-gestor.php");
         </div>
         </form>
         <div class="offset-top-25"><!-- tirado do Arma, melhorar -->
+        <form method="POST" action="remover-estacionamento.php"> 
           <button class="button button-block button-primary" type="submit">Remover estacionamento</button>
-        </div> 
+        </form> 
+        </div>
       </div>     
       <footer class="footer">
         <div class=" container-fluid ">

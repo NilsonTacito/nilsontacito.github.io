@@ -51,7 +51,7 @@ include('processa-checkin-reserva.php');
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    ParkingBr - Cadastrar Estacionamento
+    ParkingBr - Realizar Check-In
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -230,7 +230,58 @@ include('processa-checkin-reserva.php');
                         <br><?php echo ("Placa: " . $ret_qry_page_get_rsv['vei_placa'] ."<br> Ano: " . $ret_qry_page_get_rsv['vei_ano']); ?>
                       </div>
                     </div>
-                    <?php } ?>
+                    <?php 
+                    if(!empty($ret_qry_page_get_rsv['fk_rsv_vei_placa_1'])){
+                      echo(
+                        '<div class="row">
+                          <div class="col-md-8 pr-1">
+                            <div class="form-group">
+                              <label>Veículo (' . $ret_qry_page_get_rsv['vei_tipo'] . ')</label>
+                              <br>' . $ret_qry_page_get_rsv['vei_fabricante'] . '" "' . $ret_qry_page_get_rsv['vei_modelo'] .
+                            '<br>Placa: ' . $ret_qry_page_get_rsv['fk_rsv_vei_placa_1'] . ' <br> Ano: ' . $ret_qry_page_get_rsv['vei_ano'] .'
+                          </div>
+                        </div>'
+                      );
+                    }
+                    if(!empty($ret_qry_page_get_rsv['fk_rsv_vei_placa_2'])){
+                      echo(
+                        '<div class="row">
+                          <div class="col-md-8 pr-1">
+                            <div class="form-group">
+                              <label>Veículo (' . $ret_qry_page_get_rsv['vei_tipo'] . ')</label>
+                              <br>' . $ret_qry_page_get_rsv['vei_fabricante'] . ' ' . $ret_qry_page_get_rsv['vei_modelo'] .
+                            '<br>Placa: ' . $ret_qry_page_get_rsv['fk_rsv_vei_placa_2'] . '<br> Ano: ' . $ret_qry_page_get_rsv['vei_ano'] .'
+                          </div>
+                        </div>'
+                      );
+                    }
+                    if(!empty($ret_qry_page_get_rsv['fk_rsv_vei_placa_3'])){
+                      echo(
+                        '<div class="row">
+                          <div class="col-md-8 pr-1">
+                            <div class="form-group">
+                              <label>Veículo (' . $ret_qry_page_get_rsv['vei_tipo'] . ')</label>
+                              <br>' . $ret_qry_page_get_rsv['vei_fabricante'] . ' ' . $ret_qry_page_get_rsv['vei_modelo'] .
+                            '<br>Placa: ' . $ret_qry_page_get_rsv['fk_rsv_vei_placa_3'] . '<br> Ano: ' . $ret_qry_page_get_rsv['vei_ano'] .'
+                          </div>
+                        </div>'
+                      );
+                    }
+                    if(!empty($ret_qry_page_get_rsv['fk_rsv_vei_placa_4'])){
+                      echo(
+                        '<div class="row">
+                          <div class="col-md-8 pr-1">
+                            <div class="form-group">
+                              <label>Veículo (' . $ret_qry_page_get_rsv['vei_tipo'] . ')</label>
+                              <br>' . $ret_qry_page_get_rsv['vei_fabricante'] . ' ' . $ret_qry_page_get_rsv['vei_modelo'] .
+                            '<br>Placa: ' . $ret_qry_page_get_rsv['fk_rsv_vei_placa_4'] . '<br> Ano: ' . $ret_qry_page_get_rsv['vei_ano'] .'
+                          </div>
+                        </div>'
+                      );
+                    }        
+
+                  //abaixo, chave do while
+                  } ?>
                     <div class="col-md-4 pl-1">
                     <tr>
                         

@@ -55,7 +55,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    ParkingBr - Cadastrar Estacionamento
+    ParkingBr - Realizar Check-Out
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -120,7 +120,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Consultar Reservas</a>
+            <a class="navbar-brand" href="#pablo">Realizar Check-out</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -138,7 +138,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
           <div class="col-md-8">
             <div class="card">
               <div class="card-header">
-                <h5 class="title">Deseja realizar check-in no estacionamento, <?php echo $nome_cliente; ?>? </h5>
+                <h5 class="title">Deseja realizar check-out no estacionamento, <?php echo $nome_cliente; ?>? </h5>
                 <?php
                 $qry_rsv_rlz_chkout="SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, estacionamento.estac_expd_ini, estacionamento.estac_expd_fim, 
                 reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa, reserva.fk_rsv_vei_placa_1, reserva.fk_rsv_vei_placa_2, reserva.fk_rsv_vei_placa_3, reserva.fk_rsv_vei_placa,
@@ -152,7 +152,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 ?>
               </div>
               <div class="card-body">
-              <form method="POST" action="processa-checkin-reserva.php"><!-- alterar este form -->
+              <form method="POST" action="processa-checkout-reserva.php"><!-- alterar este form -->
                 <div class="row">
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
@@ -160,18 +160,14 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                         <br><?php echo strval($ret_rsv_rlz_chkout['estac_nome']); ?><br>
                       </div>
                     </div>
-                    <div class="col-md-4 pl-1">
-                      <div class="form-group">
-                        <label>CEP</label>
-                        <br><?php echo strval($ret_rsv_rlz_chkout['estac_cep']); ?><br>
-                      </div>
+                    <div class="col-md-2 pl-1">
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Endereço</label>
-                        <br><?php echo strval($ret_rsv_rlz_chkout['estac_endrc']); ?> <br>
+                        <br><?php echo ($ret_rsv_rlz_chkout['estac_endrc'] . ", CEP: " . $ret_rsv_rlz_chkout['estac_cep']); ?> <br>
                       </div>
                     </div>
                   </div>
@@ -209,7 +205,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 <!-- form action="test.php" method="POST" -->
                   <div class="row">
                     <div class="col-md-12">
-                      <br>Ao realizar o check-in, você estará informando que seus veículos foram estacionados na vaga e seu tempo de utilização da mesma será computado:
+                      <br>Ao realizar o check-out, você estará encerrando seu período de utilização da(s) vaga(s) para realização do processo de pagamento.
                     </div>               
                     <!-- query dos veículos -->
                   </div>
@@ -238,8 +234,8 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                               '<br>Placa: ' . $ret_rsv_rlz_chkout['fk_rsv_vei_placa_1'] . ' <br> Ano: ' . $ret_rsv_rlz_chkout['vei_ano'] .'
                             </div>
                           </div>'
-                          )
-                    }/*
+                      );
+                    }
                     if(!empty($ret_rsv_rlz_chkout['fk_rsv_vei_placa_2'])){
                       echo(
                         '<div class="row">
@@ -250,7 +246,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                               '<br>Placa: ' . $ret_rsv_rlz_chkout['fk_rsv_vei_placa_2'] . '<br> Ano: ' . $ret_rsv_rlz_chkout['vei_ano'] .'
                             </div>
                           </div>'
-                          )
+                      );
                     }
                     if(!empty($ret_rsv_rlz_chkout['fk_rsv_vei_placa_3'])){
                       echo(
@@ -262,7 +258,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                               '<br>Placa: ' . $ret_rsv_rlz_chkout['fk_rsv_vei_placa_3'] . '<br> Ano: ' . $ret_rsv_rlz_chkout['vei_ano'] .'
                             </div>
                           </div>'
-                          )
+                      );
                     }
                     if(!empty($ret_rsv_rlz_chkout['fk_rsv_vei_placa_4'])){
                       echo(
@@ -274,8 +270,8 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                               '<br>Placa: ' . $ret_rsv_rlz_chkout['fk_rsv_vei_placa_4'] . '<br> Ano: ' . $ret_rsv_rlz_chkout['vei_ano'] .'
                             </div>
                           </div>'
-                          )
-                    } */                   
+                      );
+                    }                   
                   } ?>
                     <div class="col-md-4 pl-1">
                     <tr>
@@ -285,7 +281,7 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                   <?php //$contador_novo++; } ?>
                   <br>
                   <div class="col-md-4 pl-1"><!-- tirado do Arma, melhorar -->
-                    <button class="button button-block button-primary" type="submit">Realizar Check-In</button>
+                    <button class="button button-block button-primary" type="submit">Realizar Check-Out</button>
                     <?php //echo("<a> ac: " . $array[$contador] . " - aco: " . $array[$contadorOutput] . " </a>"); ?>
                   </div> 
                 </form>

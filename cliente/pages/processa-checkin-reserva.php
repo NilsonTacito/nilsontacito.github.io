@@ -2,6 +2,10 @@
 //este arquivo (verificar se precisará de página) deverá deverá processar o momento do check-in (qr_code fica pras futuras implementações)
 include('conexa.php');
 include('processa-sessao-cliente.php');
+if(isset($_SESSION['id_rsv_futura'])){
+    //renomear esta var
+    $id_rsv_rlz_chkout = $_SESSION['id_rsv_futura'];
+  }
 
 /*
 update check in;

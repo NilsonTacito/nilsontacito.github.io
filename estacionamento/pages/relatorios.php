@@ -40,7 +40,7 @@ include("proc-sessao-gestor.php");
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
       <ul class="nav">
-        <li class="active ">
+          <li>
             <a href="./dados-cadastrais.php">
               <i class="now-ui-icons users_single-02"></i>
               <p>Dados Cadastrais</p>
@@ -48,25 +48,25 @@ include("proc-sessao-gestor.php");
           </li>
           <li>
             <a href="./estacionamentos.php">
-              <i class="now-ui-icons location_map-big"></i>
+              <i class="now-ui-icons shopping_shop"></i>
               <p>Estacionamentos</p>
             </a>
           </li>
           <li>
             <a href="./controle-de-vagas.php">
-              <i class="now-ui-icons ui-1_bell-53"></i>
+              <i class="now-ui-icons business_chart-bar-32"></i>
               <p>Controle de Vagas</p>
             </a>
           </li>
           <li class="active">
             <a href="./relatorios.php">
-              <i class="now-ui-icons ui-1_bell-53"></i>
+              <i class="now-ui-icons files_paper"></i>
               <p>Relatórios</p>
             </a>
-          </li>
+          </li>          
           <li class="active-pro">
             <a href="./logout.php">
-              <i class="now-ui-icons arrows-1_cloud-download-93"></i>
+              <i class="now-ui-icons ui-1_simple-remove"></i>
               <p>Sair</p>
             </a>
           </li>
@@ -85,56 +85,13 @@ include("proc-sessao-gestor.php");
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Table List</a>
+            <a class="navbar-brand" href="#pablo">Relatórios</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
             <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <form>
-              <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
-                <div class="input-group-append">
-                  <div class="input-group-text">
-                    <i class="now-ui-icons ui-1_zoom-bold"></i>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="now-ui-icons media-2_sound-wave"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="now-ui-icons location_world"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="now-ui-icons users_single-02"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Account</span>
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </div>
+          </button>          
         </div>
       </nav>
       <!-- End Navbar -->
@@ -145,23 +102,28 @@ include("proc-sessao-gestor.php");
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Simple Table</h4>
+                <h4 class="card-title">Relatório </h4>
+                <p class="category"> O valor da reserva é apresentado com as taxa de reserva e serviço já subtraídas </p>
               </div>
+              <!-- Colocar isso num while -->
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table">
                     <thead class=" text-primary">
                       <th>
-                        Name
+                        Reserva (ID)
                       </th>
                       <th>
-                        Country
+                        Estacionamento
                       </th>
                       <th>
-                        City
+                        Veículos
+                      </th>
+                      <th>
+                        Período
                       </th>
                       <th class="text-right">
-                        Salary
+                        Valor
                       </th>
                     </thead>
                     <tbody>
@@ -171,6 +133,9 @@ include("proc-sessao-gestor.php");
                         </td>
                         <td>
                           Niger
+                        </td>
+                        <td>
+                          Oud-Turnhout
                         </td>
                         <td>
                           Oud-Turnhout
@@ -270,132 +235,6 @@ include("proc-sessao-gestor.php");
             </div>
           </div>
           <div class="col-md-12">
-            <div class="card card-plain">
-              <div class="card-header">
-                <h4 class="card-title"> Table on Plain Background</h4>
-                <p class="category"> Here is a subtitle for this table</p>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Name
-                      </th>
-                      <th>
-                        Country
-                      </th>
-                      <th>
-                        City
-                      </th>
-                      <th class="text-right">
-                        Salary
-                      </th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          Dakota Rice
-                        </td>
-                        <td>
-                          Niger
-                        </td>
-                        <td>
-                          Oud-Turnhout
-                        </td>
-                        <td class="text-right">
-                          $36,738
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Sage Rodriguez
-                        </td>
-                        <td>
-                          Netherlands
-                        </td>
-                        <td>
-                          Baileux
-                        </td>
-                        <td class="text-right">
-                          $56,142
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Philip Chaney
-                        </td>
-                        <td>
-                          Korea, South
-                        </td>
-                        <td>
-                          Overland Park
-                        </td>
-                        <td class="text-right">
-                          $38,735
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Doris Greene
-                        </td>
-                        <td>
-                          Malawi
-                        </td>
-                        <td>
-                          Feldkirchen in Kärnten
-                        </td>
-                        <td class="text-right">
-                          $63,542
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Mason Porter
-                        </td>
-                        <td>
-                          Chile
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $78,615
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Jon Porter
-                        </td>
-                        <td>
-                          Portugal
-                        </td>
-                        <td>
-                          Gloucester
-                        </td>
-                        <td class="text-right">
-                          $98,615
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
