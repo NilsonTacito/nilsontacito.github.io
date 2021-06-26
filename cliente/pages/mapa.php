@@ -170,10 +170,10 @@ include("processa-sessao-cliente.php");
 
               var qtdCarro = document.createElement('text');
               //var vagas = 7;//tem que ser retorno de um select...
-              qtdCarro.textContent = 'Vagas disponiveis - Carro:'+' '+ vgCarro;
+              qtdCarro.textContent = 'Vagas disponiveis - Carros:'+' '+ vgCarro;
               
               var qtdMoto = document.createElement('text'); 
-              qtdMoto.textContent = 'Vagas para motos:'+' '+ vgMoto;
+              qtdMoto.textContent = 'Vagas disponiveis - Motos:'+' '+ vgMoto;
 
               var linkReserva = document.createElement('BUTTON');
               linkReserva.innerHTML = 'Reservar Vaga';    
@@ -198,7 +198,9 @@ include("processa-sessao-cliente.php");
                 infoWindow.setContent(infowincontent);
                 infoWindow.open(map, marker);
                 linkReserva.addEventListener ('click', function(){
-                  document.cookie ='id-do-estac='+id; //o pulo do gato! usar cookies pra guardar id do estacionamento 
+                  document.cookie ='id-do-estac='+id; //o pulo do gato! usar cookies pra guardar id do estacionamento
+                  document.cookie ='disp-carro='+vgCarro;
+                  document.cookie ='disp-moto='+vgMoto; 
                   window.location = "./reservar-vagas.php";
                 })
               });

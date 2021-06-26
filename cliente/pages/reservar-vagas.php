@@ -7,6 +7,15 @@ include('conexao.php');
 include('processa-sessao-cliente.php');
 include('backend-reservar-vaga.php');
 
+if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
+    $cookie_disp_carro = $_COOKIE['disp-carro'];
+    $cookie_disp_moto = $_COOKIE['disp-moto'];
+    
+    /*este update deve ser feito durante o submit da reserva!!!
+    $qry_update_disp_vagas = "UPDATE mov_vagas SET mvg_ocp_carro='{$cookie_disp_carro}', mvg_ocp_moto='{$cookie_disp_moto}' WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
+    $res_update_disp_vagas = mysqli_query($conn, $qry_update_disp_vagas);
+    */
+}
 ?>
 
 <!DOCTYPE html>
@@ -134,22 +143,22 @@ include('backend-reservar-vaga.php');
                       <?php
                       
                       //$query_disp_vagas = "SELECT COALESCE(CASE WHEN ISNULL (mvg_ocp_carro) THEN 0 ELSE mvg_ocp_carro END) AS mvg_ocp_carro_null_0, COALESCE(CASE WHEN ISNULL (mvg_ocp_moto) THEN 0 ELSE mvg_ocp_moto END) AS mvg_ocp_moto_null_0 FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
-                      $query_disp_vagas = "SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
+                      /*$query_disp_vagas = "SELECT mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
                       $res_disp_vagas = mysqli_query($conn, $query_disp_vagas);
                       while ($ret_disp_vagas = mysqli_fetch_array($res_disp_vagas, MYSQLI_BOTH)){
                           $disp_carro = $ret_disp_vagas['mvg_ocp_carro'];
                           $disp_moto = $ret_disp_vagas['mvg_ocp_moto'];
                           break;
-                      }    
+                      }*/    
                       ?>
                         <label>Vagas dispoíveis (carros)</label>
-                        <br><?php echo $disp_carro; ?><br>
+                        <br><?php echo $cookie_disp_carro; ?><br>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
                         <label>Vagas disponíveis (motos)</label>
-                        <br><?php echo $disp_moto; ?><br>
+                        <br><?php echo $cookie_disp_moto; ?><br>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">

@@ -36,11 +36,11 @@ while ($ret_cons_reserva = mysqli_fetch_array($res_cons_reserva, MYSQLI_BOTH)){
 
 //abaixo, a gambiarra (aprender a fazer isso na query, dentro do banco)
 //calcular e atualizar vagas disponíveis
-
+/*
 $vagas_disp_carro = ($ret_estac_capac_carro - $ret_mvg_ocp_carro);
 $vagas_disp_moto = ($ret_estac_capac_moto - $ret_mvg_ocp_moto);
 
 $query_update_vagas_disp = "UPDATE mov_vagas SET mvg_ocp_carro='{$vagas_disp_carro}', mvg_ocp_moto='{$vagas_disp_moto}' WHERE mvg_id = '{$ret_mvg_id}';";
-$res_update_vagas_disp = mysqli_query($conn, $query_update_vagas_disp);
+$res_update_vagas_disp = mysqli_query($conn, $query_update_vagas_disp);*/
 
 ?>

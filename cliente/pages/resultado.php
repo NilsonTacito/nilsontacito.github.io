@@ -10,14 +10,6 @@ function parseToXML($htmlStr){
 	return $xmlStr;
 }
 
-/*
-Query consultando as tabelas corretas:
-
-SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_lat, estacionamento.estac_long, estacionamento.estac_endrc, estacionamento.estac_cep, mov_vagas.mvg_id, mov_vagas.mvg_ocp_carro, mov_vagas.mvg_ocp_moto FROM (
-(mov_vagas INNER JOIN estacionamento ON mov_vagas.mvg_id = estacionamento.estac_id));
-
-*/
-
 // Select all the rows in the markers table
 $result_markers = "SELECT e.estac_id, e.estac_nome, e.estac_endrc, e.estac_lat, e.estac_long, e.estac_vg_carro - m.mvg_ocp_carro AS disp_carro, e.estac_vg_moto - m.mvg_ocp_moto AS disp_moto 
 FROM estacionamento e INNER JOIN mov_vagas m ON e.estac_id = m.fk_mvg_estac_id;";
@@ -29,7 +21,7 @@ header("Content-type: text/xml");
 echo '<markers>';
 
 // Iterate through the rows, printing XML nodes for each
-while ($row_markers = mysqli_fetch_assoc($resultado_markers)){
+while ($row_markers = mysqli_fetch_array($resultado_markers, MYSQLI_BOTH)){
   // Add to XML document node
   echo '<marker ';
   echo 'idestac="' . $row_markers['estac_id'] . '" '; //add id estac
