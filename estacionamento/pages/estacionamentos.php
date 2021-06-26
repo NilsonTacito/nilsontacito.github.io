@@ -142,6 +142,110 @@ include("proc-sessao-gestor.php");
   <!--  Google Maps Plugin    -->
 
   <script>
+    var customLabel = {
+        Estacionamento: {
+          label: 'E'
+        }
+      };
+
+        function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(-22.90524434791963, -43.17492474451717),
+          zoom: 15
+        });
+        var infoWindow = new google.maps.InfoWindow;
+
+
+          //Os campos de ID não precisarão aparecer no mapa, só precisamos deles armazenados em varáveis pra colocar nos cookies.
+          //A implementação dos cookies já foi feita mais abaixo, alteraremos quando for necessário 
+
+          // Change this depending on the name of your PHP or XML file
+          downloadUrl('resultado.php', function(data) {
+            var xml = data.responseXML;
+            var markers = xml.documentElement.getElementsByTagName('marker');
+            Array.prototype.forEach.call(markers, function(markerElem) {
+              var id = markerElem.getAttribute('idestac'); //var do ID do estac
+              var name = markerElem.getAttribute('name');
+              var address = markerElem.getAttribute('address');
+              var type = markerElem.getAttribute('type');
+              var point = new google.maps.LatLng(
+                  parseFloat(markerElem.getAttribute('lat')),
+                  parseFloat(markerElem.getAttribute('lng'))); 
+
+              var vgCarro = markerElem.getAttribute('vgCarro');
+              var vgMoto = markerElem.getAttribute('vgMoto');
+              
+              var infowincontent = document.createElement('div');
+
+              var strong = document.createElement('strong');            
+              strong.textContent = name
+              infowincontent.appendChild(strong);              
+              infowincontent.appendChild(document.createElement('br'));  
+              //infowincontent.appendChild(document.createElement('br'));  
+
+              var text = document.createElement('text');
+              text.textContent = address;
+
+              var qtdCarro = document.createElement('text');
+              //var vagas = 7;//tem que ser retorno de um select...
+              qtdCarro.textContent = 'Vagas disponiveis - Carros:'+' '+ vgCarro;
+              
+              var qtdMoto = document.createElement('text'); 
+              qtdMoto.textContent = 'Vagas disponiveis - Motos:'+' '+ vgMoto;
+
+              var linkReserva = document.createElement('BUTTON');
+              linkReserva.innerHTML = 'Consultar Estacionamento';    
+
+              infowincontent.appendChild(text);
+              infowincontent.appendChild(document.createElement('br'));
+              infowincontent.appendChild(document.createElement('br'));
+              infowincontent.appendChild(qtdCarro);
+              infowincontent.appendChild(document.createElement('br'));
+              infowincontent.appendChild(qtdMoto);
+              infowincontent.appendChild(document.createElement('br'));
+              infowincontent.appendChild(document.createElement('br'));
+              infowincontent.appendChild(linkReserva);
+
+              var icon = customLabel[type] || {};
+              var marker = new google.maps.Marker({
+                map: map,
+                position: point,
+                label: icon.label
+              });
+              marker.addListener('click', function() {
+                infoWindow.setContent(infowincontent);
+                infoWindow.open(map, marker);
+                linkReserva.addEventListener ('click', function(){
+                  document.cookie ='id-do-estac='+id; //o pulo do gato! usar cookies pra guardar id do estacionamento
+                  //document.cookie ='disp-carro='+vgCarro;
+                  //document.cookie ='disp-moto='+vgMoto; 
+                  window.location = "./status-estacionamento.php";
+                })
+              });
+            });
+          });
+        }
+
+        function downloadUrl(url, callback) {
+          var request = window.ActiveXObject ?
+            new ActiveXObject('Microsoft.XMLHTTP') :
+            new XMLHttpRequest;
+
+        request.onreadystatechange = function() {
+          if (request.readyState == 4) {
+            request.onreadystatechange = doNothing;
+            callback(request, request.status);
+          }
+        };
+
+        request.open('GET', url, true);
+        request.send(null);
+      }
+
+      function doNothing() {}
+
+
+/*
       var customLabel = {
         Estacionamento: {
           label: 'E'
@@ -237,6 +341,8 @@ include("proc-sessao-gestor.php");
       }
 
       function doNothing() {}
+      
+      */
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFWaImXm4kPvus4XZZWT2EjlPFqiYT7Fs&callback=initMap">

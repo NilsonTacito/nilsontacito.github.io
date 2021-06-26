@@ -27,7 +27,10 @@ mov_vagas.fk_mvg_estac_id = estacionamento.fk_gst_cnpj = $cnpj
 
 */
 // Select all the rows in the markers table
-$result_markers = "SELECT * FROM markers";
+$result_markers = "SELECT e.estac_id, e.estac_nome, e.estac_endrc, e.estac_lat, e.estac_long, e.estac_vg_carro - m.mvg_ocp_carro AS disp_carro, e.estac_vg_moto - m.mvg_ocp_moto AS disp_moto 
+FROM estacionamento e INNER JOIN mov_vagas m ON e.estac_id = m.fk_mvg_estac_id
+WHERE fk_gst_cnpj = '{$gst_sess_doc}';";
+
 $resultado_markers = mysqli_query($conn, $result_markers);
 
 header("Content-type: text/xml");
@@ -36,17 +39,16 @@ header("Content-type: text/xml");
 echo '<markers>';
 
 // Iterate through the rows, printing XML nodes for each
-while ($row_markers = mysqli_fetch_assoc($resultado_markers)){
+while ($row_markers = mysqli_fetch_array($resultado_markers,MYSQLI_BOTH)){
   // Add to XML document node
   echo '<marker ';
-  echo 'id="' . $row_markers['id'] . '" ';//add id estac
-  echo 'name="' . parseToXML($row_markers['name']) . '" ';
-  echo 'address="' . parseToXML($row_markers['address']) . '" ';
-  echo 'lat="' . $row_markers['lat'] . '" ';
-  echo 'lng="' . $row_markers['lng'] . '" ';
-  echo 'type="' . $row_markers['type'] . '" ';
-  echo 'vgCarro="' . $row_markers['vg_carro'] . '" ';
-  echo 'vgMoto="' . $row_markers['vg_moto'] . '" ';
+  echo 'idestac="' . $row_markers['estac_id'] . '" '; //add id estac
+  echo 'name="' . parseToXML($row_markers['estac_nome']) . '" ';
+  echo 'address="' . parseToXML($row_markers['estac_endrc']) . '" ';
+  echo 'lat="' . $row_markers['estac_lat'] . '" ';
+  echo 'lng="' . $row_markers['estac_long'] . '" ';
+  echo 'vgCarro="' . $row_markers['disp_carro'] . '" ';
+  echo 'vgMoto="' . $row_markers['disp_moto'] . '" ';
   echo '/>';
 }
 
