@@ -10,11 +10,6 @@ include('backend-reservar-vaga.php');
 if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
     $cookie_disp_carro = $_COOKIE['disp-carro'];
     $cookie_disp_moto = $_COOKIE['disp-moto'];
-    
-    /*este update deve ser feito durante o submit da reserva!!!
-    $qry_update_disp_vagas = "UPDATE mov_vagas SET mvg_ocp_carro='{$cookie_disp_carro}', mvg_ocp_moto='{$cookie_disp_moto}' WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";
-    $res_update_disp_vagas = mysqli_query($conn, $qry_update_disp_vagas);
-    */
 }
 ?>
 

@@ -110,13 +110,19 @@ include("proc-consulta-gestor.php");
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>CNPJ</label>
-                        <input name="tipo_veiculo" type="text" class="form-control" disabled="" placeholder="<?php echo $ret_cnpj; ?>">
+                        <input class="form-control" disabled="" placeholder="<?php echo $ret_cnpj; ?>">
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 pl-1">
+                      <div class="form-group">
+                        <label>Telefone</label>
+                        <input name="gestor-telefone" class="form-control" placeholder="<?php echo $ret_telefone; ?>" required>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
                       <div class="form-group">
                         <label>Razão Social</label>
-                        <input name="placa_veiculo" type="text" class="form-control" disabled="" placeholder="<?php echo $ret_rzsocial; ?>">
+                        <input class="form-control" disabled="" placeholder="<?php echo $ret_rzsocial; ?>">
                       </div>
                     </div>
                   </div>
@@ -124,13 +130,13 @@ include("proc-consulta-gestor.php");
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Nome</label>
-                        <input type="text" class="form-control" placeholder="<?php echo $ret_nome; ?>" >
+                        <input type="text" name="gestor-nome" class="form-control" placeholder="<?php echo $ret_nome; ?>" required>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Sobrenome</label>
-                        <input type="text" class="form-control" placeholder="<?php echo $ret_sbnome; ?>" >
+                        <input type="text" name="gestor-sbnome" class="form-control" placeholder="<?php echo $ret_sbnome; ?>" required>
                       </div>
                     </div>
                   </div>
@@ -138,13 +144,13 @@ include("proc-consulta-gestor.php");
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="text" class="form-control" disabled="" placeholder="<?php echo $ret_email; ?>" >
+                        <input class="form-control" disabled="" placeholder="<?php echo $ret_email; ?>" required>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>CEP</label>
-                        <input type="text" class="form-control" placeholder="<?php echo $ret_cep; ?>" >
+                        <input name="gestor-cep" class="form-control" placeholder="<?php echo $ret_cep; ?>" required>
                       </div>
                     </div>
                   </div>
@@ -152,7 +158,7 @@ include("proc-consulta-gestor.php");
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Endereço</label><!-- pq estes dados não estão completos? funcionou após colocar aspas no placeholder -->
-                        <input type="text" class="form-control" placeholder="<?php echo $ret_endereco; ?>" >
+                        <input name="gestor-endrc" class="form-control" placeholder="<?php echo $ret_endereco; ?>" required>
                       </div>
                     </div>
                   </div>

@@ -5,6 +5,12 @@
     </title>
 </head>
 <body>
-    test.php
+
+<?php
+$x = 99;
+$y = intval(($x / 100) * 70);
+echo $y;
+?>
+ 
 </body>
 </html>

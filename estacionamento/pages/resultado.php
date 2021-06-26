@@ -11,21 +11,6 @@ function parseToXML($htmlStr){
 	return $xmlStr;
 }
 
-/*
-retornar cnpj
-$query_get_cnpj = SELECT gst_cnpj FROM gestor WHERE gst_email = '{$lg_gestor}';
-$res_get_cnpj = mysqli_query($conn, $query_get_cnpj);
-if ($res_get_cnpj != null){
-  $ret_get_cnpj = mysqli_fetch_array($res_get_cnpj, MYSQLI_ASSOC);
-  $cnpj = $ret_get_cnpj['gst_cnpj'];
-}
-
-esboço da query do xml
-SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_lat, estacionamento.estac_long, estacionamento.estac_vg_carro, estacionamento.estac_vg_moto
-mov_vagas.mvg_id, mov_vagas.mvg_ocp_carro 
-mov_vagas.fk_mvg_estac_id = estacionamento.fk_gst_cnpj = $cnpj
-
-*/
 // Select all the rows in the markers table
 $result_markers = "SELECT e.estac_id, e.estac_nome, e.estac_endrc, e.estac_lat, e.estac_long, e.estac_vg_carro - m.mvg_ocp_carro AS disp_carro, e.estac_vg_moto - m.mvg_ocp_moto AS disp_moto 
 FROM estacionamento e INNER JOIN mov_vagas m ON e.estac_id = m.fk_mvg_estac_id

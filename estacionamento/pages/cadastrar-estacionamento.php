@@ -108,16 +108,24 @@ include("proc-sessao-gestor.php");
               <div class="card-body">
                 <form method="POST" action="processa-cad-estacionamento.php">
                 <div class="row">
-                    <div class="col-md-8 pr-1">
+                    <div class="col-md-12">
                       <div class="form-group">
                         <label>Nome</label>
-                        <input type="text" name="estac-frm-nome" class="form-control" placeholder="Ex: Quitanda 55 Park">
+                        <input type="text" name="estac-nome" class="form-control" placeholder="Ex: Quitanda 55 Park" required>
                       </div>
                     </div>
-                    <div class="col-md-4 pl-1">
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="text" name="estac-telefone" class="form-control" placeholder="21 26245544" required>
+                      </div>
+                    </div>                    
+                    <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>CEP</label>
-                        <input type="text" name="estac-frm-cep" class="form-control" placeholder="248080040">
+                        <input type="text" name="estac-cep" class="form-control" placeholder="248080040" required>
                       </div>
                     </div>
                   </div>
@@ -125,7 +133,7 @@ include("proc-sessao-gestor.php");
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Endereço</label>
-                        <input type="text" name="estac-frm-endereco"class="form-control" placeholder="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
+                        <input type="text" name="estac-endrc"class="form-control" placeholder="R. da Quitanda, Centro - Rio de Janeiro 55" required>
                       </div>
                     </div>
                   </div>
@@ -133,13 +141,13 @@ include("proc-sessao-gestor.php");
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Total de vagas (carros)</label>
-                        <input type="text" name="estac-frm-ttl-carro" class="form-control" placeholder="100">
+                        <input type="text" name="estac-ttl-carro" class="form-control" placeholder="100" required>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
                         <label>Total de vagas (motos)</label>
-                        <input type="text" name="estac-frm-tt-moto" class="form-control" placeholder="80">
+                        <input type="text" name="estac-ttl-moto" class="form-control" placeholder="80" required>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -148,13 +156,13 @@ include("proc-sessao-gestor.php");
                     <div class="col-md-2 pl-1">
                       <div class="form-group"><!-- ver input type -->
                         <label>Horário de abertura</label>
-                        <input type="text" name="estac-frm-exp-inicio" class="form-control" placeholder="07:00">
+                        <input type="text" name="estac-exp-inicio" class="form-control" placeholder="07:00" required>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Horário de encerramento</label>
-                        <input type="text" name="estac-frm-exp-fim" class="form-control" placeholder="19:00">
+                        <input type="text" name="estac-exp-fim" class="form-control" placeholder="19:00" required>
                       </div>
                     </div>
                   </div>
@@ -177,13 +185,13 @@ include("proc-sessao-gestor.php");
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Preço por hora (carros)</label>
-                        <input type="text" name="estac-frm-hr-carro" class="form-control" placeholder="5.00">
+                        <input type="text" name="estac-hr-carro" class="form-control" placeholder="5.00" required>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
                         <label> Preço da diária (carros)</label>
-                        <input type="email" name="estac-frm-dia-carro" class="form-control" placeholder="50.00">
+                        <input type="email" name="estac-dia-carro" class="form-control" placeholder="50.00" required>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -192,18 +200,18 @@ include("proc-sessao-gestor.php");
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
                         <label>Preço por hora (motos)</label>
-                        <input type="email" name="estac-frm-hr-moto" class="form-control" placeholder="4.00">
+                        <input type="email" name="estac-hr-moto" class="form-control" placeholder="4.00" required>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Preço diária (motos)</label>
-                        <input type="text" name="estac-frm-dia-moto" class="form-control" placeholder="40.00">
+                        <input type="text" name="estac-dia-moto" class="form-control" placeholder="40.00" required>
                       </div>
                     </div>
                   </div>
                   <div class="offset-top-25"><!-- tirado do Arma, melhorar -->
-                    <button class="button button-block button-primary" type="submit">Enviar</button>
+                    <button class="button button-block button-primary" type="submit">Cadastrar</button>
                   </div>        
                 </form>
               </div>
