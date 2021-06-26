@@ -124,7 +124,7 @@ include("processa-sessao-cliente.php");
   <!--  Google Maps Plugin    -->
 
   <script>
-      var customLabel = {
+  var customLabel = {
         Estacionamento: {
           label: 'E'
         }
@@ -170,7 +170,7 @@ include("processa-sessao-cliente.php");
 
               var qtdCarro = document.createElement('text');
               //var vagas = 7;//tem que ser retorno de um select...
-              qtdCarro.textContent = 'Vagas para carros:'+' '+ vgCarro;
+              qtdCarro.textContent = 'Vagas disponiveis - Carro:'+' '+ vgCarro;
               
               var qtdMoto = document.createElement('text'); 
               qtdMoto.textContent = 'Vagas para motos:'+' '+ vgMoto;

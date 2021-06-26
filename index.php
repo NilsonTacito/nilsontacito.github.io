@@ -4,6 +4,11 @@ if($_SESSION['cliente_logado'] == true){
   header('Location: /cliente/pages/mapa.php');
   exit();
 }
+
+if($_SESSION['gestor_logado'] == true){
+  header('Location: /estacionamento/pages/estacionamentos.php');
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -127,7 +132,12 @@ if($_SESSION['cliente_logado'] == true){
               <label class="form-label" for="contact-cep">CEP</label>
             </div>
             <div class="offset-top-25">
-              <button class="button button-block button-primary" type="submit">Concluir cadastro</button>
+              <button onclick="redirCliente()" class="button button-block button-primary" type="submit">Concluir cadastro</button>
+              <script>
+                    function redirCliente() {
+                      window.location.href = "http://192.168.1.30/cliente/pages/mapa.php";
+                    }
+              </script>
             </div>
           </form>
         </div>
@@ -176,7 +186,12 @@ if($_SESSION['cliente_logado'] == true){
                   <label class="form-label" for="contact-phone-2">Telefone</label>
                 </div>
                 <div class="offset-top-25">
-                  <button class="button button-block button-primary" type="submit">Concluir cadastro</button>
+                  <button onclick="redirGestor()" class="button button-block button-primary" type="submit">Concluir cadastro</button>
+                  <script>
+                    function redirGestor() {
+                      window.location.href = "http://192.168.1.30/estacionamento/pages/estacionamentos.php";
+                    }
+                  </script>
                 </div>
               </form>
             </div>

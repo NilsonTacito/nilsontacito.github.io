@@ -291,6 +291,7 @@ include('processa-checkin-reserva.php');
                   <br>
                   <div class="col-md-4 pl-1"><!-- tirado do Arma, melhorar -->
                     <button class="button button-block button-primary" type="submit">Realizar Check-In</button>
+                    <button class="button button-block button-primary" type="submit">Cancelar Reserva</button>
                     <?php //echo("<a> ac: " . $array[$contador] . " - aco: " . $array[$contadorOutput] . " </a>"); ?>
                   </div> 
                 </form>
