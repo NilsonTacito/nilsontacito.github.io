@@ -1,12 +1,12 @@
 <?php
 session_start();
 if($_SESSION['cliente_logado'] == true){
-  header('Location: /cliente/pages/mapa.php');
+  header('Location: /cliente/pages/cadastrar-veiculo.php');
   exit();
 }
 
 if($_SESSION['gestor_logado'] == true){
-  header('Location: /estacionamento/pages/estacionamentos.php');
+  header('Location: /estacionamento/pages/cadastrar-estacionamento.php');
   exit();
 }
 ?>
@@ -135,7 +135,7 @@ if($_SESSION['gestor_logado'] == true){
               <button onclick="redirCliente()" class="button button-block button-primary" type="submit">Concluir cadastro</button>
               <script>
                     function redirCliente() {
-                      window.location.href = "http://192.168.1.30/cliente/pages/mapa.php";
+                      window.location.href = "http://www.parkingbr.com/cliente/pages/mapa.php";
                     }
               </script>
             </div>
@@ -189,7 +189,7 @@ if($_SESSION['gestor_logado'] == true){
                   <button onclick="redirGestor()" class="button button-block button-primary" type="submit">Concluir cadastro</button>
                   <script>
                     function redirGestor() {
-                      window.location.href = "http://192.168.1.30/estacionamento/pages/estacionamentos.php";
+                      window.location.href = "http://www.parkingbr.com/estacionamento/pages/estacionamentos.php";
                     }
                   </script>
                 </div>
