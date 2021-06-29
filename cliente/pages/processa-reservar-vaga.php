@@ -4,15 +4,38 @@
 include('conexao.php');
 include('processa-sessao-cliente.php');
 
-$res_data= $_POST['inp-data']; 
-$res_hora= $_POST['inp-hora'];
-$res_veiculo = $_POST['inp-veciulo'];
-var_dump($res_veiculo);
-//res-dia, res-mes, res-ano, res-hora
+$res_dia= $_POST['res-dia']; 
+$res_mes= $_POST['res-mes'];
+$res_ano= $_POST['res-ano'];
+$res_hora= $_POST['res-hora'];
+$res_veiculo= $_POST['res-veciulo'];
+
+$res_datetime = ($res_ano . "-" . $res_mes . "-" . $res_dia . " " . $res_hora . ":00"); 
+
+var_dump($res_veiculo . ", datetime: " . $res_datetime);
+
+//res-dia, res-mes, res-ano, res-hora, res-veciulo
+//STR_TO_DATE('04/04/2012 04:03:35 AM', '%d/%m/%Y %r')
+
+$qry_time_diff = "SELECT TIMESTAMPDIFF(DAY,current_date(),STR_TO_DATE('{$res_datetime}', '%d/%m/%Y %r')) AS diff_data;";
+$res_time_diff = mysqli_query($conn, $qry_time_diff);
+$ret_time_diff = mysqli_fetch_array($res_time_diff, MYSQLI_BOTH);
+$time_diff = intval($ret_time_diff['diff_data']);
+
+if($time_diff > 7){
+    //$_SESSION['errors'] = array();
+    $error_time_diff = '<a style="color: red;">Erro: Data agendada para reserva acima do limite permitido!</a>';
+    $_SESSION['error_time_diff'] = $error_time_diff;
+    header('Location: /cliente/pages/reservar-vagas.php');
+    exit();
+}
+
 
 if(!empty($res_veiculo)){//insert
     
-    $query_rsv_0="INSERT INTO reserva (rsv_data, fk_rsv_estac_id, fk_rsv_vei_placa, rsv_hora) VALUES ('{$res_data}', '{$cookie_id_estac}', '{$res_veiculo}', '{$res_hora}');";
+    //$query_rsv_0="INSERT INTO reserva (rsv_data, fk_rsv_estac_id, fk_rsv_vei_placa, rsv_hora) VALUES ('{$res_data}', '{$cookie_id_estac}', '{$res_veiculo}', '{$res_hora}');";
+
+    $query_rsv_0="INSERT INTO reserva (rsv_data, fk_rsv_estac_id, fk_rsv_vei_placa) VALUES ('{$res_datetime}', '{$cookie_id_estac}', '{$res_veiculo}');";
     $res_rsv_0 = mysqli_query($conn, $query_rsv_0);
     
     $qry_last_id ="SELECT last_insert_id();";

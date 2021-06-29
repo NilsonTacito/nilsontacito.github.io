@@ -199,16 +199,17 @@ if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
                 <form action="processa-reservar-vaga.php" method="POST">
                   <div class="row">
                     <div class="col-md-12">                      
-                      <br>Atenção: Para efetuar a reserva, será cobrada uma taxa fixa de <?php echo($ret_mvg_tx_reserva . "$"); ?>
+                      <br>Atenção: Para efetuar a reserva, será cobrada uma taxa serviço de <?php echo($ret_mvg_tx_reserva . "$"); ?>
+                      <br>A data agendada para utilização da vaga não pode ser superior à 7 dias após a data atual. 
                       <br>
-                      <br>Preencha os campos abaixo de acordo com o exmeplo: 
+                      <br>
                     </div>
                     <div class="col-md-3 pr-1">
                       <div class="form-group">
                         <label for="dia">Dia:</label>
                         <select name="res-dia" id="res-dia">  
                         <?php
-                        for( $for_dia = 1; $for_dia < 32; $for_dia++ ){
+                        for($for_dia = 1; $for_dia < 32; $for_dia++){
                           echo('<option value="' . $for_dia . '">'. $for_dia .'</option>');
                         }                                                       
                         ?>
@@ -280,8 +281,13 @@ if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
                       </div>
                     </div>                 
                   </div>
-                  <div class="row">
+                  <div class="row"><!-- error handling -->
                     <div class="col-md-12">
+                      <?php
+                      if(isset($_SESSION['error_time_diff'])){
+                        echo $_SESSION['error_time_diff']];
+                      } 
+                      ?> 
                       <label></label>
                     </div>
                   </div>              
@@ -289,7 +295,7 @@ if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                       <br>Selecione o veículo:
-                        <select name="inp-veciulo" id="veiculos">
+                        <select name="res-veciulo" id="veiculos">
                         <?php                                            
                           $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante FROM veiculo WHERE fk_clt_doc = '{$sess_doc}';";
                           $res_veiculos = mysqli_query($conn, $query_veiculos);
@@ -338,7 +344,7 @@ if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
                   <br>
                   <div class="col-md-4 pl-1"><!-- tirado do Arma, melhorar -->
                     <button class="button button-block button-primary" type="submit">Reservar Vagas</button>
-                  </div> 
+                  </div>                  
                 </form>
               </div>
             </div>
