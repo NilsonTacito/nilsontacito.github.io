@@ -132,12 +132,7 @@ if($_SESSION['gestor_logado'] == true){
               <label class="form-label" for="contact-cep">CEP</label>
             </div>
             <div class="offset-top-25">
-              <button onclick="redirCliente()" class="button button-block button-primary" type="submit">Concluir cadastro</button>
-              <script>
-                    function redirCliente() {
-                      window.location.href = "http://www.parkingbr.com/cliente/pages/mapa.php";
-                    }
-              </script>
+              <button class="button button-block button-primary" type="submit">Concluir cadastro</button>
             </div>
           </form>
         </div>
@@ -186,12 +181,7 @@ if($_SESSION['gestor_logado'] == true){
                   <label class="form-label" for="contact-phone-2">Telefone</label>
                 </div>
                 <div class="offset-top-25">
-                  <button onclick="redirGestor()" class="button button-block button-primary" type="submit">Concluir cadastro</button>
-                  <script>
-                    function redirGestor() {
-                      window.location.href = "http://www.parkingbr.com/estacionamento/pages/estacionamentos.php";
-                    }
-                  </script>
+                  <button class="button button-block button-primary" type="submit">Concluir cadastro</button>
                 </div>
               </form>
             </div>

@@ -25,7 +25,7 @@ FROM ((mov_vagas m INNER JOIN estacionamento e ON e.estac_id = m.mvg_id)
 WHERE e.estac_id = '{$cookie_id_estac} AND r.rsv_data = CURRENT_DATE;";
 */
 
-$qry_res_futuras = "SELECT e.estac_nome, e.estac_endrc, e.estac_cep, e.estac_vg_carro, e.estac_vg_moto, m.mvg_ocp_carro, m.mvg_ocp_moto
+$qry_res_futuras = "SELECT e.estac_nome, e.estac_endrc, e.estac_cep, e.estac_vg_carro, e.estac_expd_ini, e.estac_expd_fim, e.estac_vg_moto, m.mvg_ocp_carro, m.mvg_ocp_moto
 FROM mov_vagas m INNER JOIN estacionamento e ON e.estac_id = m.fk_mvg_estac_id
 WHERE e.estac_id = '{$cookie_id_estac}';";
 
@@ -46,6 +46,8 @@ while($ret_res_futuras = mysqli_fetch_array($res_res_futuras, MYSQLI_BOTH)){
   $estac_cep = $ret_res_futuras['estac_cep'];
   $estac_vg_carro = $ret_res_futuras['estac_vg_carro'];
   $estac_vg_moto = $ret_res_futuras['estac_vg_moto'];
+  $estac_ini = $ret_res_futuras['estac_expd_ini'];
+  $estac_fim = $ret_res_futuras['estac_expd_fim'];
   $estac_ocp_carro = $ret_res_futuras['mvg_ocp_carro'];
   $estac_ocp_moto = $ret_res_futuras['mvg_ocp_moto'];
 
@@ -168,7 +170,8 @@ while($ret_res_futuras = mysqli_fetch_array($res_res_futuras, MYSQLI_BOTH)){
             <div class="card">
               <div class="card-header">
                 <h4 class="card-title"><?php echo $estac_nome; ?></h4><!-- return do banco -->
-                <p class="category"><?php echo($estac_endrc . ", " .  $estac_cep); ?></p>
+                <a class="category"><?php echo($estac_endrc . ", " .  $estac_cep); ?></a><br>
+                <a class="category"><?php echo("Expediente: " . $estac_ini. " - " .  $estac_fim); ?></a>
               </div>
               <div class="card-body">
                 <div class="table-responsive">

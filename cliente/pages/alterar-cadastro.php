@@ -123,13 +123,13 @@ include("processa-consultar-cliente.php");
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Nome</label>
-                        <input type="text" class="form-control" name="nome-cliente" placeholder="<?php echo $ret_nome_cliente; ?>">
+                        <input type="text" class="form-control" name="nome-cliente" placeholder="<?php echo $ret_nome_cliente; ?>" required>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>Sobrenome</label>
-                        <input type="text" class="form-control" name="sbnome-cliente" placeholder="<?php echo $ret_sbnome_cliente; ?>"">
+                        <input type="text" class="form-control" name="sbnome-cliente" placeholder="<?php echo $ret_sbnome_cliente; ?>" required>
                       </div>
                     </div>
                   </div>
@@ -137,7 +137,7 @@ include("processa-consultar-cliente.php");
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Endereço</label>
-                        <input type="text" class="form-control" name="endrc-cliente" placeholder="<?php echo $ret_endrc_cliente; ?>">
+                        <input type="text" class="form-control" name="endrc-cliente" placeholder="<?php echo $ret_endrc_cliente; ?>" required>
                       </div>
                     </div>
                   </div>
@@ -145,13 +145,13 @@ include("processa-consultar-cliente.php");
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Telefone</label>
-                        <input type="text" class="form-control" name="tel-cliente" placeholder="<?php echo $ret_tel_cliente; ?>">
+                        <input type="tel" class="form-control" name="tel-cliente" placeholder="<?php echo $ret_tel_cliente; ?>" pattern="[0-9]{2}-[0-9]{9}" required>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>CEP</label>
-                        <input type="text" class="form-control" name="cep-cliente" placeholder="<?php echo $ret_cep_cliente; ?>">
+                        <input type="tel" class="form-control" name="cep-cliente" placeholder="<?php echo $ret_cep_cliente; ?>" pattern="[0-9]{5}-[0-9]{3}" required>
                       </div>
                     </div>
                   </div>

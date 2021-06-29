@@ -8,7 +8,7 @@ $res_data= $_POST['inp-data'];
 $res_hora= $_POST['inp-hora'];
 $res_veiculo = $_POST['inp-veciulo'];
 var_dump($res_veiculo);
-
+//res-dia, res-mes, res-ano, res-hora
 
 if(!empty($res_veiculo)){//insert
     

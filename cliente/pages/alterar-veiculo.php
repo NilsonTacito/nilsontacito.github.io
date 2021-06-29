@@ -96,18 +96,21 @@ include('processa-sessao-cliente.php');
                 <form method="POST" action="processa-cad-veiculo.php">
                   <!--Abaixo, o campo do tipo do veículo -->
                   <div class="row">
-                    <div class="col-md-6 pr-1">
-                      <div class="form-group">
-                        <label>Tipo</label>
-                        <input name="tipo_veiculo" type="text" class="form-control" placeholder="carro ou moto" >
-                      </div>
-                    </div>
-                    <div class="col-md-6 pr-1">
+                  <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Placa</label>
-                        <input name="placa_veiculo" type="text" class="form-control" placeholder="ABC-1234">
+                        <input name="placa_veiculo" type="text" class="form-control" placeholder="ABC-1234" pattern="[A-Za-z]{3}-[0-9]{4}">
                       </div>
                     </div>
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                      <label>Veículo</label><br>                     
+                        <input type="radio" name="tipo-veiculo" id="veiculo" value="carro"/>
+                        <label for="carro">Carro</label><br>
+                        <input type="radio" name="tipo-veiculo" id="veiculo" value="moto"/>
+                        <label for="moto">Moto</label>
+                      </div>
+                    </div>                    
                   </div>
                   <div class="row">
                     <div class="col-md-6 pr-1">
@@ -133,7 +136,7 @@ include('processa-sessao-cliente.php');
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>Ano</label>
-                        <input name="ano_veiculo" type="text" class="form-control" placeholder="1997">
+                        <input name="ano_veiculo" type="number" class="form-control" placeholder="1997">
                       </div>
                     </div>
                   </div>

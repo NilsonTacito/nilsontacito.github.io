@@ -96,30 +96,33 @@ include('processa-sessao-cliente.php');
                 <form method="POST" action="processa-cad-veiculo.php">
                   <!--Abaixo, o campo do tipo do veículo -->
                   <div class="row">
-                    <div class="col-md-6 pr-1">
-                      <div class="form-group">
-                        <label>Tipo</label>
-                        <input name="tipo_veiculo" type="text" class="form-control" placeholder="carro ou moto" >
-                      </div>
-                    </div>
-                    <div class="col-md-6 pr-1">
+                  <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Placa</label>
-                        <input name="placa_veiculo" type="text" class="form-control" placeholder="ABC-1234">
+                        <input name="placa_veiculo" type="text" class="form-control" placeholder="ABC-1234" pattern="[A-Za-z]{3}-[0-9]{4}" required>
                       </div>
                     </div>
+                    <div class="col-md-6 pr-1">
+                      <div class="form-group">
+                      <label>Veículo</label><br>                     
+                        <input type="radio" name="tipo-veiculo" id="veiculo-carro" value="Carro" required/>
+                        <label for="carro">Carro</label><br>
+                        <input type="radio" name="tipo-veiculo" id="veiculo-moto" value="Moto" required/>
+                        <label for="moto">Moto</label>
+                      </div>
+                    </div>                    
                   </div>
                   <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Modelo</label>
-                        <input name="modelo_veiculo" type="text" class="form-control" placeholder="Civic XLS, Golf GTI, etc...">
+                        <input name="modelo_veiculo" type="text" class="form-control" placeholder="Civic XLS, Golf GTI, etc..." required>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>Fabricante</label>
-                        <input name="fabricante_veiculo" type="text" class="form-control" placeholder="Ford, Mercedes Benz, BMW, etc...">
+                        <input name="fabricante_veiculo" type="text" class="form-control" placeholder="Ford, Mercedes Benz, BMW, etc..." required>
                       </div>
                     </div>
                   </div>
@@ -127,17 +130,21 @@ include('processa-sessao-cliente.php');
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Cor</label>
-                        <input name="cor_veiculo" type="text" class="form-control" placeholder="Cinza Carra, Azul Platinum, etc...">
+                        <input name="cor_veiculo" type="text" class="form-control" placeholder="Cinza Carra, Azul Platinum, etc..." required>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>Ano</label>
-                        <input name="ano_veiculo" type="text" class="form-control" placeholder="1997">
+                        <input name="ano_veiculo" type="text" class="form-control" placeholder="1997" pattern="[0-9]{4}" required>
                       </div>
                     </div>
                   </div>
-                  
+                  <?php
+                   if(!empty($_SESSION['error-cad'])){
+                      echo $_SESSION['error-cad'];
+                    }
+                   ?>
                   <div class="offset-top-25"><!-- tirado do Arma, melhorar -->
                     <button class="button button-block button-primary" type="submit">Concluir cadastro</button>
                   </div>                                 

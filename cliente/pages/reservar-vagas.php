@@ -205,16 +205,78 @@ if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
                     </div>
                     <div class="col-md-3 pr-1">
                       <div class="form-group">
-                        <br>
-                        <a>Data</a>
-                        <input type="text" class="form-control" placeholder="Ex: 13/05/2021" name="inp-data">
+                        <label for="dia">Dia:</label>
+                        <select name="res-dia" id="res-dia">  
+                        <?php
+                        for( $for_dia = 1; $for_dia < 32; $for_dia++ ){
+                          echo('<option value="' . $for_dia . '">'. $for_dia .'</option>');
+                        }                                                       
+                        ?>
+                        </select>
+                        <label for="mes">Mês:</label>
+                        <select name="res-mes" id="res-mes">  
+                        <?php
+                        $get_mes = date('n');
+                        $mes_mais = $get_mes + 1;
+                        for( $for_mes = $get_mes; $for_mes <= $mes_mais; $for_mes++ ){
+                          echo('<option value="' . $for_mes . '">'. $for_mes .'</option>');
+                        }
+                        ?>                        
+                        </select>
+                        <label for="ano">Ano:</label>
+                        <select name="res-ano" id="res-ano">  
+                        <?php
+                        $get_ano = date('Y');
+                        $ano_mais = $get_ano + 1;
+                        for( $for_ano = $get_ano; $for_ano <= $ano_mais; $for_ano++ ){
+                          echo('<option value="' . $for_ano . '">'. $for_ano .'</option>');
+                        }                                                       
+                        ?>
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-3 pr-1">
-                      <div class="form-group">
-                        <br>
-                        <a>Hora</a>
-                        <input type="text" class="form-control" placeholder="19:30" name="inp-hora">
+                      <div class="form-group">         
+                        <label for="hora">Hora:</label>
+                        <select name="res-hora" id="hora">
+                          <option value="06:00">06:00</option>
+                          <option value="06:30">06:30</option>
+                          <option value="07:00">07:00</option>
+                          <option value="07:30">07:30</option>
+                          <option value="08:00">08:00</option>
+                          <option value="08:30">08:30</option>
+                          <option value="09:00">09:00</option>
+                          <option value="09:30">09:30</option>
+                          <option value="10:00">10:00</option>
+                          <option value="10:30">10:30</option>
+                          <option value="11:00">11:00</option>
+                          <option value="11:30">11:30</option>
+                          <option value="12:00">12:00</option>
+                          <option value="12:30">12:30</option>
+                          <option value="13:00">13:00</option>
+                          <option value="13:30">13:30</option>
+                          <option value="14:00">14:00</option>
+                          <option value="14:30">14:30</option>
+                          <option value="15:00">15:00</option>
+                          <option value="15:30">15:30</option>
+                          <option value="16:00">16:00</option>
+                          <option value="16:30">16:30</option>
+                          <option value="17:00">17:00</option>
+                          <option value="17:30">17:30</option>
+                          <option value="18:00">18:00</option>
+                          <option value="18:30">18:30</option>
+                          <option value="19:00">19:00</option>
+                          <option value="19:30">19:30</option>
+                          <option value="20:00">20:00</option>
+                          <option value="20:30">20:30</option>
+                          <option value="21:00">21:00</option>
+                          <option value="21:30">21:30</option>
+                          <option value="22:00">22:00</option>
+                          <option value="22:30">22:30</option>
+                          <option value="23:00">23:00</option>
+                          <option value="23:30">23:30</option>
+                          <option value="00:00">00:00</option>                          
+                        </select>                        
                       </div>
                     </div>                 
                   </div>
