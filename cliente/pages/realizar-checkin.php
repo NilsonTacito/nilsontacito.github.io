@@ -146,7 +146,7 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                   $placa_res_futura = $_GET['placa_futura'];                
                 }
 
-                $qry_page_get_rsv="SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, estacionamento.estac_expd_ini, estacionamento.estac_expd_fim,
+                $qry_page_get_rsv="SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, TIME_FORMAT(estacionamento.estac_expd_ini, '%h:%i') AS estac_expd_ini, TIME_FORMAT(estacionamento.estac_expd_fim, '%h:%i') AS estac_expd_fim,
                 reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa,
                 vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano
                 FROM ((reserva
