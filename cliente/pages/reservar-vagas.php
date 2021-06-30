@@ -8,10 +8,11 @@ include('processa-sessao-cliente.php');
 include('backend-reservar-vaga.php');
 
 //campos de vagas disponíveis
+/*
 if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
     $cookie_disp_carro = $_COOKIE['disp-carro'];
     $cookie_disp_moto = $_COOKIE['disp-moto'];
-}
+}*/
 ?>
 
 <!DOCTYPE html>
@@ -133,13 +134,13 @@ if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Vagas dispoíveis (carros)</label>
-                        <br><?php echo $cookie_disp_carro; ?><br>
+                        <br><?php echo $ret_estac_disp_carro; ?><br>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Vagas disponíveis (motos)</label>
-                        <br><?php echo $cookie_disp_moto; ?><br>
+                        <br><?php echo $ret_estac_disp_moto; ?><br>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -295,7 +296,7 @@ if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                       <br>Selecione o veículo:
-                        <select name="res-veciulo" id="veiculos">
+                        <select name="res-veiculo" id="veiculos">
                         <?php                                            
                           $query_veiculos = "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante FROM veiculo WHERE fk_clt_doc = '{$sess_doc}';";
                           $res_veiculos = mysqli_query($conn, $query_veiculos);

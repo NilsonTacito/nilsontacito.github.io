@@ -199,8 +199,8 @@ include("processa-sessao-cliente.php");
                 infoWindow.open(map, marker);
                 linkReserva.addEventListener ('click', function(){
                   document.cookie ='id-do-estac='+id; //o pulo do gato! usar cookies pra guardar id do estacionamento
-                  document.cookie ='disp-carro='+vgCarro;
-                  document.cookie ='disp-moto='+vgMoto; 
+                  //document.cookie ='disp-carro='+vgCarro;
+                  //document.cookie ='disp-moto='+vgMoto; 
                   window.location = "./reservar-vagas.php";
                 })
               });

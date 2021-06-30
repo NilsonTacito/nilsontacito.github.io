@@ -244,10 +244,14 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                   <br>
                   <div class="col-md-4 pl-1"><!-- tirado do Arma, melhorar -->
                     <button class="button button-block button-primary" type="submit">Realizar Check-In</button>
+                    </form>
+                    <form action="processa-cancel-reserva.php" method="POST">
+                      <?php $_SESSION['cancel_id'] = $chk_out_rsv_id; ?>
                     <button class="button button-block button-primary" type="submit">Cancelar Reserva</button>
+                    </form>
                     <?php //echo("<a> ac: " . $array[$contador] . " - aco: " . $array[$contadorOutput] . " </a>"); ?>
                   </div> 
-                </form>
+                
               </div>
             </div>
           </div>

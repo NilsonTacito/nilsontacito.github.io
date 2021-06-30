@@ -146,13 +146,13 @@ if(isset($_SESSION['error_time_diff'])){
                           echo ('<a href="realizar-checkin.php?estac_futura=' . $fut_res_campo['estac_id'] . '&placa_futura=' . $fut_res_campo['fk_rsv_vei_placa'] . '&id_rsv_futura=' . $fut_res_campo['rsv_id'] . '">' . $fut_res_campo['estac_nome'] . '</a>'); 
                           }                          
                           ?>
-                    
+                    <?php echo $_SESSION['test_0'][0]; ?>
                         </td>
                         <td><!--estac endr e cep -->
                           <?php echo ($fut_res_campo['estac_endrc'] . " - " . $fut_res_campo['estac_cep']); ?>
                         </td>
                         <td><!--estac quant e tipo vg reservada -->
-                          <?php //echo $dadox2; ?>
+                          
                         </td>
                         <td class="text-right"><!--estac data e hora -->
                           <?php                       
