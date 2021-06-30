@@ -12,8 +12,6 @@ $res_veiculo= $_POST['res-veciulo'];
 
 $res_datetime = ($res_ano . "-" . $res_mes . "-" . $res_dia . " " . $res_hora . ":00"); 
 
-var_dump($res_veiculo . ", datetime: " . $res_datetime);
-
 //res-dia, res-mes, res-ano, res-hora, res-veciulo
 //STR_TO_DATE('04/04/2012 04:03:35 AM', '%d/%m/%Y %r')
 
@@ -42,8 +40,6 @@ if(!empty($res_veiculo)){//insert
     $res_last_id = mysqli_query($conn, $qry_last_id);  
     $ret_last_id = mysqli_fetch_array($res_last_id, MYSQLI_BOTH);
     $last_id = intval($ret_last_id['last_insert_id()']);
-
-    var_dump($res_rsv_0 . ' - ' . $last_id);
 
     //get vagas ocupadas (fazer isso dentro do if, num join)
     $qry_get_mov_vagas = "SELECT mvg_id, mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE fk_mvg_estac_id = '{$cookie_id_estac}';";

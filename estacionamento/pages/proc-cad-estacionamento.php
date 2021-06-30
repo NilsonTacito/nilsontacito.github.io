@@ -21,12 +21,14 @@ $rn_carro = intval(($estac_ttl_carro / 100) * 70);
 $rn_moto = intval(($estac_ttl_moto / 100) * 70);
 
 $qry_insert_estac = "INSERT INTO estacionamento (estac_nome, estac_endrc, estac_cep, estac_vg_carro, estac_vg_moto, estac_expd_ini, estac_expd_fim, fk_gst_cnpj, estac_tel) 
-VALUES ('{$estac_nome}', '{$estac_endrc}', '{$estac_cep}', '{$rn_carro}', '{$rn_moto}', '{$estac_expd_inicio}', '{$estac_expd_fim}', '{$gst_sess_doc}', '{$estac_telefone}');
-INSERT INTO mov_vagas (mvg_dia_carro, mvg_dia_moto, mvg_hr_carro, mvg_hr_moto, fk_mvg_estac_id)
-VALUES ('{$estac_dia_carro}', '{$estac_dia_moto}', '{$estac_hr_carro}', '{$estac_hr_moto}', LAST_INSERT_ID());
-COMMIT;";
-$res_insert_estac = mysqli_query($conn, $$qry_insert_estac);
-if($res_insert_estac != null){
+VALUES ('{$estac_nome}', '{$estac_endrc}', '{$estac_cep}', '{$rn_carro}', '{$rn_moto}', '{$estac_expd_inicio}', '{$estac_expd_fim}', '{$gst_sess_doc}', '{$estac_telefone}');";
+$res_insert_estac = mysqli_query($conn, $qry_insert_estac);
+
+$qry_insert_mvg = "INSERT INTO mov_vagas (mvg_dia_carro, mvg_dia_moto, mvg_hr_carro, mvg_hr_moto, fk_mvg_estac_id)
+VALUES ('{$estac_dia_carro}', '{$estac_dia_moto}', '{$estac_hr_carro}', '{$estac_hr_moto}', LAST_INSERT_ID());";
+$res_insert_mvg = mysqli_query($conn, $qry_insert_mvg);
+
+if (($res_insert_estac != null) AND ($res_insert_mvg != null)) {
     header('Location: /estacionamento/pages/estacionamentos.php');
     exit();
 }

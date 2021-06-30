@@ -98,25 +98,25 @@ if($_SESSION['gestor_logado'] == true){
           <h3 class="text-uppercase">Você ainda não<br>é nosso cliente?</h3>
           <p class="text-primary text-uppercase text-box offset-top-15">Cadastre-se!</p>
           <!--RD Mailform          -->
-          <form class="rd-form rd-mailform" data-form-type="contact" method="POST" action="/home/processa-cad-cliente.php">
+          <form class="rd-form rd-mailform" method="POST" action="/home/processa-cad-cliente.php">
             <div class="form-wrap">                                               
-              <input name="nome" class="form-input" id="contact-name" type="text" data-constraints="@Required">
+              <input name="nome" class="form-input" id="contact-name" type="text" required>
               <label class="form-label" for="contact-name">Nome</label>
             </div>
             <div class="form-wrap">
-              <input  name="sobrenome" class="form-input" id="contact-sbname" type="text" data-constraints="@Required">
+              <input  name="sobrenome" class="form-input" id="contact-sbname" type="text" required>
               <label class="form-label" for="contact-sbname">Sobrenome</label>
             </div>
             <div class="form-wrap">
-              <input name="documento" class="form-input" id="contact-documento" type="text" data-constraints="@Required">
+              <input name="documento" class="form-input" id="contact-documento" type="text" required>
               <label class="form-label" for="contact-documento">Documento (CPF ou CNPJ)</label><!--Documento! não só cpf -->
             </div>  
             <div class="form-wrap">
-              <input name="email" class="form-input" id="contact-email" type="email" data-constraints="@Email @Required">
+              <input type="email" name="email" class="form-input" id="contact-email" type="email" required>
               <label class="form-label" for="contact-email">E-mail</label>
             </div>
             <div class="form-wrap">
-              <input name="senha" class="form-input" id="contact-senha" type="password" data-constraints="@Required">
+              <input name="senha" class="form-input" id="contact-senha" type="password" required>
               <label class="form-label" for="contact-senha">Senha</label>
             </div>
             <div class="form-wrap">
@@ -143,41 +143,41 @@ if($_SESSION['gestor_logado'] == true){
             <div class="col-md-7 col-lg-5 bg-gray-800 text-center contact-item" id="contacts" data-type="anchor">
               <h3 class="text-uppercase">Você ainda não<br>é nosso parceiro?</h3>
               <p class="text-primary text-uppercase text-box offset-top-15">Cadastre-se!</p>
-              <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" method="post" action="/home/processa-cad-gestor.php">
+              <form class="rd-form rd-mailform" method="POST" action="/home/processa-cad-gestor.php">
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-razaoSocial-2" type="text" name="razaosocial-gestor" data-constraints=" @Required">
+                  <input class="form-input" id="contact-razaoSocial-2" type="text" name="razaosocial-gestor" required>
                   <label class="form-label" for="contact-razaoSocial-2">Razão Social</label>
                 </div>
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-CNPJ-2" type="int" name="cnpj-gestor" data-constraints="@Required">
+                  <input class="form-input" id="contact-CNPJ-2" type="int" name="cnpj-gestor" required>
                   <label class="form-label" for="contact-CNPJ-2">CNPJ</label>
                 </div>                
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-email-2" type="email" name="email-gestor" data-constraints="@Email @Required">
+                  <input class="form-input" id="contact-email-2" type="email" name="email-gestor" required>
                   <label class="form-label" for="contact-email-2">E-mail</label>
                 </div>
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-senha-2" type="password" name="senha-gestor" data-constraints="@Required">
+                  <input class="form-input" id="contact-senha-2" type="password" name="senha-gestor" required>
                   <label class="form-label" for="contact-senha-2">Senha</label>
                 </div>
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-nome-2" type="text" name="nome-gestor" data-constraints="@Required">
+                  <input class="form-input" id="contact-nome-2" type="text" name="nome-gestor" required>
                   <label class="form-label" for="contact-nome-2">Nome</label>
                 </div>
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-sbnome-2" type="text" name="sbnome-gestor" data-constraints="@Required">
+                  <input class="form-input" id="contact-sbnome-2" type="text" name="sbnome-gestor" required>
                   <label class="form-label" for="contact-sbnome-2">Sobrenome</label>
                 </div>
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-endereco-2" type="text" name="endereco-gestor" data-constraints="@Required">
+                  <input class="form-input" id="contact-endereco-2" type="text" name="endereco-gestor" required>
                   <label class="form-label" for="contact-endereco-2">Endereço</label>
                 </div>
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-cep-2" type="text" name="cep-gestor" data-constraints="@Required">
+                  <input class="form-input" id="contact-cep-2" type="text" name="cep-gestor" required>
                   <label class="form-label" for="contact-cep-2">CEP</label>
                 </div>
                 <div class="form-wrap">
-                  <input class="form-input" id="contact-phone-2" type="text" name="telefone-gestor" data-constraints="@PhoneNumber @Required">
+                  <input class="form-input" id="contact-phone-2" type="text" name="telefone-gestor" required>
                   <label class="form-label" for="contact-phone-2">Telefone</label>
                 </div>
                 <div class="offset-top-25">

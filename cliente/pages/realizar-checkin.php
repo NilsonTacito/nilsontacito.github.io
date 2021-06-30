@@ -37,8 +37,8 @@ if(isset($_GET['id_rsv_futura'])){
    
 }
 
-include('backend-checkin-reserva.php');
-include('processa-checkin-reserva.php');
+//include('backend-checkin-reserva.php');
+//include('processa-checkin-reserva.php');
 
 if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
   header('Location: consultar-reservas.php');

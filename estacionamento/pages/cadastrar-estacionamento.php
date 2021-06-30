@@ -106,7 +106,7 @@ include("proc-sessao-gestor.php");
                 <h5 class="title">Cadastre seu estacionamento</h5>
               </div>
               <div class="card-body">
-                <form method="POST" action="processa-cad-estacionamento.php">
+                <form method="POST" action="proc-cad-estacionamento.php">
                 <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
@@ -119,13 +119,13 @@ include("proc-sessao-gestor.php");
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Telefone</label>
-                        <input type="text" name="estac-telefone" class="form-control" placeholder="21 26245544" required>
+                        <input type="tel" name="estac-telefone" class="form-control" placeholder="21 26245544" pattern="[0-9]{2}-[0-9]{9}" required>
                       </div>
                     </div>                    
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>CEP</label>
-                        <input type="text" name="estac-cep" class="form-control" placeholder="248080040" required>
+                        <input type="text" name="estac-cep" class="form-control" placeholder="248080-040" pattern="[0-9]{5}-[0-9]{3}" required>
                       </div>
                     </div>
                   </div>
@@ -156,13 +156,13 @@ include("proc-sessao-gestor.php");
                     <div class="col-md-2 pl-1">
                       <div class="form-group"><!-- ver input type -->
                         <label>Horário de abertura</label>
-                        <input type="text" name="estac-exp-inicio" class="form-control" placeholder="07:00" required>
+                        <input type="text" name="estac-exp-inicio" class="form-control" placeholder="07:00" pattern="[0-9]{2}:[0-9]{2}" required>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Horário de encerramento</label>
-                        <input type="text" name="estac-exp-fim" class="form-control" placeholder="19:00" required>
+                        <input type="text" name="estac-exp-fim" class="form-control" placeholder="19:00" pattern="[0-9]{2}:[0-9]{2}" required>
                       </div>
                     </div>
                   </div>
@@ -191,7 +191,7 @@ include("proc-sessao-gestor.php");
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
                         <label> Preço da diária (carros)</label>
-                        <input type="email" name="estac-dia-carro" class="form-control" placeholder="50.00" required>
+                        <input type="text" name="estac-dia-carro" class="form-control" placeholder="50.00" required>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -200,7 +200,7 @@ include("proc-sessao-gestor.php");
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
                         <label>Preço por hora (motos)</label>
-                        <input type="email" name="estac-hr-moto" class="form-control" placeholder="4.00" required>
+                        <input type="text" name="estac-hr-moto" class="form-control" placeholder="4.00"  required>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">

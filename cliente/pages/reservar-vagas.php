@@ -285,7 +285,7 @@ if(($_COOKIE['disp-carro'] != null) and ($_COOKIE['disp-moto'] != null)){
                     <div class="col-md-12">
                       <?php
                       if(isset($_SESSION['error_time_diff'])){
-                        echo $_SESSION['error_time_diff']];
+                        echo $_SESSION['error_time_diff'];
                       } 
                       ?> 
                       <label></label>

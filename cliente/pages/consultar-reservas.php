@@ -90,7 +90,7 @@ if(isset($_SESSION['error_time_diff'])){
                 <div class="table-responsive">
                   <?php
                   $query_futuras_rsv = "SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, 
-                  reserva.rsv_id, reserva.rsv_data, reserva.rsv_hora, reserva.rsv_chkin, reserva.fk_rsv_vei_placa, veiculo.vei_tipo
+                  reserva.rsv_id, reserva.rsv_data, reserva.rsv_hora, reserva.rsv_chkin, reserva.fk_rsv_vei_placa, veiculo.vei_modelo, veiculo.vei_fabricante
                   FROM ((reserva
                   INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
                   INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa)
@@ -128,22 +128,21 @@ if(isset($_SESSION['error_time_diff'])){
                         <td id="futuras"><!--estac nome -->                        
                           <?php
                           //escrever "em andamento" com link, caso reserva esteja em andamento
-                          $id_em_andamento = $fut_res_campo['rsv_id'];                          
-                          $qry_em_andamento = "SELECT rsv_chkin, rsv_chkout WHERE reserva.rsv_id='{$id_em_andmaneto}';";
+                          $id_em_andamento = intval($fut_res_campo['rsv_id']);                          
+                          $qry_em_andamento = "SELECT rsv_chkin, rsv_chkout FROM reserva WHERE rsv_id='{$id_em_andmaneto}';";
                           $res_em_andamento = mysqli_query($conn, $qry_em_andamento);
 
                           while($ret_em_andamento = mysqli_fetch_array($res_em_andamento,MYSQLI_ASSOC)){
-                            $chk_in_em_andamento = $ret_em_andamento['rsv_chkin'];
-                            $chk_out_em_andamento = $ret_em_andamento['rsv_chkout']; 
+                            $chkin_em_andamento = $ret_em_andamento['rsv_chkin'];
+                            $chkout_em_andamento = $ret_em_andamento['rsv_chkout']; 
                           }
                           
-                          if(($chk_in_em_andamento == "Realizado") AND ($chk_out_em_andamento == "Não Realizado")){
+                          if(($chkin_em_andamento == "ok") AND ($chkout_em_andamento == "nok")){
                             $_SESSION['id_rsv_futura'] = $id_em_andamento;
                             $andamento = "Em Andamento";
                             echo ('<a href="realizar-checkout.php">' . $andamento . '</a>');
-                          }
-
-                          if(($chk_in_em_andamento != "Realizado") AND ($chk_out_em_andamento != "Não Realizado")){
+                          }else{
+                          //if(($chkin_em_andamento != "ok") AND ($chkout_em_andamento != "nok")){
                           echo ('<a href="realizar-checkin.php?estac_futura=' . $fut_res_campo['estac_id'] . '&placa_futura=' . $fut_res_campo['fk_rsv_vei_placa'] . '&id_rsv_futura=' . $fut_res_campo['rsv_id'] . '">' . $fut_res_campo['estac_nome'] . '</a>'); 
                           }                          
                           ?>
@@ -218,15 +217,15 @@ if(isset($_SESSION['error_time_diff'])){
                   INNER JOIN reserva ON mov_vagas.mvg_id = reserva.rsv_id);
                   */
                   $query1 = "SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, 
-                  reserva.rsv_id, rsv_chkin_dt, rsv_chkout_dt, reserva.rsv_chkout, reserva.fk_rsv_vei_placa, reserva.fk_rsv_vei_placa_1, reserva.fk_rsv_vei_placa_2, reserva.fk_rsv_vei_placa_3, reserva.fk_rsv_vei_placa_4, reserva.rsv_preco, veiculo.vei_tipo
+                  reserva.rsv_id, rsv_chkin_dt, rsv_chkout_dt, reserva.rsv_chkout, reserva.fk_rsv_vei_placa, reserva.rsv_preco, veiculo.vei_tipo
                   FROM ((reserva
                   INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
                   INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa)
-                  WHERE reserva.fk_rsv_vei_placa ='{$placa_0}' AND reserva.rsv_chkin= 'Realizado'
-                  OR reserva.fk_rsv_vei_placa = '{$placa_1}' AND reserva.rsv_chkin= 'Realizado' 
-                  OR reserva.fk_rsv_vei_placa = '{$placa_2}' AND reserva.rsv_chkin= 'Realizado' 
-                  OR reserva.fk_rsv_vei_placa = '{$placa_3}' AND reserva.rsv_chkin= 'Realizado' 
-                  OR reserva.fk_rsv_vei_placa = '{$placa_4}' AND reserva.rsv_chkin= 'Realizado';";
+                  WHERE reserva.fk_rsv_vei_placa ='{$placa_0}' AND reserva.rsv_chkin= 'nok'
+                  OR reserva.fk_rsv_vei_placa = '{$placa_1}' AND reserva.rsv_chkin= 'nok' 
+                  OR reserva.fk_rsv_vei_placa = '{$placa_2}' AND reserva.rsv_chkin= 'nok' 
+                  OR reserva.fk_rsv_vei_placa = '{$placa_3}' AND reserva.rsv_chkin= 'nok' 
+                  OR reserva.fk_rsv_vei_placa = '{$placa_4}' AND reserva.rsv_chkin= 'nok';";
                   $resultado1 = mysqli_query($conn, $query1);
                   ?>
                   <table class="table">
