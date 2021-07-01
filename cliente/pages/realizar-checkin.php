@@ -24,7 +24,7 @@ if(isset($_GET['id_rsv_futura'])){
   $qry_chk_out_rsv_id = "SELECT rsv_chkin, rsv_chkout FROM reserva WHERE rsv_id= '{$chk_out_rsv_id}';";
   $res_chk_out_rsv_id = mysqli_query($conn, $qry_chk_out_rsv_id);
     
-  while($ret_chk_out_rsv_id = mysqli_fetch_array($res_chk_out_rsv_id, MYSLI_ASSOC)){
+  while($ret_chk_out_rsv_id = mysqli_fetch_array($res_chk_out_rsv_id, MYSQLI_ASSOC)){
     $chk_futura_chkin = $ret_chk_out_rsv_id['rsv_chkin'];
     $chk_futura_chkout = $ret_chk_out_rsv_id['rsv_out'];
   } 
@@ -147,15 +147,15 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                 }
 
                 $qry_page_get_rsv="SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, TIME_FORMAT(estacionamento.estac_expd_ini, '%h:%i') AS estac_expd_ini, TIME_FORMAT(estacionamento.estac_expd_fim, '%h:%i') AS estac_expd_fim,
-                reserva.rsv_id, reserva.rsv_data, DATE_FORMAT(reserva.rsv_data, "%d/%m/%Y") AS data,, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa,
-                vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano
+                reserva.rsv_id, DATE_FORMAT(reserva.rsv_data, '%d/%m/%Y') AS data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.fk_rsv_vei_placa,
+                veiculo.vei_placa, veiculo.vei_tipo, veiculo.vei_modelo, veiculo.vei_fabricante, veiculo.vei_cor, veiculo.vei_ano
                 FROM ((reserva
                 INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
                 INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) 
                 WHERE reserva.fk_rsv_estac_id ='{$estac_res_futura}' AND reserva.fk_rsv_vei_placa ='{$placa_res_futura}';";
                 $res_qry_page_get_rsv = mysqli_query($conn,$qry_page_get_rsv);                
                 //$ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_BOTH);
-                while ($ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_BOTH)) {
+                while($ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_ASSOC)){
                 ?>
               </div>
               <div class="card-body">
