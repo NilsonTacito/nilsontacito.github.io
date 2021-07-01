@@ -5,6 +5,9 @@ O usuário é direcionado à mesma após o cadastro na landing page
 <?php
 //include('conexao.php');
 include('processa-sessao-cliente.php');
+if(isset($_SESSION['placa_alterar'])){
+  $placa_alterar = $_SESSION['placa_alterar']; 
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,25 +93,27 @@ include('processa-sessao-cliente.php');
           <div class="col-md-8">
             <div class="card">
               <div class="card-header"><!-- retornar placa-->
-                <h5 class="title"> Atualizar dados do veículo de placa <?php echo ("teste: ". $nome_cliente);?> </h5>
+                <h5 class="title"> Atualizar dados do veículo <?php //echo ("teste: ". $nome_cliente);?> </h5>
               </div><!--Placa, Tipo, Modelo, Fabricante, Cor, Ano  -->
               <div class="card-body">
-                <form method="POST" action="processa-cad-veiculo.php">
+                <form method="POST" action="processa-alt-veiculo.php">
                   <!--Abaixo, o campo do tipo do veículo -->
+                  <?php
+                    $qry_vei_alterar= "SELECT vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano FROM veiculo WHERE vei_placa='{$placa_alterar}';";
+                    $res_vei_alterar= mysqli_query($conn, $qry_vei_alterar);
+                    while($ret_vei_alterar =  mysqli_fetch_array($res_vei_alterar, MYSQLI_ASSOC)){
+                  ?>
                   <div class="row">
                   <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Placa</label>
-                        <input name="placa_veiculo" type="text" class="form-control" placeholder="ABC-1234" pattern="[A-Za-z]{3}-[0-9]{4}">
+                        <?php echo( '<input type="text" disabled class="form-control" placeholder="' . $ret_vei_alterar['vei_placa'] . '" >');?>
                       </div>
                     </div>
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                       <label>Veículo</label><br>                     
-                        <input type="radio" name="tipo-veiculo" id="veiculo" value="carro"/>
-                        <label for="carro">Carro</label><br>
-                        <input type="radio" name="tipo-veiculo" id="veiculo" value="moto"/>
-                        <label for="moto">Moto</label>
+                        <?php echo('<input name="tipo_veiculo" type="text" class="form-control" placeholder="' . $ret_vei_alterar['vei_tipo'] . '" required>');?>
                       </div>
                     </div>                    
                   </div>
@@ -116,13 +121,13 @@ include('processa-sessao-cliente.php');
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Modelo</label>
-                        <input name="modelo_veiculo" type="text" class="form-control" placeholder="Civic XLS, Golf GTI, etc...">
+                        <?php echo('<input name="modelo_veiculo" type="text" class="form-control" placeholder="' . $ret_vei_alterar['vei_modelo'] . '" required>');?>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>Fabricante</label>
-                        <input name="fabricante_veiculo" type="text" class="form-control" placeholder="Ford, Mercedes Benz, BMW, etc...">
+                        <?php echo('<input name="fabricante_veiculo" type="text" class="form-control" placeholder="' . $ret_vei_alterar['vei_fabricante'] . '" required>'); ?>
                       </div>
                     </div>
                   </div>
@@ -130,17 +135,17 @@ include('processa-sessao-cliente.php');
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Cor</label>
-                        <input name="cor_veiculo" type="text" class="form-control" placeholder="Cinza Carra, Azul Platinum, etc...">
+                        <?php echo('<input name="cor_veiculo" type="text" class="form-control" placeholder="' . $ret_vei_alterar['vei_cor'] . '" required>');?>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>Ano</label>
-                        <input name="ano_veiculo" type="number" class="form-control" placeholder="1997">
+                        <?php echo('<input name="ano_veiculo" type="text" class="form-control" disabled placeholder="' . $ret_vei_alterar['vei_ano'] . '" required>'); ?>
                       </div>
                     </div>
                   </div>
-                  
+                    <?php }; ?>
                   <div class="offset-top-25"><!-- tirado do Arma, melhorar -->
                     <button class="button button-block button-primary" type="submit">Concluir cadastro</button>
                   </div>                                 

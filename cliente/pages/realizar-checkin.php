@@ -147,7 +147,7 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                 }
 
                 $qry_page_get_rsv="SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, TIME_FORMAT(estacionamento.estac_expd_ini, '%h:%i') AS estac_expd_ini, TIME_FORMAT(estacionamento.estac_expd_fim, '%h:%i') AS estac_expd_fim,
-                reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa,
+                reserva.rsv_id, reserva.rsv_data, DATE_FORMAT(reserva.rsv_data, "%d/%m/%Y") AS data,, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa,
                 vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano
                 FROM ((reserva
                 INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
@@ -187,7 +187,7 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Data da Reserva</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['rsv_data']);?>
+                        <br><?php echo strval($ret_qry_page_get_rsv['data']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">

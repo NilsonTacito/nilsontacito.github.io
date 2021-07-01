@@ -1,11 +1,88 @@
 <!--
-Páigina de testes, para criação do front end da página específica dos estacionamentos 
+Páigina específica dos estacionamentos 
 
 -->
 <?php
-include("proc-sessao-gestor.php");
-//ainda não terminei de integrar com a página do mapa
+include('conexao.php');
+include('proc-sessao-gestor.php');
 
+//query all -- nao é pra essa page; fica melhor no controle de vagas
+
+/*
+$qry_res_futuras = "SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, estacionamento.estac_vg_carro - mov_vagas.mvg_ocp_carro AS disp_carro, estacionamento.estac_vg_carro - mov_vagas.mvg_ocp_moto AS disp_moto,
+mov_vagas.mvg_ocp_carro, mov_vagas.mvg_ocp_moto, reserva.rsv_id, reserva.rsv_data, reserva.rsv_hora, reserva.rsv_chkin, reserva.rsv_chkout, reserva.fk_rsv_estac_id, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt, reserva.fk_rsv_estac_id,
+reserva.fk_rsv_vei_placa, reserva.fk_rsv_vei_placa_1, reserva.fk_rsv_vei_placa_2, reserva.fk_rsv_vei_placa_3, reserva.fk_rsv_vei_placa_4, veiculo.vei_tipo
+FROM (((estacionamento
+INNER JOIN mov_vagas ON mov_vagas.fk_mvg_estac_id = estacionamento.estac_id) 
+INNER JOIN reserva ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
+INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa)		   
+WHERE estacionamento.estac_id ='{$cookie_id_estac}';";
+*/
+
+/*$qry_res_futuras = "SELECT e.estac_nome, e.estac_endrc, e.estac_cep, e.estac_vg_carro, e.estac_vg_moto, m.mvg_ocp_carro, m.mvg_ocp_moto, COUNT(r.fk_rsv_estac_id) AS num_reservas
+FROM ((mov_vagas m INNER JOIN estacionamento e ON e.estac_id = m.mvg_id) 
+      INNER JOIN reserva r ON e.estac_id = r.fk_rsv_estac_id)
+WHERE e.estac_id = '{$cookie_id_estac} AND r.rsv_data = CURRENT_DATE;";
+*/
+
+$qry_res_futuras = "SELECT e.estac_nome, e.estac_endrc, e.estac_cep, e.estac_vg_carro, e.estac_expd_ini, e.estac_expd_fim, e.estac_vg_moto, m.mvg_ocp_carro, m.mvg_ocp_moto
+FROM mov_vagas m INNER JOIN estacionamento e ON e.estac_id = m.fk_mvg_estac_id
+WHERE e.estac_id = '{$cookie_id_estac}';";
+
+$qry_reserva_carro = "SELECT COUNT(*) AS reservaCarro
+FROM reserva r INNER JOIN veiculo v ON r.fk_rsv_vei_placa = v.vei_placa
+WHERE r.fk_rsv_estac_id = '{$cookie_id_estac}' AND cast(rsv_data AS DATE) = (SELECT CURRENT_DATE) AND  v.vei_tipo = 'Carro';";
+
+
+$qry_reserva_moto = "SELECT COUNT(*) AS reservaMoto
+FROM reserva r INNER JOIN veiculo v ON r.fk_rsv_vei_placa = v.vei_placa
+WHERE r.fk_rsv_estac_id = '{$cookie_id_estac}' AND cast(rsv_data AS DATE) = (SELECT CURRENT_DATE) AND  v.vei_tipo = 'Moto';";
+
+$reserva_hoje_carro = mysqli_query($conn,$qry_reserva_carro);
+while($reserva_hoje_carro = mysqli_fetch_array($reserva_hoje_carro, MYSQLI_BOTH)){
+  $carro_hoje = $reserva_hoje_carro['reservaCarro'];
+};  
+
+$reserva_hoje_moto = mysqli_query($conn,$qry_reserva_moto);
+while($reserva_hoje_moto = mysqli_fetch_array($reserva_hoje_moto, MYSQLI_BOTH)){
+  $moto_hoje = $reserva_hoje_moto['reservaMoto'];
+};
+
+$res_res_futuras = mysqli_query($conn,$qry_res_futuras);
+while($ret_res_futuras = mysqli_fetch_array($res_res_futuras, MYSQLI_BOTH)){
+  $estac_nome = $ret_res_futuras['estac_nome'];
+  $estac_endrc = $ret_res_futuras['estac_endrc'];
+  $estac_cep = $ret_res_futuras['estac_cep'];
+  $estac_vg_carro = $ret_res_futuras['estac_vg_carro'];
+  $estac_vg_moto = $ret_res_futuras['estac_vg_moto'];
+  $estac_ini = $ret_res_futuras['estac_expd_ini'];
+  $estac_fim = $ret_res_futuras['estac_expd_fim'];
+  $estac_ocp_carro = $ret_res_futuras['mvg_ocp_carro'];
+  $estac_ocp_moto = $ret_res_futuras['mvg_ocp_moto'];
+
+//$estac = $ret_res_futuras['estac_id'];
+//$estac_disp_carro = $ret_res_futuras['disp_carro'];
+//$estac_disp_moto = $ret_res_futuras['disp_moto'];
+//$estac_rsv_id = $ret_res_futuras['rsv_id'];
+//$estac_rsv_data = $ret_res_futuras['rsv_data'];
+//$estac_rsv_hora = $ret_res_futuras['rsv_hora'];
+//$estac_rsv_chk_in = $ret_res_futuras['rsv_chkin'];
+//$estac_rsv_chk_out = $ret_res_futuras['rsv_chkout'];
+//$estac_id = $ret_res_futuras['fk_rsv_estac_id'];
+//$estac_chk_in_dt = $ret_res_futuras['rsv_chkin_dt'];
+//$estac_chk_out_dt = $ret_res_futuras['rsv_chkout_dt'];
+// = $ret_res_futuras['fk_rsv_estac_id'];
+//$rsv_vei_placa_0 = $ret_res_futuras['fk_rsv_vei_placa'];
+//$rsv_vei_placa_1 = $ret_res_futuras['fk_rsv_vei_placa_1'];
+//$rsv_vei_placa_2 = $ret_res_futuras['fk_rsv_vei_placa_2'];
+//$rsv_vei_placa_3 = $ret_res_futuras['fk_rsv_vei_placa_3'];
+//$rsv_vei_placa_4 = $ret_res_futuras['fk_rsv_vei_placa_4'];
+//$rsv_vei_tipo = $ret_res_futuras['veiculo.vei_tipo']; //testar isso
+};
+
+$qry_reservas_futuras = "SELECT r.rsv_id, c.clt_nome, v.vei_tipo, r.fk_rsv_vei_placa, r.rsv_data, cast(r.rsv_data AS DATE) AS data_comp
+FROM reserva r INNER JOIN veiculo v ON r.fk_rsv_vei_placa = v.vei_placa INNER JOIN cliente c ON v.fk_clt_doc = c.clt_doc
+WHERE r.fk_rsv_estac_id = '{$cookie_id_estac}';";
 
 ?>
 <!DOCTYPE html>
@@ -105,15 +182,12 @@ include("proc-sessao-gestor.php");
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Estacionamento Nome</h4><!-- return do banco -->
-                <p class="category">Endereço e CEP</p>
+                <h4 class="card-title"><?php echo $estac_nome; ?></h4><!-- return do banco -->
+                <a class="category"><?php echo($estac_endrc . ", " .  $estac_cep); ?></a><br>
+                <a class="category"><?php echo("Expediente: " . $estac_ini. " - " .  $estac_fim); ?></a>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <?php
-                  $query0 = "SELECT documento, telefone, cep, nome FROM cliente WHERE nome = '$busca'";
-                  $resultado0 = mysqli_query($conn, $query0);
-                  ?>
                   <table class="table"><!-- Alterar para informar que não há dados caso nenhuma reserva tenha sido feita antes --> 
                     <thead class=" text-primary">
                       <th>
@@ -130,35 +204,15 @@ include("proc-sessao-gestor.php");
                       <!-- /th -->
                     </thead>
                     <tbody>
-                    <?php while ($testedado = mysqli_fetch_array($resultado0)) {?> <!--  meu erro estava sendo usar $conn->fetch_array() sem parâmetro -->
-                      
-                      <tr>
-                        <td> <!-- Total, ocupadas, reservadas-->
-                          <?php echo $testedado['cep']; ?>
-                        </td>
-                        <td>
-                          <?php echo $testedado['telefone']; ?>                        
-                        </td>                        
-                        <td> <!-- Total, ocupadas, reservadas-->
-                          <?php echo $testedado['documento']; ?>
-                        </td>
-                        <td>
-                          <?php echo $testedado['telefone']; ?>                         
-                        </td>
-                      </tr>
-                      
-                      <?php break;} ?>
-
                       <tr>
                         <td>
-                          D: Disponíveis 
-                          <br>O: Ocupadas
-                          <br>R: Reservadas para Hoje
-                        </td>
+                          <?php echo intval($estac_vg_carro-$estac_ocp_carro); ?> : Disponíveis 
+                          <br> <?php echo intval($estac_ocp_carro); ?> : Ocupadas
+                          <br> <?php echo intval($carro_hoje); ?> : Reservadas para Hoje
                         <td>
-                          D: Disponíveis
-                          <br>O: Ocupadas
-                          <br>R: Reservadas para Hoje
+                         <?php echo intval($estac_vg_moto); ?> : Disponíveis
+                          <br> <?php echo intval($estac_ocp_moto); ?> : Ocupadas
+                          <br> <?php echo intval($moto_hoje); ?> : Reservadas para Hoje
                         </td>
                         <!-- td>
                           Sinaai-Waas
@@ -184,47 +238,41 @@ include("proc-sessao-gestor.php");
                         Veículos <!-- quantidade e tipo -->
                       </th>
                       <th>
-                        Horário
+                        Data/Horário
                       </th>
-                      <!-- th>
-                        Vagas para motos // quantidade e tipo -->
-                      <!-- /th -->
                     </thead>
                     <tbody>
-                    <?php while ($testedado = mysqli_fetch_array($resultado0)) {?> <!--  meu erro estava sendo usar $conn->fetch_array() sem parâmetro -->
-                      
-                      <tr>
-                        <td> <!-- Total, ocupadas, reservadas-->
-                          <?php echo $testedado['cep']; ?>
-                        </td>
-                        <td>
-                          <?php echo $testedado['telefone']; ?>                        
-                        </td>                        
-                        <td> <!-- Total, ocupadas, reservadas-->
-                          <?php echo $testedado['documento']; ?>
-                        </td>
-                        <td>
-                          <?php echo $testedado['telefone']; ?>                         
-                        </td>
-                      </tr>
-                      
-                      <?php break;} ?>
 
-                      <tr>
-                        <td>
-                          ID: x
-                        </td>
-                        <td>
-                          Cliente: Minerva Hooper
-                        </td>
-                        <td>
-                          x Carros / x Motos
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                      </tr>
+                      <?php
+                        $rsv_futuras = mysqli_query($conn,$qry_reservas_futuras);
+                        while($reservas_futuras = mysqli_fetch_array($rsv_futuras, MYSQLI_BOTH)){
+                          
+                          $data_comp = $reservas_futuras['data_comp'];
+                          if ($data_comp >= date('Y-m-d')){
 
+                            $reserv_id = $reservas_futuras['rsv_id'];
+                            $cliente_nome = $reservas_futuras['clt_nome'];
+                            $veiculo_tipo = $reservas_futuras['vei_tipo'];
+                            $veiculo_placa = $reservas_futuras['fk_rsv_vei_placa'];
+                            $reserva_dia = $reservas_futuras['rsv_data'];
+                                                
+                            echo("<tr>");
+                              echo("<td>");
+                                echo("ID: ". $reserv_id);
+                              echo("</td>");
+                              echo("<td>");
+                                echo($cliente_nome);
+                              echo("</td>");
+                              echo("<td>");
+                                echo($veiculo_tipo . " / " . $veiculo_placa);
+                              echo("</td>");
+                              echo("<td>");
+                                echo($reserva_dia);
+                              echo("</td>
+                            </tr>");
+                          }
+                        };
+                      ?>
                     </tbody>
                   </table>
 

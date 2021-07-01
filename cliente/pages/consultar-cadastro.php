@@ -1,4 +1,8 @@
 <!--
+
+remove o veículo aqui
+
+
 Página de edição dos dados cadastrais
 esta página deve:
 - abrir realizando uma consulta no banco e mostrar os dados atuais do usuário
@@ -167,7 +171,7 @@ include("processa-consultar-cliente.php");
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label>Placa</label>
-                        <br> <?php print_r($dados_veiculos['vei_placa']); ?>
+                        <br><?php print_r($dados_veiculos['vei_placa']); ?>
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
@@ -206,12 +210,12 @@ include("processa-consultar-cliente.php");
                     </div>
                   </div>
                   <div class="offset-top-25"> <!-- não implantado ainda -->
-                    <button class="button button-block button-primary" type="submit">Editar Veículo</button>
+                  <?php $_SESSION['placa_alterar'] = $dados_veiculos['vei_placa']; ?>
+                    <button class="button button-block button-primary" type="submit">Remover Veículo</button>
                   </div><!-- testar "editar" dentro do while (com mais de 1 veículo) -->
                   <br>
                   <?php } } if ($res_veiculos == null) {
                     echo("<a>Você ainda não cadastrou nenhum veículo. </a>");
-                    var_dump($res_veiculos);
                   } ?>
                 </form>
                 <form method="POST" action="cadastrar-veiculo.php">
