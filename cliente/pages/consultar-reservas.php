@@ -90,7 +90,8 @@ if(isset($_SESSION['error_time_diff'])){
                 <div class="table-responsive">
                   <?php
                   $query_futuras_rsv = "SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, 
-                  reserva.rsv_id, reserva.rsv_data, reserva.rsv_hora, reserva.rsv_chkin, reserva.fk_rsv_vei_placa, veiculo.vei_modelo, veiculo.vei_fabricante
+                  reserva.rsv_id, reserva.rsv_data, reserva.rsv_hora, reserva.rsv_chkin, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt, reserva.fk_rsv_vei_placa,
+                  veiculo.vei_tipo, veiculo.vei_modelo, veiculo.vei_fabricante
                   FROM ((reserva
                   INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
                   INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa)
@@ -129,36 +130,28 @@ if(isset($_SESSION['error_time_diff'])){
                           <?php
                           //escrever "em andamento" com link, caso reserva esteja em andamento
                           $id_em_andamento = intval($fut_res_campo['rsv_id']);                          
-                          $qry_em_andamento = "SELECT rsv_chkin, rsv_chkout FROM reserva WHERE rsv_id='{$id_em_andmaneto}';";
-                          $res_em_andamento = mysqli_query($conn, $qry_em_andamento);
-
-                          while($ret_em_andamento = mysqli_fetch_array($res_em_andamento,MYSQLI_ASSOC)){
-                            $chkin_em_andamento = $ret_em_andamento['rsv_chkin'];
-                            $chkout_em_andamento = $ret_em_andamento['rsv_chkout']; 
-                          }
+                          $chkin_em_andamento = $ret_em_andamento['rsv_chkin'];
+                          $chkout_em_andamento = $ret_em_andamento['rsv_chkout']; 
                           
                           if(($chkin_em_andamento == "ok") AND ($chkout_em_andamento == "nok")){
                             $_SESSION['id_rsv_futura'] = $id_em_andamento;
-                            $andamento = "Em Andamento";
+                            $andamento = "Reserva em Andamento";
                             echo ('<a href="realizar-checkout.php">' . $andamento . '</a>');
                           }else{
                           //if(($chkin_em_andamento != "ok") AND ($chkout_em_andamento != "nok")){
                           echo ('<a href="realizar-checkin.php?estac_futura=' . $fut_res_campo['estac_id'] . '&placa_futura=' . $fut_res_campo['fk_rsv_vei_placa'] . '&id_rsv_futura=' . $fut_res_campo['rsv_id'] . '">' . $fut_res_campo['estac_nome'] . '</a>'); 
                           }                          
                           ?>
-                    <?php echo $_SESSION['test_0'][0]; ?>
                         </td>
                         <td><!--estac endr e cep -->
                           <?php echo ($fut_res_campo['estac_endrc'] . " - " . $fut_res_campo['estac_cep']); ?>
                         </td>
                         <td><!--estac quant e tipo vg reservada -->
-                          
+                          <?php echo ($fut_res_campo['vei_tipo'] . ": " . $fut_res_campo['vei_fabricante'] . $fut_res_campo['vei_modelo'] . " (" . $fut_res_campo['vei_modelo'] . ")"); ?>
                         </td>
                         <td class="text-right"><!--estac data e hora -->
-                          <?php                       
-
-                          echo ($fut_res_campo['rsv_data'] . " - " . $fut_res_campo['rsv_hora']); 
-                          
+                          <?php
+                          echo ($fut_res_campo['rsv_data']);
                           ?>
                         </td>
                       </tr>
@@ -216,17 +209,21 @@ if(isset($_SESSION['error_time_diff'])){
                   INNER JOIN estacionamento ON mov_vagas.mvg_id = estacionamento.estac_id)
                   INNER JOIN reserva ON mov_vagas.mvg_id = reserva.rsv_id);
                   */
-                  $query1 = "SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, 
-                  reserva.rsv_id, rsv_chkin_dt, rsv_chkout_dt, reserva.rsv_chkout, reserva.fk_rsv_vei_placa, reserva.rsv_preco, veiculo.vei_tipo
+                  $qry_hist_rsv = "SELECT estacionamento.estac_id, estacionamento.estac_nome, 
+                  reserva.rsv_id, reserva.rsv_chkin, reserva.rsv_chkout, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt, reserva.fk_rsv_vei_placa, reserva.rsv_preco,
+                  DATE_FORMAT(reserva.rsv_chkin_dt, '%d/%m/%Y %h:%i') AS hr_entrada,
+                  DATE_FORMAT(reserva.rsv_chkout_dt, '%d/%m/%Y %h:%i') AS hr_saida,
+                  TIMEDIFF(reserva.rsv_chkin_dt, reserva.rsv_chkout_dt) AS res_periodo,                  
+                  veiculo.vei_placa, veiculo.vei_tipo, veiculo.vei_modelo, veiculo.vei_fabricante
                   FROM ((reserva
                   INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
                   INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa)
-                  WHERE reserva.fk_rsv_vei_placa ='{$placa_0}' AND reserva.rsv_chkin= 'nok'
-                  OR reserva.fk_rsv_vei_placa = '{$placa_1}' AND reserva.rsv_chkin= 'nok' 
-                  OR reserva.fk_rsv_vei_placa = '{$placa_2}' AND reserva.rsv_chkin= 'nok' 
-                  OR reserva.fk_rsv_vei_placa = '{$placa_3}' AND reserva.rsv_chkin= 'nok' 
-                  OR reserva.fk_rsv_vei_placa = '{$placa_4}' AND reserva.rsv_chkin= 'nok';";
-                  $resultado1 = mysqli_query($conn, $query1);
+                  WHERE reserva.fk_rsv_vei_placa ='{$placa_0}' AND reserva.rsv_chkout= 'ok'
+                  OR reserva.fk_rsv_vei_placa = '{$placa_1}' AND reserva.rsv_chkout= 'ok' 
+                  OR reserva.fk_rsv_vei_placa = '{$placa_2}' AND reserva.rsv_chkout= 'ok' 
+                  OR reserva.fk_rsv_vei_placa = '{$placa_3}' AND reserva.rsv_chkout= 'ok' 
+                  OR reserva.fk_rsv_vei_placa = '{$placa_4}' AND reserva.rsv_chkout= 'ok';";
+                  $resultado1 = mysqli_query($conn,$qry_hist_rsv);
                   ?>
                   <table class="table">
                     <thead class=" text-primary">
@@ -244,22 +241,22 @@ if(isset($_SESSION['error_time_diff'])){
                       </th>
                     </thead>
                     <tbody><!-- próximas reservas tbm atende ao gestor, add disponíveis na view / histórico de reservas tbm-->
-                    <?php while ($dado = mysqli_fetch_array($resultado1)) {?>
+                    <?php while ($dado = mysqli_fetch_array($resultado1, MYSQLI_ASSOC)) {?>
                       <tr>
                         <td>
-                          <?php echo $dado['nome_estac_cons']; ?>
+                          <?php echo $dado['estac_nome']; ?>
                         </td>
                         <td>
-                          <?php echo $dado['id_vaga_cons']; ?>
+                        <?php echo ($dado['vei_tipo'] . ": " . $dado['vei_fabricante'] . " " . $dado['vei_modelo'] . " (" . $dado['vei_placa'] . ")"); ?>
                         </td>
                         <td>
-                          <?php echo $dado['h_ent_cons']; ?>
+                          <?php echo ($dado['hr_entrada'] . " - " . $dado['hr_saida'] . " (" . $dado['res_periodo'] . "h)"); ?>
                         </td>
                         <td class="text-right">
-                          <?php echo $dado['check_in_cons']; ?>
+                          <?php echo ($dado['rsv_preco'] . "$"); ?>
                         </td>
                       </tr>
-                      <?php break; } ;?> 
+                      <?php } ;?> 
                       <!-- testar populando o banco -->
                     </tbody>
                   </table>
