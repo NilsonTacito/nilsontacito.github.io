@@ -15,10 +15,17 @@ realizar check out = sair e calcular e mostrar "final page" (botão ok pra pagar
 <?php
 include('conexao.php');
 include('processa-sessao-cliente.php');
+//$_SESSION['chkout_pg_id']id reserva vindo da page do check in
 
-if(isset($_SESSION['id_rsv_futura'])){
-  $id_rsv_rlz_chkout = $_SESSION['id_rsv_futura'];
+if(isset($_SESSION['chkout_pg_id'])){
+  $id_rsv_rlz_chkout = $_SESSION['chkout_pg_id'];
 }
+
+if(isset($_GET['id_chkout'])){
+  $chkout_estac_res_futura = $_GET['id_chkout'];
+}
+
+
 //$cookie_id_estac isset in the seesion
 
 //preciso do clt_doc pra chegar nos carros
@@ -136,10 +143,11 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                 veiculo.vei_tipo, vei_modelo, vei_fabricante, vei_ano
                 FROM ((reserva
                 INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
-                INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) WHERE reserva.rsv_id ='1';";//$id_rsv_rlz_chkout , coloquei "1" pra testar
+                INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) WHERE reserva.rsv_id ='{$chkout_estac_res_futura}';";//$id_rsv_rlz_chkout , coloquei "1" pra testar
                 $res_rsv_rlz_chkout = mysqli_query($conn,$qry_rsv_rlz_chkout);                
                 //$ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_BOTH);
                 while ($ret_rsv_rlz_chkout= mysqli_fetch_array($res_rsv_rlz_chkout, MYSQLI_BOTH)) {
+                 $_SESSION['proc_chkout'] = $ret_rsv_rlz_chkout['rsv_id'];
                 ?>
               </div>
               <div class="card-body">

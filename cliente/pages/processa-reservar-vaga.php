@@ -50,7 +50,6 @@ if(!empty($res_veiculo)){//insert
 
     }
 
-
     if($res_rsv_0 != null){
         //saber se placas é de carro ou moto -- pegar dados da mv aqui??
         $qry_tipo_vei_placa_0 = "SELECT vei_tipo FROM veiculo WHERE vei_placa ='{$res_veiculo}';";
@@ -66,9 +65,9 @@ if(!empty($res_veiculo)){//insert
                     $qry_updt_carro_disp_0 = "UPDATE mov_vagas SET mvg_ocp_carro='{$mvg_carro_disp_0}' WHERE mvg_id='{$ret_proc_mvg_id}';";
                     $res_updt_carro_disp_0 = mysqli_query($conn, $qry_updt_carro_disp_0);
 
-                    //$_SESSION['test_0'][0] = var_dump($mvg_carro_disp_0 . " - " . $ret_mvg_carros_disp . " - " . $ret_proc_mvg_id . " - " . $qyr_update_carro_disp_1);
                     if ($res_updt_carro_disp_0 != null){
-                        header('Location: /cliente/pages/consultar-reservas.php');
+                        $_SESSION['id_pagamento'] = $last_id;
+                        header('Location: /cliente/pages/pagamento-taxa-reserva.php');
                         exit();
                     }                    
                     break;
@@ -79,7 +78,8 @@ if(!empty($res_veiculo)){//insert
                     $res_updt_carro_disp_1 = mysqli_query($conn, $qry_updt_carro_disp_1);
 
                     if ($res_updt_carro_disp_1 != null){
-                        header('Location: /cliente/pages/consultar-reservas.php');
+                        $_SESSION['id_pagamento'] = $last_id;
+                        header('Location: /cliente/pages/pagamento-taxa-reserva.php');
                         exit();
                     }    
                     break;
@@ -90,7 +90,8 @@ if(!empty($res_veiculo)){//insert
                     $res_updt_moto_disp_0 = mysqli_query($conn, $qry_updt_moto_disp_0);
 
                     if ($res_updt_moto_disp_0 != null){
-                        header('Location: /cliente/pages/consultar-reservas.php');
+                        $_SESSION['id_pagamento'] = $last_id;
+                        header('Location: /cliente/pages/pagamento-taxa-reserva.php');
                         exit();
                     }
                     break;
@@ -98,10 +99,11 @@ if(!empty($res_veiculo)){//insert
                 case "Moto" :
                     $mvg_moto_disp_1 = $ret_mvg_motos_disp + 1;
                     $qry_updt_moto_disp_1 = "UPDATE mov_vagas SET mvg_ocp_moto='{$mvg_moto_disp_1}' WHERE mvg_id='{$ret_proc_mvg_id}';";
-                    $res_updt_moto_disp_1 = mysqli_query($conn, $qry_updt_moto_disp_0);
+                    $res_updt_moto_disp_1 = mysqli_query($conn, $qry_updt_moto_disp_1);
 
                     if ($res_updt_moto_disp_1 != null){
-                        header('Location: /cliente/pages/consultar-reservas.php');
+                        $_SESSION['id_pagamento'] = $last_id;
+                        header('Location: /cliente/pages/pagamento-taxa-reserva.php');
                         exit();
                     }
                     break;

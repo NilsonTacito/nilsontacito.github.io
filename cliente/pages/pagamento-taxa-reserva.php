@@ -106,7 +106,7 @@ if(isset($_SESSION['id_pagamento'])){
               <div class="card-header text-left">
               <?php
                 $qry_rsv_pagto="SELECT estacionamento.estac_nome, 
-                reserva.rsv_id, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt, reserva.fk_rsv_vei_placa, TIMESTAMPDIFF(MINUTE, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt) AS rsv_periodo_min, TIMESTAMPDIFF(HOUR, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt) AS rsv_periodo_hora,
+                reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt, reserva.fk_rsv_vei_placa, reserva.rsv_taxa, TIMESTAMPDIFF(MINUTE, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt) AS rsv_periodo_min, TIMESTAMPDIFF(HOUR, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt) AS rsv_periodo_hora,
                 mov_vagas.mvg_id, mov_vagas.mvg_dia_carro, mov_vagas.mvg_dia_moto, mov_vagas.mvg_hr_carro, mov_vagas.mvg_hr_moto, mov_vagas.mvg_tx_reserva, mov_vagas.mvg_tx_servico,
                 veiculo.vei_tipo, veiculo.vei_modelo, veiculo.vei_fabricante
                 FROM (
@@ -119,13 +119,13 @@ if(isset($_SESSION['id_pagamento'])){
                 ?>
                 <h5 class="card-title">Reserva (ID: <?php echo $ret_rsv_pagto['rsv_id']; ?>)</h5>
                   <a class="text-left">Estacionamento: <?php echo $ret_rsv_pagto['estac_nome']; ?></a>
-                  <br><a class="text-left"><?php echo("De: " . $ret_rsv_pagto['rsv_chkin_dt'] . " Até: " . $ret_rsv_pagto['rsv_chkout_dt']); ?></a>
+                  <br><a class="text-left"><?php echo("Data da Reserva: " . $ret_rsv_pagto['rsv_data']); ?></a>
                   <!--placas -->
                   <br><a class="text-left"><?php echo("Veículo(s): " . $ret_rsv_pagto['fk_rsv_vei_placa']);                                    
                   ?></a>
                   <!-- p class="card-category">Are you looking for more components? Please check our Premium Version of Now UI Dashboard PRO.</p -->
               </div>
-              <form action="processa-pagamento.php" method="POST">
+              <form action="processa-pagto-tx-reserva.php" method="POST">
               <div class="card-body">
                 <div class="table-responsive table-upgrade">
                   <table class="table">
@@ -139,81 +139,17 @@ if(isset($_SESSION['id_pagamento'])){
                         <td class="text-right"><?php echo($ret_rsv_pagto['vei_tipo'] . ": " . $ret_rsv_pagto['vei_fabricante'] . " " . $ret_rsv_pagto['vei_modelo'] . " (" . $ret_rsv_pagto['fk_rsv_vei_placa'] . ")"); ?></td>
                       </tr>
                       <tr>
-                        <!-- SELECT rsv_id,rsv_chkin_dt, rsv_chkout_dt, TIMESTAMPDIFF(MINUTE,rsv_chkin_dt, rsv_chkout_dt) FROM reserva -->
-                        <td>Tempo de Utilização das Vagas</td> <!-- Verificar com Júlio -->
-                        <td class="text-right"><?php echo($ret_rsv_pagto['rsv_periodo']); ?>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Preço por Hora</td>
-                        <td class="text-right"">
-                          <?php 
-                            if(($ret_rsv_pagto['vei_tipo'] == "Carro") or ($ret_rsv_pagto['vei_tipo'] == "carro")){
-                              echo($ret_rsv_pagto['mvg_hr_carro'] . "$");
-                            }
-                            if(($ret_rsv_pagto['vei_tipo'] == "Moto") or ($ret_rsv_pagto['vei_tipo'] == "moto")){
-                              echo($ret_rsv_pagto['mvg_hr_moto'] . "$");
-                            }
-                          ?>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Preço Diária/Pernoite</td>
-                        <td class="text-right">
-                        <?php 
-                            if(($ret_rsv_pagto['vei_tipo'] == "Carro") or ($ret_rsv_pagto['vei_tipo'] == "carro")){
-                              $calc_diaria_carro = $ret_rsv_pagto['mvg_hr_carro'];
-                              //criar n diária = preço pernoite = calc 16h
-                              $diaria_carro = (($calc_diaria_carro / 60) * 960);
-                              echo(number_format((float)$diaria_carro, 2, '.', '') . "$" );
-                            }
-                            if(($ret_rsv_pagto['vei_tipo'] == "Moto") or ($ret_rsv_pagto['vei_tipo'] == "moto")){
-                              $calc_diaria_carro = $ret_rsv_pagto['mvg_hr_moto'];
-                              $diaria_moto = (($calc_diaria_moto / 60) * 960);
-                              echo(number_format((float)$diaria_moto, 2, '.', '') . "$" );                           
-                            }
-                          ?>                        
-                        </td>
-                        <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
-                        <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
-                      </tr>
                       <tr>
                         <td>Taxa de Reserva</td>
-                        <td class="text-right"><?php echo($ret_rsv_pagto['mvg_tx_reserva'] . "$"); ?></td>
-                        <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
-                        <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
-                      </tr>
-                      <tr>
-                        <td>Taxa de Serviço</td>
-                        <td class="text-right"><?php echo($ret_rsv_pagto['mvg_tx_servico'] . "% (Total)"); ?></td>
+                        <td class="text-right"><?php echo($ret_rsv_pagto['rsv_taxa'] . "$");?></td>
                         <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
                         <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
                       </tr>
                       <tr>
                         <td>Total A Pagar</td>
-                        <td class="text-right">
-                        <?php
-                          $intervalo_tempo = $ret_rsv_pagto['rsv_periodo_min'];
-                          $tx_pkbr = $ret_rsv_pagto['mvg_tx_servico'];
-
-                          if(!empty($calc_diaria_carro)){
-                            $res_preco_carro = ($calc_diaria_carro / 60) * $intervalo_tempo;
-                            $perc_tx_pkbr_carro = ($res_preco_carro / 100) * $tx_pkbr;
-                            $total_carro = ($res_preco_carro + $perc_tx_pkbr_carro);
-                            $_SESSION['total_carro'] = $total_carro;
-                            echo(number_format((float)$total_carro, 2, '.', '') . '$');
-                          }
-                          
-                          if(!empty($calc_diaria_moto)){
-                            $res_preco_moto = ($calc_diaria_moto / 60) * $intervalo_tempo;
-                            $perc_tx_pkbr_moto = ($res_preco_moto / 100) * $tx_pkbr;
-                            $total_moto = ($res_preco_moto + $perc_tx_pkbro_moto);
-                            $_SESSION['total_moto'] = $total_moto;
-                            echo(number_format((float)$total_moto, 2, '.', '') . '$');
-                          }
-                        }                   
-                        ?>
-                        </td>
+                          <td class="text-right"><?php echo($ret_rsv_pagto['rsv_taxa'] . "$");
+                          $_SESSION['preco_tx_reserva'] = $ret_rsv_pagto['rsv_taxa']; } ?></td>                        
+                          </td>
                         <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
                         <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
                       </tr>

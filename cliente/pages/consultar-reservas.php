@@ -84,9 +84,71 @@ if(isset($_SESSION['error_time_diff'])){
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title"> Próximas Reservas</h4>
+                <h4 class="card-title">Em Andamento</h4>
               </div>
               <div class="card-body">
+              <div class="table-responsive">
+                  <?php
+                  $qry_rsv_andamento = "SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, 
+                  reserva.rsv_id, reserva.rsv_data, reserva.rsv_hora, reserva.rsv_chkin, reserva.rsv_chkin_dt, reserva.rsv_chkout_dt, reserva.fk_rsv_vei_placa,
+                  veiculo.vei_tipo, veiculo.vei_modelo, veiculo.vei_fabricante
+                  FROM ((reserva
+                  INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
+                  INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa)
+                  WHERE reserva.fk_rsv_vei_placa ='{$placa_0}' AND reserva.rsv_chkin= 'ok'
+                  OR reserva.fk_rsv_vei_placa = '{$placa_1}' AND reserva.rsv_chkin= 'ok' 
+                  OR reserva.fk_rsv_vei_placa = '{$placa_2}' AND reserva.rsv_chkin= 'ok' 
+                  OR reserva.fk_rsv_vei_placa = '{$placa_3}' AND reserva.rsv_chkin= 'ok' 
+                  OR reserva.fk_rsv_vei_placa = '{$placa_4}' AND reserva.rsv_chkin= 'ok';";
+                  
+                  $res_rsv_andamento = mysqli_query($conn, $qry_rsv_andamento);
+                  ?>
+                  <table class="table"><!-- Alterar para informar que não há dados caso nenhuma reserva tenha sido feita antes --> 
+                    <thead class=" text-primary">
+                      <th>
+                        Estacionamento
+                      </th>
+                      <th>
+                        Endereço
+                      </th>
+                      <th>
+                        Vagas Reservadas <!-- quantidade e tipo -->
+                      </th>
+                      <th class="text-right">
+                        Data <!-- e hora -->
+                      </th>
+                    </thead>
+                    <tbody>
+                    <?php
+                    if(!empty($res_rsv_andamento )){
+                    while ($ret_rsv_andamento = mysqli_fetch_array($res_rsv_andamento,MYSQLI_BOTH)) { 
+                    ?>
+                      <tr>
+                        <td id="futuras"><!--estac nome -->                        
+                          <?php
+                          $id_em_andamento = $ret_rsv_andamento['rsv_id'];                          
+                          echo ('<a href="realizar-checkout.php?id_chkout=' . $ret_rsv_andamento['rsv_id'] . '">' . $ret_rsv_andamento['estac_nome'] . '</a>');             
+                          ?>
+                        </td>
+                        <td><!--estac endr e cep -->
+                          <?php echo ($ret_rsv_andamento['estac_endrc'] . " - " . $ret_rsv_andamento['estac_cep']); ?>
+                        </td>
+                        <td><!--estac quant e tipo vg reservada -->
+                          <?php echo ($ret_rsv_andamento['vei_tipo'] . ": " . $ret_rsv_andamento['vei_fabricante'] . $ret_rsv_andamento['vei_modelo'] . " (" . $ret_rsv_andamento['vei_modelo'] . ")"); ?>
+                        </td>
+                        <td class="text-right"><!--estac data e hora -->
+                          <?php
+                          echo ($ret_rsv_andamento['rsv_data']);
+                          ?>
+                        </td>
+                      </tr>
+                      <?php } }?>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="card-header">
+                <h4 class="card-title"> Próximas Reservas</h4>
+              </div>
                 <div class="table-responsive">
                   <?php
                   $query_futuras_rsv = "SELECT estacionamento.estac_id, estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, 
@@ -127,20 +189,8 @@ if(isset($_SESSION['error_time_diff'])){
                     ?>
                       <tr>
                         <td id="futuras"><!--estac nome -->                        
-                          <?php
-                          //escrever "em andamento" com link, caso reserva esteja em andamento
-                          $id_em_andamento = intval($fut_res_campo['rsv_id']);                          
-                          $chkin_em_andamento = $ret_em_andamento['rsv_chkin'];
-                          $chkout_em_andamento = $ret_em_andamento['rsv_chkout']; 
-                          
-                          if(($chkin_em_andamento == "ok") AND ($chkout_em_andamento == "nok")){
-                            $_SESSION['id_rsv_futura'] = $id_em_andamento;
-                            $andamento = "Reserva em Andamento";
-                            echo ('<a href="realizar-checkout.php">' . $andamento . '</a>');
-                          }else{
-                          //if(($chkin_em_andamento != "ok") AND ($chkout_em_andamento != "nok")){
-                          echo ('<a href="realizar-checkin.php?estac_futura=' . $fut_res_campo['estac_id'] . '&placa_futura=' . $fut_res_campo['fk_rsv_vei_placa'] . '&id_rsv_futura=' . $fut_res_campo['rsv_id'] . '">' . $fut_res_campo['estac_nome'] . '</a>'); 
-                          }                          
+                          <?php          
+                          echo ('<a href="realizar-checkin.php?estac_futura=' . $fut_res_campo['estac_id'] . '&placa_futura=' . $fut_res_campo['fk_rsv_vei_placa'] . '&id_rsv_futura=' . $fut_res_campo['rsv_id'] . '">' . $fut_res_campo['estac_nome'] . '</a>');                       
                           ?>
                         </td>
                         <td><!--estac endr e cep -->
@@ -156,23 +206,6 @@ if(isset($_SESSION['error_time_diff'])){
                         </td>
                       </tr>
                       <?php } }?>
-                      <!-- verificar o uso do break --> 
-                      <!--
-                      <tr>
-                        <td>
-                          Minerva Hooper
-                        </td>
-                        <td>
-                          Curaçao
-                        </td>
-                        <td>
-                          Sinaai-Waas
-                        </td>
-                        <td class="text-right">
-                          $23,789
-                        </td>
-                      </tr>
-                      -->
                     </tbody>
                   </table>
                 </div>

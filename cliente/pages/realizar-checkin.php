@@ -1,16 +1,4 @@
 <!--
-Página de consulta da reserva e criada para realização do check in/check out.
-
-página final da reserva (hora de estacionar):
-
-mostrar na tela:
-rsv_data
-rsv_chkin Não Realizado
-fk_rsv_estac_id (retornar pra mostrar dados do estac)
-fk_rsv_vei_placa (todos veiculos)
-
-realizar check in = estacionar (informar abaixo)
-realizar check out = sair e calcular e mostrar "final page" (botão ok pra pagar)
 
 -->
 <?php
@@ -20,13 +8,13 @@ include('processa-sessao-cliente.php');
 //redirecionar para página do check out se já tiver realizado check in
 if(isset($_GET['id_rsv_futura'])){
   $chk_out_rsv_id = $_GET['id_rsv_futura'];
-
+}
   $qry_chk_out_rsv_id = "SELECT rsv_chkin, rsv_chkout FROM reserva WHERE rsv_id= '{$chk_out_rsv_id}';";
   $res_chk_out_rsv_id = mysqli_query($conn, $qry_chk_out_rsv_id);
     
   while($ret_chk_out_rsv_id = mysqli_fetch_array($res_chk_out_rsv_id, MYSQLI_ASSOC)){
     $chk_futura_chkin = $ret_chk_out_rsv_id['rsv_chkin'];
-    $chk_futura_chkout = $ret_chk_out_rsv_id['rsv_out'];
+    $chk_futura_chkout = $ret_chk_out_rsv_id['rsv_chkout'];
   } 
 
   if(($chk_futura_chkin == 'ok') AND ($chk_futura_chkout == 'nok')){
@@ -35,18 +23,29 @@ if(isset($_GET['id_rsv_futura'])){
     exit();
   }
    
-}
 
-//include('backend-checkin-reserva.php');
-//include('processa-checkin-reserva.php');
 
 if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
   header('Location: consultar-reservas.php');
   exit();
 }
 
-?>
 
+if(isset($_GET['estac_futura']) AND isset($_GET['placa_futura'])){
+  $estac_res_futura = $_GET['estac_futura'];
+  $placa_res_futura = $_GET['placa_futura'];
+}
+
+$qry_page_chkin="SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, TIME_FORMAT(estacionamento.estac_expd_ini, '%h:%i') AS estac_expd_ini, TIME_FORMAT(estacionamento.estac_expd_fim, '%h:%i') AS estac_expd_fim,
+reserva.rsv_id, DATE_FORMAT(reserva.rsv_data, '%d/%m/%Y') AS data, TIME_FORMAT(reserva.rsv_data, '%h:%i') AS rsv_hora, reserva.rsv_chkin, reserva.rsv_chkin, reserva.fk_rsv_vei_placa,
+veiculo.vei_placa, veiculo.vei_tipo, veiculo.vei_modelo, veiculo.vei_fabricante, veiculo.vei_cor, veiculo.vei_ano
+FROM ((reserva
+INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
+INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) 
+WHERE reserva.rsv_id ='{$chk_out_rsv_id}';";
+$res_page_chkin = mysqli_query($conn,$qry_page_chkin);                
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,13 +67,9 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
-
 <body class="user-profile">
   <div class="wrapper ">
     <div class="sidebar" data-color="orange">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-    -->
       <div class="logo">
         <div class="simple-text logo-normal" style="padding-left: 14px;"><!-- 168x40 original -->
           <img src="/home/images/logox-wt.png" alt="" width="126" height="30"/>
@@ -140,37 +135,25 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
             <div class="card">
               <div class="card-header">
                 <h5 class="title">Deseja realizar check-in no estacionamento, <?php echo $nome_cliente; ?>? </h5>
-                <?php
-                if(isset($_GET['estac_futura']) AND isset($_GET['placa_futura'])){
-                  $estac_res_futura = $_GET['estac_futura'];
-                  $placa_res_futura = $_GET['placa_futura'];                
-                }
-
-                $qry_page_get_rsv="SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, TIME_FORMAT(estacionamento.estac_expd_ini, '%h:%i') AS estac_expd_ini, TIME_FORMAT(estacionamento.estac_expd_fim, '%h:%i') AS estac_expd_fim,
-                reserva.rsv_id, DATE_FORMAT(reserva.rsv_data, '%d/%m/%Y') AS data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.fk_rsv_vei_placa,
-                veiculo.vei_placa, veiculo.vei_tipo, veiculo.vei_modelo, veiculo.vei_fabricante, veiculo.vei_cor, veiculo.vei_ano
-                FROM ((reserva
-                INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
-                INNER JOIN veiculo ON veiculo.vei_placa = reserva.fk_rsv_vei_placa) 
-                WHERE reserva.fk_rsv_estac_id ='{$estac_res_futura}' AND reserva.fk_rsv_vei_placa ='{$placa_res_futura}';";
-                $res_qry_page_get_rsv = mysqli_query($conn,$qry_page_get_rsv);                
-                //$ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_BOTH);
-                while($ret_qry_page_get_rsv = mysqli_fetch_array($res_qry_page_get_rsv, MYSQLI_ASSOC)){
-                ?>
               </div>
               <div class="card-body">
               <form method="POST" action="processa-checkin-reserva.php"><!-- alterar este form -->
+              <?php                
+                while ($ret_page_chkin = mysqli_fetch_array($res_page_chkin, MYSQLI_ASSOC)){
+                 $id = $ret_page_chkin['rsv_id'];
+                 $_SESSION['chkin_res_id'] = $id;
+                ?>
                 <div class="row">
                     <div class="col-md-8 pr-1">
                       <div class="form-group">
                         <label>Estacionamento </label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_nome']); ?><br>
+                        <br><?php echo strval($ret_page_chkin['estac_nome']); ?><br>
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>CEP</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_cep']); ?><br>
+                        <br><?php echo strval($ret_page_chkin['estac_cep']); ?><br>
                       </div>
                     </div>
                   </div>
@@ -178,7 +161,7 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Endereço</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_endrc']); ?> <br>
+                        <br><?php echo strval($ret_page_chkin['estac_endrc']); ?> <br>
                       </div>
                     </div>
                   </div>
@@ -187,13 +170,13 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Data da Reserva</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['data']);?>
+                        <br><?php echo strval($ret_page_chkin['data']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
                         <label>Horário da reserva: </label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['rsv_hora']);?>
+                        <br><?php echo strval($ret_page_chkin['rsv_hora']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
@@ -202,13 +185,13 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                     <div class="col-md-2 pl-1">
                       <div class="form-group"><!-- estes dados estarão no banco "definitivo" -->
                         <label>Horário de abertura</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_expd_ini']);?>
+                        <br><?php echo strval($ret_page_chkin['estac_expd_ini']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group">
                         <label>Horário de encerramento</label>
-                        <br><?php echo strval($ret_qry_page_get_rsv['estac_expd_fim']);?>
+                        <br><?php echo strval($ret_page_chkin['estac_expd_fim']);?>
                       </div>
                     </div>
                   </div>
@@ -229,15 +212,14 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                   <div class="row">
                     <div class="col-md-8 pr-1">
                       <div class="form-group"><!-- botar este form por aqui, precisará da checkbox funcionando (processa-reservar-vaga.php)  - vei_placa, vei_tipo, vei_modelo, vei_fabricante, vei_cor, vei_ano -->
-                        <label>Veículo <?php echo ("(" . $ret_qry_page_get_rsv['vei_tipo'] . ")");?> </label><!-- decidir se manda ou não aquela placa no insert -->
-                        <br><?php echo ($ret_qry_page_get_rsv['vei_fabricante'] ." ". $ret_qry_page_get_rsv['vei_modelo']); ?>
-                        <br><?php echo ("Placa: " . $ret_qry_page_get_rsv['vei_placa'] ."<br> Ano: " . $ret_qry_page_get_rsv['vei_ano']); 
+                        <label>Veículo <?php echo ("(" . $ret_page_chkin['vei_tipo'] . ")");?> </label><!-- decidir se manda ou não aquela placa no insert -->
+                        <br><?php echo ($ret_page_chkin['vei_fabricante'] ." ". $ret_page_chkin['vei_modelo']); ?>
+                        <br><?php echo ("Placa: " . $ret_page_chkin['vei_placa'] ."<br> Ano: " . $ret_page_chkin['vei_ano']); 
                         } ?>
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
-                    <tr>
-                        
+                    <tr>                        
                     </tr> 
                   </div>
                   <?php //$contador_novo++; } ?>
@@ -250,8 +232,7 @@ if(!isset($_GET['estac_futura']) AND !isset($_GET['placa_futura'])){
                     <button class="button button-block button-primary" type="submit">Cancelar Reserva</button>
                     </form>
                     <?php //echo("<a> ac: " . $array[$contador] . " - aco: " . $array[$contadorOutput] . " </a>"); ?>
-                  </div> 
-                
+                  </div>                
               </div>
             </div>
           </div>
