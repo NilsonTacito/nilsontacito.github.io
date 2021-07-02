@@ -1,16 +1,6 @@
 <!--
-Página de consulta da reserva e criada para realização do check in/check out.
+Página de consulta da reserva e criada para realização do check out.
 
-página final da reserva (hora de estacionar):
-
-mostrar na tela:
-rsv_data
-rsv_chkin Não Realizado
-fk_rsv_estac_id (retornar pra mostrar dados do estac)
-fk_rsv_vei_placa (todos veiculos)
-
-realizar check in = estacionar (informar abaixo)
-realizar check out = sair e calcular e mostrar "final page" (botão ok pra pagar)
 -->
 <?php
 include('conexao.php');
@@ -24,23 +14,6 @@ if(isset($_SESSION['chkout_pg_id'])){
 if(isset($_GET['id_chkout'])){
   $chkout_estac_res_futura = $_GET['id_chkout'];
 }
-
-
-//$cookie_id_estac isset in the seesion
-
-//preciso do clt_doc pra chegar nos carros
-
-
-/*
-if (isset($_COOKIE["id-do-estac"])){
-$ck = $_COOKIE["id-do-estac"];
-/quando for utilizado o bd corrigido, será feito select da tx de estacionamento
-$query_tx_reserva = "SELECT vg_carro FROM markers WHERE id ='{$ck}';";
-$res_tx_reserva = mysqli_query($conn,$query_tx_reserva);
-$ret_tx_reserva = mysqli_fetch_array($res_tx_reserva, MYSQLI_ASSOC);
-$tx_reserva = $ret_tx_reserva['vg_carro'];
-}
-*/
 
 ?>
 
@@ -137,9 +110,9 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
             <div class="card">
               <div class="card-header">
                 <h5 class="title">Deseja realizar check-out no estacionamento, <?php echo $nome_cliente; ?>? </h5>
-                <?php
+                <?php //TIME_FORMAT(reserva.rsv_chkin_dt, '%h:%i') -- botar condição pro checkou 
                 $qry_rsv_rlz_chkout="SELECT estacionamento.estac_nome, estacionamento.estac_endrc, estacionamento.estac_cep, TIME_FORMAT(estacionamento.estac_expd_ini, '%h:%i') AS estac_expd_ini, TIME_FORMAT(estacionamento.estac_expd_fim, '%h:%i') AS estac_expd_fim, 
-                reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, reserva.rsv_chkin, reserva.rsv_data, reserva.fk_rsv_vei_placa,
+                reserva.rsv_id, reserva.rsv_data, reserva.rsv_chkin, TIME_FORMAT(reserva.rsv_chkin_dt, '%h:%i') AS chkin_dt, TIME_FORMAT(reserva.rsv_data, '%h:%i') AS rsv_hora, reserva.fk_rsv_vei_placa,
                 veiculo.vei_tipo, vei_modelo, vei_fabricante, vei_ano
                 FROM ((reserva
                 INNER JOIN estacionamento ON reserva.fk_rsv_estac_id = estacionamento.estac_id)
@@ -180,8 +153,8 @@ $tx_reserva = $ret_tx_reserva['vg_carro'];
                     </div>
                     <div class="col-md-2 pr-1">
                       <div class="form-group"><!-- ver input type -->
-                        <label>Horário da reserva: </label>
-                        <br><?php echo strval($ret_rsv_rlz_chkout['rsv_hora']);?>
+                        <label>Horário do check-in: </label>
+                        <br><?php echo strval($ret_rsv_rlz_chkout['chkin_dt']);?>
                       </div>
                     </div>
                     <div class="col-md-2 pr-1">

@@ -3,6 +3,10 @@ Tela da integraÃ§Ã£o com o Google Maps para demonstraÃ§Ã£o das vagas de 
 -->
 <?php
 include("processa-sessao-cliente.php");
+//limpar error alert da reserva
+if(isset($_SESSION['error_time_diff'])){
+  unset($_SESSION['error_time_diff']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

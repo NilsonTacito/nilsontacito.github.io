@@ -10,6 +10,22 @@ include('processa-sessao-cliente.php');
 
 if(isset($_SESSION['id_pagamento'])){
   $id_rsv_pagto = $_SESSION['id_pagamento'];
+
+
+  $_SESSION['res-dia'] = $_POST['res-dia']; 
+  $_SESSION['res-mes'] = $_POST['res-mes']; 
+  $_SESSION['res-ano'] = $_POST['res-ano']; 
+  $_SESSION['res-hora'] = $_POST['res-hora']; 
+  $_SESSION['res-veiculo'] = $_POST['res-veiculo']; 
+  $_SESSION['res-dia'] = $_POST['res-dia']; 
+
+
+  $res_dia= $_POST['res-dia']; 
+  $res_mes= $_POST['res-mes'];
+  $res_ano= $_POST['res-ano'];
+  $res_hora= $_POST['res-hora'];
+  $res_veiculo= $_POST['res-veiculo'];
+
 }
 ?>
 

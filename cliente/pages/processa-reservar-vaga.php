@@ -27,11 +27,28 @@ if($time_diff > 7){
     header('Location: /cliente/pages/reservar-vagas.php');
     exit();
 }
-
+if($time_diff < 0){
+    //$_SESSION['errors'] = array();
+    $error_time_diff = '<a style="color: red;">Erro: Data agendada para reserva fora do limite permitido!</a>';
+    $_SESSION['error_time_diff'] = $error_time_diff;
+    header('Location: /cliente/pages/reservar-vagas.php');
+    exit();
+}
 
 if(!empty($res_veiculo)){//insert
     
-    $query_rsv_0="INSERT INTO reserva (rsv_data, fk_rsv_estac_id, fk_rsv_vei_placa) VALUES ('{$res_datetime}', '{$cookie_id_estac}', '{$res_veiculo}');";
+    //get vagas ocupadas (fazer isso dentro do if, num join)
+    $qry_get_mvg = "SELECT mvg_id, mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE fk_mvg_estac_id='{$cookie_id_estac}';";
+    $res_get_mvg = mysqli_query($conn, $qry_get_mvg);
+    
+    while($ret_get_mvg = mysqli_fetch_array($res_get_mvg)){
+        $ret_proc_mvg_id = intval($ret_get_mvg['mvg_id']);  
+        $ret_mvg_carros_disp = intval($ret_get_mvg['mvg_ocp_carro']);
+        $ret_mvg_motos_disp = intval($ret_get_mvg['mvg_ocp_moto']);
+    
+    }
+
+    $query_rsv_0="INSERT INTO reserva (rsv_data, fk_rsv_estac_id, fk_rsv_vei_placa, fk_rsv_mvg_id, fk_rsv_clt_doc) VALUES ('{$res_datetime}', '{$cookie_id_estac}', '{$res_veiculo}', '{$ret_proc_mvg_id}', '{$sess_doc}');";
     $res_rsv_0 = mysqli_query($conn, $query_rsv_0);
     
     $qry_last_id ="SELECT last_insert_id();";
@@ -39,22 +56,11 @@ if(!empty($res_veiculo)){//insert
     $ret_last_id = mysqli_fetch_array($res_last_id, MYSQLI_BOTH);
     $last_id = intval($ret_last_id['last_insert_id()']);
 
-    //get vagas ocupadas (fazer isso dentro do if, num join)
-    $qry_get_mvg = "SELECT mvg_id, mvg_ocp_carro, mvg_ocp_moto FROM mov_vagas WHERE fk_mvg_estac_id='{$cookie_id_estac}';";
-    $res_get_mvg = mysqli_query($conn, $qry_get_mvg);
-
-    while($ret_get_mvg = mysqli_fetch_array($res_get_mvg)){
-        $ret_proc_mvg_id = intval($ret_get_mvg['mvg_id']);  
-        $ret_mvg_carros_disp = intval($ret_get_mvg['mvg_ocp_carro']);
-        $ret_mvg_motos_disp = intval($ret_get_mvg['mvg_ocp_moto']);
-
-    }
-
     if($res_rsv_0 != null){
         //saber se placas é de carro ou moto -- pegar dados da mv aqui??
         $qry_tipo_vei_placa_0 = "SELECT vei_tipo FROM veiculo WHERE vei_placa ='{$res_veiculo}';";
         $res_tipo_vei_placa_0 = mysqli_query($conn, $qry_tipo_vei_placa_0);
-        $_SESSION['test_0'] = array();
+
         if(!empty($res_tipo_vei_placa_0)){
             $ret_tipo_vei_placa_0 = mysqli_fetch_array($res_tipo_vei_placa_0, MYSQLI_ASSOC);
             $tipo_vei_placa_0 = strval($ret_tipo_vei_placa_0['vei_tipo']);

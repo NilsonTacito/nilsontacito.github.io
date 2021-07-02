@@ -6,6 +6,7 @@ include('processa-sessao-cliente.php');
 if(isset($_SESSION['id_pagamento'])){
   $id_rsv_pagseguro = $_SESSION['id_pagamento'];
 }
+//$_SESSION['tx_rsv_pkbr']
 
 $qry_get_preco = "SELECT rsv_preco FROM reserva WHERE rsv_id='{$id_rsv_pagseguro}';";
 $res_get_preco = mysqli_query($conn,$qry_get_preco);

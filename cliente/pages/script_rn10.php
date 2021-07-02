@@ -32,7 +32,7 @@ $length_id = count($rsv_data['id']);
 
 for($i=0;$i<$length_id;$i++){ 
     //abaixo, mudar pra 15 na Hostinger
-    if(($rsv_data['diff'][$i] > 3000) AND ($rsv_data['chkin'][$i] == 'nok')){
+    if(($rsv_data['diff'][$i] > 15) AND ($rsv_data['chkin'][$i] == 'nok')){
         $updt_id = $rsv_data['id'][$i];
         $qry_rn010="UPDATE reserva SET rsv_chkin='ok', rsv_chkout='ok' WHERE rsv_id='{$updt_id}';";
         $res_rn010 = mysqli_query($conn, $qry_rn010); //cancelar é isso: chkin e chkout ok, sem alterar timestamps  (chkin_dt e chkout_dt = null)

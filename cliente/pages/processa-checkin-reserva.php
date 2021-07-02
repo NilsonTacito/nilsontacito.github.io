@@ -12,7 +12,7 @@ $res_rlz_chkin = mysqli_query($conn,$qry_rlz_chkin);
 
 if($res_rlz_chkin != null){
   $_SESSION['chkout_pg_id'] = $id_rsv_futura;
-  header('Location: realizar-checkout.php');
+  header('Location: consultar-reservas.php');
   exit();
 }
 

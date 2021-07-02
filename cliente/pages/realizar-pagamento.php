@@ -141,7 +141,7 @@ if(isset($_SESSION['id_pagamento'])){
                       <tr>
                         <!-- SELECT rsv_id,rsv_chkin_dt, rsv_chkout_dt, TIMESTAMPDIFF(MINUTE,rsv_chkin_dt, rsv_chkout_dt) FROM reserva -->
                         <td>Tempo de Utilização das Vagas</td> <!-- Verificar com Júlio -->
-                        <td class="text-right"><?php echo($ret_rsv_pagto['rsv_periodo']); ?>
+                        <td class="text-right"><?php echo($ret_rsv_pagto['rsv_periodo_hora'] . " hora(s)"); ?>
                         </td>
                       </tr>
                       <tr>
@@ -178,12 +178,6 @@ if(isset($_SESSION['id_pagamento'])){
                         <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
                       </tr>
                       <tr>
-                        <td>Taxa de Reserva</td>
-                        <td class="text-right"><?php echo($ret_rsv_pagto['mvg_tx_reserva'] . "$"); ?></td>
-                        <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
-                        <td class="text-center"><i class="now-ui-icons ui-1_check text-success"></i></td -->
-                      </tr>
-                      <tr>
                         <td>Taxa de Serviço</td>
                         <td class="text-right"><?php echo($ret_rsv_pagto['mvg_tx_servico'] . "% (Total)"); ?></td>
                         <!-- td class="text-center"><i class="now-ui-icons ui-1_simple-remove text-danger"></i></td>
@@ -194,11 +188,13 @@ if(isset($_SESSION['id_pagamento'])){
                         <td class="text-right">
                         <?php
                           $intervalo_tempo = $ret_rsv_pagto['rsv_periodo_min'];
-                          $tx_pkbr = $ret_rsv_pagto['mvg_tx_servico'];
+                          $tx_reserva_pkbr = $ret_rsv_pagto['mvg_tx_reserva'];
+                          $_SESSION['tx_rsv_pkbr'] = $tx_reserva_pkbr;
+                          $tx_servico_pkbr = $ret_rsv_pagto['mvg_tx_servico'];
 
                           if(!empty($calc_diaria_carro)){
                             $res_preco_carro = ($calc_diaria_carro / 60) * $intervalo_tempo;
-                            $perc_tx_pkbr_carro = ($res_preco_carro / 100) * $tx_pkbr;
+                            $perc_tx_pkbr_carro = ($res_preco_carro / 100) * $tx_servico_pkbr;
                             $total_carro = ($res_preco_carro + $perc_tx_pkbr_carro);
                             $_SESSION['total_carro'] = $total_carro;
                             echo(number_format((float)$total_carro, 2, '.', '') . '$');
@@ -206,7 +202,7 @@ if(isset($_SESSION['id_pagamento'])){
                           
                           if(!empty($calc_diaria_moto)){
                             $res_preco_moto = ($calc_diaria_moto / 60) * $intervalo_tempo;
-                            $perc_tx_pkbr_moto = ($res_preco_moto / 100) * $tx_pkbr;
+                            $perc_tx_pkbr_moto = ($res_preco_moto / 100) * $tx_servico_pkbr;
                             $total_moto = ($res_preco_moto + $perc_tx_pkbro_moto);
                             $_SESSION['total_moto'] = $total_moto;
                             echo(number_format((float)$total_moto, 2, '.', '') . '$');

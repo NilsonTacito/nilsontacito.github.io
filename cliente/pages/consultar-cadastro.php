@@ -12,6 +12,10 @@ esta página deve:
 include("conexao.php");
 include("processa-sessao-cliente.php");
 include("processa-consultar-cliente.php");
+//limpar error alert da reserva
+if(isset($_SESSION['error_time_diff'])){
+  unset($_SESSION['error_time_diff']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
